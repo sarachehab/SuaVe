@@ -1,10 +1,8 @@
 #include "Vinstrmem.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
-#include <iostream>
 
-#define MAX_SIM_CYC 20
-
+#define MAX_SIM_CYC 10
 
 int main ( int argc , char ** argv , char **env) {
     //i counts the number of clock ticks
@@ -23,22 +21,22 @@ int main ( int argc , char ** argv , char **env) {
 
     //intialise simulation inputs
     top->A = 0;
-    top->clk = 0;
 
     //run simulation for many clock cycles
     for (simcyc = 0 ; simcyc < MAX_SIM_CYC ; simcyc++){
+
         //dump varaibles into VCD file and toggle clock
-        for(tick = 0 ; tick < 2 ; tick++) {
-            tfp->dump (2*simcyc + tick); //unit in ps
-            top->clk = !top->clk;
-            top->eval();
-        }
+        // for(tick = 0 ; tick < 2 ; tick++) {
+        //     tfp->dump (2*simcyc + tick); //unit in ps
+        //     // top->clk = !top->clk;
+        //     top->eval();
+        // }
 
-        //testing if the ROM outputs the expected instructions by incrementing Read Address:
+        //evaluating asynchronously...
+        tfp->dump (simcyc);
+        top->eval();
+
         top->A++;
-
-
-
 
         if(Verilated::gotFinish()) exit(0);
     }

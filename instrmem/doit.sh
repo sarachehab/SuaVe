@@ -15,3 +15,4 @@ echo -e "\nrunning simulation\n"
 obj_dir/Vinstrmem
 echo -e "\\ncomplete simulation\n"
 
+gtkwave instrmem.vcd
