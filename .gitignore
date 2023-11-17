@@ -1,3 +1,4 @@
 instrmem/obj_dir
+controlunit/obj_dir
 *.vcd
 .vscode
