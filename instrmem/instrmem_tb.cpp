@@ -2,7 +2,7 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
-#define MAX_SIM_CYC 10
+#define MAX_SIM_CYC 32
 
 int main ( int argc , char ** argv , char **env) {
     //i counts the number of clock ticks
@@ -24,19 +24,14 @@ int main ( int argc , char ** argv , char **env) {
 
     //run simulation for many clock cycles
     for (simcyc = 0 ; simcyc < MAX_SIM_CYC ; simcyc++){
+        // dump varaibles into VCD file and toggle clock
+        for(tick = 0 ; tick < 2 ; tick++) {
+            tfp->dump (2*simcyc + tick); //unit in ps
+            // top->clk = !top->clk;
+            top->eval();
+        }
 
-        //dump varaibles into VCD file and toggle clock
-        // for(tick = 0 ; tick < 2 ; tick++) {
-        //     tfp->dump (2*simcyc + tick); //unit in ps
-        //     // top->clk = !top->clk;
-        //     top->eval();
-        // }
-
-        //evaluating asynchronously...
-        tfp->dump (simcyc);
-        top->eval();
-
-        top->A++;
+        top->A++; // expect that the instruction output doesnt change untill the read address A is a multiple of 4
 
         if(Verilated::gotFinish()) exit(0);
     }
