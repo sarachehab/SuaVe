@@ -3,13 +3,13 @@ module dataPath#(
     parameter DATA_WIDTH = 32
 )(
     input  logic clk, RegWrite, ALUsrc,
-    input  logic [ADDRESS_WIDTH-1:0] rs1, rs2, rd,
+    input  logic [DATA_WIDTH-1:0] rs1, rs2, rd,
     input  logic [DATA_WIDTH-1:0] ImmOp,
     output logic [DATA_WIDTH-1:0] a0,
     output logic EQ
 );
 
-logic [DATA_WIDTH-1:0] WD3, ALUop1, ALUop2;
+logic [DATA_WIDTH-1:0] ALUop1, ALUop2;
 
 regFile rf(
     .AD1(rs1),
@@ -17,6 +17,7 @@ regFile rf(
     .AD3(rd),
     .WE3(RegWrite),
     .WD3(WD3), 
+    .WD3(ALUout),
     .clk(clk),
     .RD1(ALUop1),
     .RD2(ALUop2),
@@ -25,7 +26,7 @@ regFile rf(
 
 alu opAlu(
     .ALUop1(ALUop1),
-    .ALUop2(ALUop2),
+    .ALUop2(ALUsrc ? ALUop2 : ImmOp),
     .SUM(ALUout),
     .EQ(EQ)
 );
