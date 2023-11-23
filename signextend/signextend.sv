@@ -10,18 +10,10 @@ module signextend  # (
 );
 
 always_comb begin
-    if(instr[31])begin
-        if(immsrc)
-            assign immop = {20'hfffff , instr[31:20]};
-        else
-            assign immop = {19'h7ffff , instr[31] , instr[7] , instr[30:25] , instr[11:8] , 1'h0};
-    end
-    else begin
-        if(immsrc)
-            assign immop = {20'h0 , instr[31:20]};
-        else
-            assign immop = {19'h0 , instr[31] , instr[7] , instr[30:25] , instr[11:8] , 1'h0};
-    end
+    if(immsrc)
+        assign immop = {{20{instr[31]}} , instr[31:20]};
+    else
+        assign immop = {{19{instr[31]}} , instr[31] , instr[7] , instr[30:25] , instr[11:8] , 1'b0};
 end
-endmodule
 
+endmodule
