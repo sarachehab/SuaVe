@@ -3,3 +3,5 @@ controlunit/obj_dir
 signextend/obj_dir
 *.vcd
 .vscode
+*.cfg
+vbuddy.cpp
