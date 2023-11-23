@@ -1,4 +1,4 @@
-#include //top level sv file ".h"
+#include "Vtop.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
@@ -11,18 +11,20 @@ int main (int argc, char **argv, char **ev){
   Verilated::commandArgs(argc, argv);
 
   //init top verilog instance
-  Vf1_fsm * top = new Vf1_fsm;
+  Vtop* top = new Vtop;
 
   // init trace dump
   Verilated::traceEverOn(true);
   VerilatedVcdC* tfp = new VerilatedVcdC;
   top->trace (tfp,99);
-  //tfp->open ("Vf1_fsm.vcd");
-
+  tfp->open (".vcd");//!!!! not correct!!!!
+  /*
   //init Vbuddy
   if(vbdOpen()!=1) return (-1);
   vbdHeader("lab 4");
+  */
   //initialize simulation inputs
+
   top->clk = 1;
   top->rst = 0;
 

@@ -16,11 +16,12 @@ regFile rf(
     .AD2(rs2),
     .AD3(rd),
     .WE3(RegWrite),
+    .WD3(WD3), 
     .WD3(ALUout),
     .clk(clk),
     .RD1(ALUop1),
     .RD2(ALUop2),
-    .a0(a0)
+    .a0(a0) //a0 needs to be connected to WD3
 );
 
 alu opAlu(
@@ -30,5 +31,10 @@ alu opAlu(
     .EQ(EQ)
 );
 
+selecImm opSelec(
+    .ALUsrc(ALUsrc),
+    .regOp2(regOp2),
+    .ImmOp(ImmOp),
+    .ALUop2(ALUop2)
+);
 endmodule
-
