@@ -11,3 +11,4 @@ assign SUM = ALUop1 + ALUop2;
 assign EQ = ALUop1 == ALUop2;
 
 endmodule
+
