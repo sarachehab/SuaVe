@@ -12,17 +12,16 @@ module regFile #(
 logic [DATA_WIDTH-1:0] rf[2**ADDRESS_WIDTH-1:0];
 
 initial begin
-    for (int i; i < 32; i++) {
+    for (int i = 0; i < 32; i++)
         rf[i] = 32'b0;
-    }
-end;
+end
 
 
 always_ff @(posedge clk) 
     if (WE3) rf[AD3] <=  WD3;
 
-assign RD1 = (AD1 != 0) ? rf[AD1] : 0;
-assign RD2 = (AD2 != 0) ? rf[AD2] : 0;
-assign a0  = rf[32'd10] : 0;
+assign RD1 = rf[AD1];
+assign RD2 = rf[AD2];
+assign a0  = rf[32'd10];
 
 endmodule
