@@ -2,7 +2,7 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
-#include "vbuddy.cpp"
+//#include "vbuddy.cpp"
 #define MAX_SIM_CYC 10000
 
 int main (int argc, char **argv, char **ev){
@@ -17,7 +17,7 @@ int main (int argc, char **argv, char **ev){
   Verilated::traceEverOn(true);
   VerilatedVcdC* tfp = new VerilatedVcdC;
   top->trace (tfp,99);
-  tfp->open (".vcd");//!!!! not correct!!!!
+  tfp->open ("top.vcd");//!!!! not correct!!!!
   /*
   //init Vbuddy
   if(vbdOpen()!=1) return (-1);
@@ -37,13 +37,15 @@ int main (int argc, char **argv, char **ev){
       top->eval ();
     }
 
-    vbdCycle(i+1);
+    //vbdCycle(i+1);
       
     // either simulation finished, or 'q' is pressed
-    if ((Verilated::gotFinish()) || (vbdGetkey()=='q'))
-      exit(0);
+    if (Verilated::gotFinish()){
+    exit(0);    
+    }
+  
   }
-  vbdClose();
   tfp->close();
   exit(0);
+  
 }
