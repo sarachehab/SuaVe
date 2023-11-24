@@ -6,7 +6,7 @@ module signextend  # (
     input logic [I_WIDTH-1 : 0] instr, //instruction
     input logic[1:0] immsrc, //is B type or I type? if high then I type
     //output immediate
-    output logic [D_WIDTH-1 : 0] immOp //output immediate in 12 bits
+    output logic [D_WIDTH-1 : 0] immOp //output immediate in 32 bits
 );
 
 always_comb begin
