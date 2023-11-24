@@ -1,6 +1,7 @@
 #include "Vtop.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include <iostream>
 
 //#include "vbuddy.cpp"
 #define MAX_SIM_CYC 10000
@@ -26,7 +27,7 @@ int main (int argc, char **argv, char **ev){
   //initialize simulation inputs
 
   top->clk = 1;
-  top->rst = 0;
+  top->rst = 1;
 
   for(i=0; i<MAX_SIM_CYC; i++){
 
@@ -36,6 +37,10 @@ int main (int argc, char **argv, char **ev){
       top->clk = !top->clk;
       top->eval ();
     }
+
+    top->rst = 0;
+
+    // std::cout << (top->a0) << std::endl;
 
     //vbdCycle(i+1);
       
