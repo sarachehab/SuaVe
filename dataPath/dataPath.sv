@@ -20,7 +20,7 @@ regFile rf(
     .clk(clk),
     .RD1(ALUop1),
     .RD2(ALUop2),
-    .a0(a0) //a0 needs to be connected to WD3
+    .a0(a0)
 );
 
 alu opAlu(

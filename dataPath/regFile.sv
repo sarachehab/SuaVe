@@ -21,6 +21,6 @@ always_ff @(posedge clk)
 
 assign RD1 = (AD1 != 0) ? rf[AD1] : 0;
 assign RD2 = (AD2 != 0) ? rf[AD2] : 0;
-assign a0  = (AD3 != 0) ? rf[AD3] : 0;
+assign a0  = (AD3 != 0) ? rf[AD3] : 0; //could be wrong, discuss!!!!!
 
 endmodule
