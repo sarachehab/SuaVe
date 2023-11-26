@@ -5,12 +5,13 @@
 #include "verilated.h"
 
 #include "Valu__Syms.h"
+#include "Valu__Syms.h"
 #include "Valu___024root.h"
 
 void Valu___024root___ctor_var_reset(Valu___024root* vlSelf);
 
-Valu___024root::Valu___024root(Valu__Syms* symsp, const char* name)
-    : VerilatedModule{name}
+Valu___024root::Valu___024root(Valu__Syms* symsp, const char* v__name)
+    : VerilatedModule{v__name}
     , vlSymsp{symsp}
  {
     // Reset structure values

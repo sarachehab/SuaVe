@@ -10,7 +10,7 @@ default: Valu
 # Perl executable (from $PERL)
 PERL = perl
 # Path to Verilator kit (from $VERILATOR_ROOT)
-VERILATOR_ROOT = /usr/local/share/verilator
+VERILATOR_ROOT = /opt/homebrew/Cellar/verilator/5.016/share/verilator
 # SystemC include directory with systemc.h (from $SYSTEMC_INCLUDE)
 SYSTEMC_INCLUDE ?= 
 # SystemC library directory with libsystemc.a (from $SYSTEMC_LIBDIR)

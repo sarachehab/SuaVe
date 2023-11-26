@@ -65,10 +65,6 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
-            else 
-            {
-                std::cout << "correct match of " << in->SrcA << " + " << in->SrcB << " = " << tx->ALUResult << std::endl;
-            }
             break;
 
         // sub instruction
@@ -83,7 +79,6 @@ public:
                           << "  Actual: " << tx->EQ << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
-            std::cout << "correct match of " << in->SrcA << " - " << in->SrcB << " = " << int(tx->ALUResult) << std::endl;
             break;
 
         // and instruction
@@ -96,7 +91,6 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
-            std::cout << "correct match of " << in->SrcA << " & " << in->SrcB << " = " << tx->ALUResult << std::endl;
             break;
 
         // or instruction
@@ -109,7 +103,6 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
-            std::cout << "correct match of " << in->SrcA << " | " << in->SrcB << " = " << tx->ALUResult << std::endl;
             break;
 
         // slt instruction
@@ -122,7 +115,6 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
-            std::cout << "correct match of " << in->SrcA << " < " << in->SrcB << std::endl;
             break;
         }
     }
@@ -191,13 +183,15 @@ public:
 
     void monitor()
     {
-        // create new transaction item and populate it with result observed
-        AluOutTx *tx = new AluOutTx();
-        tx->ALUResult = dut->ALUResult;
-        tx->EQ = dut->EQ;
+        if (simcyc > 0)
+        { // create new transaction item and populate it with result observed
+            AluOutTx *tx = new AluOutTx();
+            tx->ALUResult = dut->ALUResult;
+            tx->EQ = dut->EQ;
 
-        // pass transaction item to score board
-        scb->writeOut(tx);
+            // pass transaction item to score board
+            scb->writeOut(tx);
+        }
     }
 
 private:
@@ -250,7 +244,7 @@ int main(int argc, char **argv, char **env)
         {
             tfp->dump(clk + 2 * simcyc);
             // dut->clk = !dut->clk; // no clock for this module
-            // dut->eval();
+            dut->eval();
 
             // if on rising clock edge
             // if (dut->clk == 1)
@@ -260,7 +254,6 @@ int main(int argc, char **argv, char **env)
                 tx = rndAluInTx();
                 //
                 drv->drive(tx);
-                dut->eval();
                 // monitor the input interface
                 inMon->monitor();
                 // monitor the output interface
