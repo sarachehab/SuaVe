@@ -10,21 +10,21 @@
 #define VERIF_START_TIME 7
 int simcyc = 0;
 
-std::vector<uint> possible_ALUControl = {0, 1, 2, 3, 5};
+std::vector<uint> possible_alu_control_i = {0, 1, 2, 3, 5};
 
 class AluInTx
 {
 public:
-    uint32_t SrcA;
-    uint32_t SrcB;
-    uint ALUControl;
+    uint32_t src1_i;
+    uint32_t src2_i;
+    uint alu_control_i;
 };
 
 class AluOutTx
 {
 public:
-    uint32_t ALUResult;
-    uint EQ;
+    uint32_t alu_result_o;
+    uint eq_o;
 };
 
 class AluScb
@@ -52,67 +52,67 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
-        switch (in->ALUControl)
+        switch (in->alu_control_i)
         {
 
         // add instruction
         case 0:
-            if (in->SrcA + in->SrcB != tx->ALUResult)
+            if (in->src1_i + in->src2_i != tx->alu_result_o)
             {
                 std::cout << std::endl;
                 std::cout << "AluScb: add mismatch" << std::endl;
-                std::cout << "  Expected: " << in->SrcA + in->SrcB
-                          << "  Actual: " << tx->ALUResult << std::endl;
+                std::cout << "  Expected: " << in->src1_i + in->src2_i
+                          << "  Actual: " << tx->alu_result_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
         // sub instruction
         case 1:
-            if ((in->SrcA - in->SrcB != tx->ALUResult) && ((in->SrcA == in->SrcB) == tx->EQ))
+            if ((in->src1_i - in->src2_i != tx->alu_result_o) && ((in->src1_i == in->src2_i) == tx->eq_o))
             {
                 std::cout << std::endl;
-                std::cout << "AluScb: sub/eq mismatch" << std::endl;
-                std::cout << "  Expected ALUResult: " << in->SrcA - in->SrcB
-                          << "  Actual: " << tx->ALUResult << std::endl;
-                std::cout << "  Expected EQ: " << (in->SrcA == in->SrcB)
-                          << "  Actual: " << tx->EQ << std::endl;
+                std::cout << "AluScb: sub/eq_o mismatch" << std::endl;
+                std::cout << "  Expected alu_result_o: " << in->src1_i - in->src2_i
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Expected eq_o: " << (in->src1_i == in->src2_i)
+                          << "  Actual: " << tx->eq_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
         // and instruction
         case 2:
-            if ((in->SrcA & in->SrcB) != tx->ALUResult)
+            if ((in->src1_i & in->src2_i) != tx->alu_result_o)
             {
                 std::cout << std::endl;
                 std::cout << "AluScb: and mismatch" << std::endl;
-                std::cout << "  Expected: " << (in->SrcA & in->SrcB)
-                          << "  Actual: " << tx->ALUResult << std::endl;
+                std::cout << "  Expected: " << (in->src1_i & in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
         // or instruction
         case 3:
-            if ((in->SrcA | in->SrcB) != tx->ALUResult)
+            if ((in->src1_i | in->src2_i) != tx->alu_result_o)
             {
                 std::cout << std::endl;
                 std::cout << "AluScb: or mismatch" << std::endl;
-                std::cout << "  Expected: " << (in->SrcA | in->SrcB)
-                          << "  Actual: " << tx->ALUResult << std::endl;
+                std::cout << "  Expected: " << (in->src1_i | in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
         // slt instruction
         case 5:
-            if ((in->SrcA < in->SrcB) != tx->ALUResult)
+            if ((in->src1_i < in->src2_i) != tx->alu_result_o)
             {
                 std::cout << std::endl;
                 std::cout << "AluScb: slt mismatch" << std::endl;
-                std::cout << "  Expected: " << (in->SrcA < in->SrcB)
-                          << "  Actual: " << tx->ALUResult << std::endl;
+                std::cout << "  Expected: " << (in->src1_i < in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
@@ -135,9 +135,9 @@ public:
     {
         if (tx != NULL)
         {
-            dut->SrcA = tx->SrcA;
-            dut->SrcB = tx->SrcB;
-            dut->ALUControl = tx->ALUControl;
+            dut->src1_i = tx->src1_i;
+            dut->src2_i = tx->src2_i;
+            dut->alu_control_i = tx->alu_control_i;
             delete tx;
         }
     }
@@ -159,9 +159,9 @@ public:
     {
         // create a new transaction item and populate it with data observerd at the interface pin
         AluInTx *tx = new AluInTx();
-        tx->ALUControl = dut->ALUControl;
-        tx->SrcA = dut->SrcA;
-        tx->SrcB = dut->SrcB;
+        tx->alu_control_i = dut->alu_control_i;
+        tx->src1_i = dut->src1_i;
+        tx->src2_i = dut->src2_i;
 
         // pass transaction item to score board
         scb->writeIn(tx);
@@ -186,8 +186,8 @@ public:
         if (simcyc > 0)
         { // create new transaction item and populate it with result observed
             AluOutTx *tx = new AluOutTx();
-            tx->ALUResult = dut->ALUResult;
-            tx->EQ = dut->EQ;
+            tx->alu_result_o = dut->alu_result_o;
+            tx->eq_o = dut->eq_o;
 
             // pass transaction item to score board
             scb->writeOut(tx);
@@ -202,9 +202,9 @@ private:
 AluInTx *rndAluInTx()
 {
     AluInTx *tx = new AluInTx();
-    tx->SrcA = rand() % 100;
-    tx->SrcB = rand() % 100;
-    tx->ALUControl = possible_ALUControl[rand() % 5];
+    tx->src1_i = rand() % 100;
+    tx->src2_i = rand() % 100;
+    tx->alu_control_i = possible_alu_control_i[rand() % 5];
     return tx;
 }
 
@@ -244,7 +244,6 @@ int main(int argc, char **argv, char **env)
         {
             tfp->dump(clk + 2 * simcyc);
             // dut->clk = !dut->clk; // no clock for this module
-            dut->eval();
 
             // if on rising clock edge
             // if (dut->clk == 1)
@@ -252,13 +251,13 @@ int main(int argc, char **argv, char **env)
             {
                 // generate a randomised transaction item
                 tx = rndAluInTx();
-                //
                 drv->drive(tx);
                 // monitor the input interface
                 inMon->monitor();
                 // monitor the output interface
                 outMon->monitor();
             }
+            dut->eval();
         }
 
         if ((Verilated::gotFinish()))

@@ -1,10 +1,9 @@
-alu_tb.o: ../alu_tb.cpp \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilatedos.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated_config.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated_types.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated_funcs.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated_vcd_c.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated_trace.h \
-  /opt/homebrew/Cellar/verilator/5.016/share/verilator/include/verilated_trace_defs.h \
-  Valu.h
+alu_tb.o: ../alu_tb.cpp /usr/local/share/verilator/include/verilated.h \
+ /usr/local/share/verilator/include/verilatedos.h \
+ /usr/local/share/verilator/include/verilated_config.h \
+ /usr/local/share/verilator/include/verilated_types.h \
+ /usr/local/share/verilator/include/verilated_funcs.h \
+ /usr/local/share/verilator/include/verilated_vcd_c.h \
+ /usr/local/share/verilator/include/verilated.h \
+ /usr/local/share/verilator/include/verilated_trace.h \
+ /usr/local/share/verilator/include/verilated_trace_defs.h Valu.h

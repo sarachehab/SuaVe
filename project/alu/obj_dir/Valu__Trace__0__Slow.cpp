@@ -11,18 +11,18 @@ VL_ATTR_COLD void Valu___024root__trace_init_sub__TOP__0(Valu___024root* vlSelf,
     // Init
     const int c = vlSymsp->__Vm_baseCode;
     // Body
-    tracep->declBus(c+1,"SrcA", false,-1, 31,0);
-    tracep->declBus(c+2,"SrcB", false,-1, 31,0);
-    tracep->declBus(c+3,"ALUControl", false,-1, 2,0);
-    tracep->declBus(c+4,"ALUResult", false,-1, 31,0);
-    tracep->declBit(c+5,"EQ", false,-1);
+    tracep->declBus(c+1,"src1_i", false,-1, 31,0);
+    tracep->declBus(c+2,"src2_i", false,-1, 31,0);
+    tracep->declBus(c+3,"alu_control_i", false,-1, 2,0);
+    tracep->declBus(c+4,"alu_result_o", false,-1, 31,0);
+    tracep->declBit(c+5,"eq_o", false,-1);
     tracep->pushNamePrefix("alu ");
     tracep->declBus(c+6,"DATA_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+1,"SrcA", false,-1, 31,0);
-    tracep->declBus(c+2,"SrcB", false,-1, 31,0);
-    tracep->declBus(c+3,"ALUControl", false,-1, 2,0);
-    tracep->declBus(c+4,"ALUResult", false,-1, 31,0);
-    tracep->declBit(c+5,"EQ", false,-1);
+    tracep->declBus(c+1,"src1_i", false,-1, 31,0);
+    tracep->declBus(c+2,"src2_i", false,-1, 31,0);
+    tracep->declBus(c+3,"alu_control_i", false,-1, 2,0);
+    tracep->declBus(c+4,"alu_result_o", false,-1, 31,0);
+    tracep->declBit(c+5,"eq_o", false,-1);
     tracep->popNamePrefix(1);
 }
 
@@ -66,10 +66,10 @@ VL_ATTR_COLD void Valu___024root__trace_full_sub_0(Valu___024root* vlSelf, Veril
     // Init
     uint32_t* const oldp VL_ATTR_UNUSED = bufp->oldp(vlSymsp->__Vm_baseCode);
     // Body
-    bufp->fullIData(oldp+1,(vlSelf->SrcA),32);
-    bufp->fullIData(oldp+2,(vlSelf->SrcB),32);
-    bufp->fullCData(oldp+3,(vlSelf->ALUControl),3);
-    bufp->fullIData(oldp+4,(vlSelf->ALUResult),32);
-    bufp->fullBit(oldp+5,(vlSelf->EQ));
+    bufp->fullIData(oldp+1,(vlSelf->src1_i),32);
+    bufp->fullIData(oldp+2,(vlSelf->src2_i),32);
+    bufp->fullCData(oldp+3,(vlSelf->alu_control_i),3);
+    bufp->fullIData(oldp+4,(vlSelf->alu_result_o),32);
+    bufp->fullBit(oldp+5,(vlSelf->eq_o));
     bufp->fullIData(oldp+6,(0x20U),32);
 }

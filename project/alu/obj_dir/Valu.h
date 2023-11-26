@@ -15,7 +15,7 @@ class Valu___024root;
 class VerilatedVcdC;
 
 // This class is the main interface to the Verilated model
-class alignas(VL_CACHE_LINE_BYTES) Valu VL_NOT_FINAL : public VerilatedModel {
+class Valu VL_NOT_FINAL : public VerilatedModel {
   private:
     // Symbol table holding complete model state (owned by this class)
     Valu__Syms* const vlSymsp;
@@ -25,11 +25,11 @@ class alignas(VL_CACHE_LINE_BYTES) Valu VL_NOT_FINAL : public VerilatedModel {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-    VL_IN8(&ALUControl,2,0);
-    VL_OUT8(&EQ,0,0);
-    VL_IN(&SrcA,31,0);
-    VL_IN(&SrcB,31,0);
-    VL_OUT(&ALUResult,31,0);
+    VL_IN8(&alu_control_i,2,0);
+    VL_OUT8(&eq_o,0,0);
+    VL_IN(&src1_i,31,0);
+    VL_IN(&src2_i,31,0);
+    VL_OUT(&alu_result_o,31,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
@@ -62,10 +62,6 @@ class alignas(VL_CACHE_LINE_BYTES) Valu VL_NOT_FINAL : public VerilatedModel {
     void eval_end_step() {}
     /// Simulation complete, run final blocks.  Application must call on completion.
     void final();
-    /// Are there scheduled events to handle?
-    bool eventsPending();
-    /// Returns time at next time slot. Aborts if !eventsPending()
-    uint64_t nextTimeSlot();
     /// Trace signals in the model; called by application code
     void trace(VerilatedVcdC* tfp, int levels, int options = 0);
     /// Retrieve name of this model instance (as passed to constructor).
@@ -75,13 +71,7 @@ class alignas(VL_CACHE_LINE_BYTES) Valu VL_NOT_FINAL : public VerilatedModel {
     const char* hierName() const override final;
     const char* modelName() const override final;
     unsigned threads() const override final;
-    /// Prepare for cloning the model at the process level (e.g. fork in Linux)
-    /// Release necessary resources. Called before cloning.
-    void prepareClone() const;
-    /// Re-init after cloning the model at the process level (e.g. fork in Linux)
-    /// Re-allocate necessary resources. Called after cloning.
-    void atClone() const;
     std::unique_ptr<VerilatedTraceConfig> traceConfig() const override final;
-};
+} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
 
 #endif  // guard
