@@ -242,7 +242,7 @@ int main(int argc, char **argv, char **env)
         {
             tfp->dump(clk + 2 * simcyc);
             // dut->clk = !dut->clk; // no clock for this module
-            dut->eval();
+            // dut->eval();
 
             // if on rising clock edge
             // if (dut->clk == 1)
@@ -252,6 +252,7 @@ int main(int argc, char **argv, char **env)
                 tx = rndAluInTx();
                 //
                 drv->drive(tx);
+                dut->eval();
                 // monitor the input interface
                 inMon->monitor();
                 // monitor the output interface
