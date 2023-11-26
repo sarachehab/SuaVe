@@ -18,7 +18,9 @@ VL_INLINE_OPT void Vpc___024root___nba_sequent__TOP__0(Vpc___024root* vlSelf) {
     Vpc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vpc___024root___nba_sequent__TOP__0\n"); );
     // Body
-    vlSelf->pc__DOT__program_counter = ((IData)(vlSelf->rst)
+    vlSelf->pc__DOT__program_counter = (((IData)(vlSelf->rst) 
+                                         | (0xbfc00fffU 
+                                            < vlSelf->pc__DOT__program_counter))
                                          ? 0U : ((IData)(vlSelf->PCsrc)
                                                   ? 
                                                  (vlSelf->pc__DOT__program_counter 

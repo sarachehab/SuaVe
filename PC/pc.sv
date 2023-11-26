@@ -11,12 +11,12 @@ module pc # (
     logic   [PC_WIDTH-1:0]  program_counter;
 
     initial begin 
-        program_counter = {PC_WIDTH{1'b0}};
+        program_counter = 32'hBFC00000;
     end
 
     always_ff @ (posedge clk) begin
 
-        if (rst)    program_counter <= {PC_WIDTH{1'b0}};
+        if (rst || program_counter > 32'hBFC00FFF)    program_counter <= {PC_WIDTH{1'b0}};
         else        program_counter <= PCsrc ? program_counter + ImmOp : program_counter + 32'd4;
 
     end
@@ -24,4 +24,3 @@ module pc # (
     assign PC = program_counter;
 
 endmodule
-
