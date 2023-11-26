@@ -65,6 +65,10 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
+            else 
+            {
+                std::cout << "correct match of " << in->SrcA << " + " << in->SrcB << " = " << tx->ALUResult << std::endl;
+            }
             break;
 
         // sub instruction
@@ -79,6 +83,7 @@ public:
                           << "  Actual: " << tx->EQ << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
+            std::cout << "correct match of " << in->SrcA << " - " << in->SrcB << " = " << int(tx->ALUResult) << std::endl;
             break;
 
         // and instruction
@@ -91,6 +96,7 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
+            std::cout << "correct match of " << in->SrcA << " & " << in->SrcB << " = " << tx->ALUResult << std::endl;
             break;
 
         // or instruction
@@ -103,6 +109,7 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
+            std::cout << "correct match of " << in->SrcA << " | " << in->SrcB << " = " << tx->ALUResult << std::endl;
             break;
 
         // slt instruction
@@ -115,6 +122,7 @@ public:
                           << "  Actual: " << tx->ALUResult << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
+            std::cout << "correct match of " << in->SrcA << " < " << in->SrcB << std::endl;
             break;
         }
     }
