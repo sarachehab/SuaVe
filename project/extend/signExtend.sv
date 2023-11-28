@@ -3,11 +3,11 @@ module signExtend # (
                DATA_WIDTH = 32
 )(
     //input signals
-    input  logic [INSTRUCT_WIDTH-1:7] instr, //instruction
-    input  logic [1:0] immsrc,
+    input  logic [INSTRUCT_WIDTH-1:7] Instr, //instruction
+    input  logic [1:0] ImmSrc,
     input logic [DATA_WIDTH-1:0] PC,
     //output immediate
-    output logic [DATA_WIDTH-1:0] immExt, //output imm extended into 32 bits
+    output logic [DATA_WIDTH-1:0] ImmExt, //output imm extended into 32 bits
     output logic [DATA_WIDTH-1:0] PCTarget,
 );
 
