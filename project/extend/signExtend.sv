@@ -5,12 +5,15 @@ module signExtend # (
     //input signals
     input  logic [INSTRUCT_WIDTH-1:7] instr, //instruction
     input  logic [1:0] immsrc,
+    input logic [DATA_WIDTH-1:0] PC,
     //output immediate
-    output logic [DATA_WIDTH-1:0] immext //output imm extended into 32 bits
+    output logic [DATA_WIDTH-1:0] immExt, //output imm extended into 32 bits
+    output logic [DATA_WIDTH-1:0] PCTarget,
 );
 
 always_comb
     case(immsrc)
+
         //type I
         2'b00: immext = {{20{instr[31]}}, instr[31:20]};
         // type S
@@ -20,5 +23,7 @@ always_comb
         //type Jal
         2'b11: immext = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0};
         default: immext = 32'b0;
+
     endcase
+    assign PCTarget = immExt + PC;
 endmodule
