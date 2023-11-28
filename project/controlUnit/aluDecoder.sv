@@ -11,11 +11,11 @@ logic rTypeSub = funct7_5 & op_5;
 
 always_comb
     case(ALUOp)
-    2'b00:  ALUControl = 000 // add for lw or sw
-    2'b01: ALUControl = 001 //subtract for beq
+    2'b00:  ALUControl = 000; // add for lw or sw
+    2'b01: ALUControl = 001; //subtract for beq
     default:    case(funct3) // if we have R-type or I-type, because we've dealt with lw, sw and beq
                     3'b000: if (rTypeSub)
-                                ALUControl = 3'b001 //subtract as sub has funct7_5 high and op_5 high while addi has op_5 low
+                                ALUControl = 3'b001; //subtract as sub has funct7_5 high and op_5 high while addi has op_5 low
                             else
                                         ALUControl = 3'b000; //add, addi
                                 3'b010: ALUControl = 3'b101; //slt, slti
