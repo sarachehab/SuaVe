@@ -7,10 +7,9 @@
 
 #include "verilated.h"
 
-
 class Vregister_file__Syms;
 
-class alignas(VL_CACHE_LINE_BYTES) Vregister_file___024root final : public VerilatedModule {
+class Vregister_file___024root final : public VerilatedModule {
   public:
 
     // DESIGN SPECIFIC STATE
@@ -19,33 +18,27 @@ class alignas(VL_CACHE_LINE_BYTES) Vregister_file___024root final : public Veril
     VL_IN8(addr1_i,4,0);
     VL_IN8(addr2_i,4,0);
     VL_IN8(addr3_i,4,0);
-    CData/*0:0*/ __Vtrigprevexpr___TOP__clk_i__0;
-    CData/*0:0*/ __VactContinue;
+    CData/*4:0*/ register_file__DOT__addr3_i_q;
+    CData/*0:0*/ __Vclklast__TOP__clk_i;
     VL_IN(addr3_wd_i,31,0);
     VL_OUT(rd1_o,31,0);
     VL_OUT(rd2_o,31,0);
-    IData/*31:0*/ reg_file__DOT__unnamedblk1__DOT__i;
-    IData/*31:0*/ __VstlIterCount;
-    IData/*31:0*/ __VicoIterCount;
-    IData/*31:0*/ __VactIterCount;
-    VlUnpacked<IData/*31:0*/, 32> reg_file__DOT__rf;
+    IData/*31:0*/ register_file__DOT__addr3_data_q;
+    IData/*31:0*/ register_file__DOT__unnamedblk1__DOT__i;
+    VlUnpacked<IData/*31:0*/, 32> register_file__DOT__rf;
     VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
-    VlTriggerVec<1> __VstlTriggered;
-    VlTriggerVec<1> __VicoTriggered;
-    VlTriggerVec<1> __VactTriggered;
-    VlTriggerVec<1> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vregister_file__Syms* const vlSymsp;
 
     // CONSTRUCTORS
-    Vregister_file___024root(Vregister_file__Syms* symsp, const char* v__name);
+    Vregister_file___024root(Vregister_file__Syms* symsp, const char* name);
     ~Vregister_file___024root();
     VL_UNCOPYABLE(Vregister_file___024root);
 
     // INTERNAL METHODS
     void __Vconfigure(bool first);
-};
+} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
 
 
 #endif  // guard

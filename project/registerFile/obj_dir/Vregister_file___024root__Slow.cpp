@@ -5,13 +5,12 @@
 #include "verilated.h"
 
 #include "Vregister_file__Syms.h"
-#include "Vregister_file__Syms.h"
 #include "Vregister_file___024root.h"
 
 void Vregister_file___024root___ctor_var_reset(Vregister_file___024root* vlSelf);
 
-Vregister_file___024root::Vregister_file___024root(Vregister_file__Syms* symsp, const char* v__name)
-    : VerilatedModule{v__name}
+Vregister_file___024root::Vregister_file___024root(Vregister_file__Syms* symsp, const char* name)
+    : VerilatedModule{name}
     , vlSymsp{symsp}
  {
     // Reset structure values

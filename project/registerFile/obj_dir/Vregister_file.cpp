@@ -38,15 +38,27 @@ Vregister_file::~Vregister_file() {
 }
 
 //============================================================
-// Evaluation function
+// Evaluation loop
 
-#ifdef VL_DEBUG
-void Vregister_file___024root___eval_debug_assertions(Vregister_file___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vregister_file___024root___eval_static(Vregister_file___024root* vlSelf);
 void Vregister_file___024root___eval_initial(Vregister_file___024root* vlSelf);
 void Vregister_file___024root___eval_settle(Vregister_file___024root* vlSelf);
 void Vregister_file___024root___eval(Vregister_file___024root* vlSelf);
+#ifdef VL_DEBUG
+void Vregister_file___024root___eval_debug_assertions(Vregister_file___024root* vlSelf);
+#endif  // VL_DEBUG
+void Vregister_file___024root___final(Vregister_file___024root* vlSelf);
+
+static void _eval_initial_loop(Vregister_file__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    Vregister_file___024root___eval_initial(&(vlSymsp->TOP));
+    // Evaluate till stable
+    vlSymsp->__Vm_activity = true;
+    do {
+        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
+        Vregister_file___024root___eval_settle(&(vlSymsp->TOP));
+        Vregister_file___024root___eval(&(vlSymsp->TOP));
+    } while (0);
+}
 
 void Vregister_file::eval_step() {
     VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vregister_file::eval_step\n"); );
@@ -54,32 +66,15 @@ void Vregister_file::eval_step() {
     // Debug assertions
     Vregister_file___024root___eval_debug_assertions(&(vlSymsp->TOP));
 #endif  // VL_DEBUG
+    // Initialize
+    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
+    // Evaluate till stable
     vlSymsp->__Vm_activity = true;
-    vlSymsp->__Vm_deleter.deleteAll();
-    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) {
-        vlSymsp->__Vm_didInit = true;
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial\n"););
-        Vregister_file___024root___eval_static(&(vlSymsp->TOP));
-        Vregister_file___024root___eval_initial(&(vlSymsp->TOP));
-        Vregister_file___024root___eval_settle(&(vlSymsp->TOP));
-    }
-    // MTask 0 start
-    VL_DEBUG_IF(VL_DBG_MSGF("MTask0 starting\n"););
-    Verilated::mtaskId(0);
-    VL_DEBUG_IF(VL_DBG_MSGF("+ Eval\n"););
-    Vregister_file___024root___eval(&(vlSymsp->TOP));
+    do {
+        VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
+        Vregister_file___024root___eval(&(vlSymsp->TOP));
+    } while (0);
     // Evaluate cleanup
-    Verilated::endOfThreadMTask(vlSymsp->__Vm_evalMsgQp);
-    Verilated::endOfEval(vlSymsp->__Vm_evalMsgQp);
-}
-
-//============================================================
-// Events and timing
-bool Vregister_file::eventsPending() { return false; }
-
-uint64_t Vregister_file::nextTimeSlot() {
-    VL_FATAL_MT(__FILE__, __LINE__, "", "%Error: No delays in the design");
-    return 0;
 }
 
 //============================================================
@@ -92,10 +87,8 @@ const char* Vregister_file::name() const {
 //============================================================
 // Invoke final blocks
 
-void Vregister_file___024root___eval_final(Vregister_file___024root* vlSelf);
-
 VL_ATTR_COLD void Vregister_file::final() {
-    Vregister_file___024root___eval_final(&(vlSymsp->TOP));
+    Vregister_file___024root___final(&(vlSymsp->TOP));
 }
 
 //============================================================
@@ -104,10 +97,6 @@ VL_ATTR_COLD void Vregister_file::final() {
 const char* Vregister_file::hierName() const { return vlSymsp->name(); }
 const char* Vregister_file::modelName() const { return "Vregister_file"; }
 unsigned Vregister_file::threads() const { return 1; }
-void Vregister_file::prepareClone() const { contextp()->prepareClone(); }
-void Vregister_file::atClone() const {
-    contextp()->threadPoolpOnClone();
-}
 std::unique_ptr<VerilatedTraceConfig> Vregister_file::traceConfig() const {
     return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
 };
@@ -136,9 +125,6 @@ VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32
 VL_ATTR_COLD void Vregister_file___024root__trace_register(Vregister_file___024root* vlSelf, VerilatedVcd* tracep);
 
 VL_ATTR_COLD void Vregister_file::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (tfp->isOpen()) {
-        vl_fatal(__FILE__, __LINE__, __FILE__,"'Vregister_file::trace()' shall not be called after 'VerilatedVcdC::open()'.");
-    }
     if (false && levels && options) {}  // Prevent unused
     tfp->spTrace()->addModel(this);
     tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
