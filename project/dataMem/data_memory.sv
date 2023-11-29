@@ -6,7 +6,7 @@ module data_memory # (
               END_ADDRESS   = 32'h1FFFF
 )(
     input  logic                        clk_i, we_i, byte_op_i,
-    input  logic [DATA_WIDTH-1:0]    addr_i,
+    input  logic [DATA_WIDTH-1:0]       addr_i,
     input  logic [DATA_WIDTH-1:0]       wd_i,
     output logic [DATA_WIDTH-1:0]       rd_o
 );

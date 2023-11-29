@@ -11,14 +11,14 @@
 #define VERIF_START_TIME 7
 int simcyc = 0;
 
-std::vector<uint> simulated_data_memory;
+std::vector<int32_t> simulated_data_memory;
 
 void build_simulated_data_memory()
 {
     std::ifstream input_file;
     input_file.open("gaussian.mem");
 
-    int n;
+    int32_t n;
 
     while (input_file >> n)
     {
@@ -34,13 +34,13 @@ public:
     uint addr_i;
     uint byte_op_i;
     uint we_i;
-    uint32_t wd_i;
+    int32_t wd_i;
 };
 
 class DataMemoryOutTx
 {
 public:
-    uint32_t rd_o;
+    int32_t rd_o;
 };
 
 class DataMemoryScb
@@ -68,23 +68,28 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
-        int base_address = ((in->addr_i) & 0xFFFFFFFC);
-        int read_value = 0;
+        int32_t base_address = ((in->addr_i) & 0xFFFFFFFC) % 65536;
+        int32_t read_value = 0;
+        int32_t expected_value = tx->rd_o;
+        std::cout << std::endl
+                  << "expected: " << expected_value << std::endl;
 
         switch (in->byte_op_i)
         {
         case 0:
+            std::cout << std::endl
+                      << "expected: " << expected_value << std::endl;
 
             for (int i = 0; i < 4; i++)
             {
-                read_value += simulated_data_memory[base_address + i] << i;
+                read_value += (simulated_data_memory[base_address + i] & 0xFF) << (8 * i);
             }
 
-            if (read_value != tx->rd_o)
+            if (read_value != expected_value)
             {
                 std::cout << std::endl;
                 std::cout << "DataMemoryScb: read word mismatch: " << in->addr_i << std::endl;
-                std::cout << "  Expected: " << tx->rd_o << "  Actual: " << read_value << std::endl;
+                std::cout << "  Expected: " << expected_value << "  Actual: " << read_value << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
 
@@ -100,11 +105,11 @@ public:
 
         case 1:
 
-            if (simulated_data_memory[in->addr_i] != tx->rd_o)
+            if (simulated_data_memory[(in->addr_i) % 65536] != expected_value)
             {
                 std::cout << std::endl;
-                std::cout << "DataMemoryScb: read word mismatch: " << in->addr_i << std::endl;
-                std::cout << "  Expected: " << tx->rd_o << "  Actual: " << simulated_data_memory[in->addr_i] << std::endl;
+                std::cout << "DataMemoryScb: read byte mismatch: " << in->addr_i << std::endl;
+                std::cout << "  Expected: " << expected_value << "  Actual: " << simulated_data_memory[(in->addr_i) % 65536] << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
 
