@@ -11,12 +11,12 @@ module mainDecoder (
     output logic [1:0] imm_src_o,
     output logic reg_write_o,
     output logic [1:0] alu_op_o
-)
+);
 
 always_comb
     case(op_i)
         //memory read instruction: lw
-        6'b0000011 : begin
+        7'b0000011 : begin
             reg_write_o = 1'b1;
             imm_src_o = 2'b00;
             alu_src_o = 1'b1;
@@ -27,9 +27,9 @@ always_comb
             jump_o = 1'b0;
         end
         //memory write instruction: sw
-        6'b0100011 : begin
-            reg_write_o = 1'b0,
-            imm_src_o = 1'b01;
+        7'b0100011 : begin
+            reg_write_o = 1'b0;
+            imm_src_o = 2'b01;
             alu_src_o = 1'b1;
             mem_write_o = 1'b1;
             result_src_o = 2'b00;//don't-care values 
@@ -38,9 +38,9 @@ always_comb
             jump_o = 1'b0;
         end
         //register operation:
-        6'b0110011 : begin
-            reg_write_o = 1'b1,
-            imm_src_o = 1'b00; //dont-care values
+        7'b0110011 : begin
+            reg_write_o = 1'b1;
+            imm_src_o = 2'b00; //dont-care values
             alu_src_o = 1'b0;
             mem_write_o = 1'b0;
             result_src_o = 2'b00;
@@ -49,9 +49,9 @@ always_comb
             jump_o = 1'b0;
         end
         //branch_o opreation: beq
-        6'b1100011 : begin
-            reg_write_o = 1'b0,
-            imm_src_o = 1'b10;
+        7'b1100011 : begin
+            reg_write_o = 1'b0;
+            imm_src_o = 2'b10;
             alu_src_o = 1'b0;
             mem_write_o = 1'b0;
             result_src_o = 2'b00;//dont-care values
@@ -60,9 +60,9 @@ always_comb
             jump_o = 1'b0;
         end
         //immediate operation:
-        6'b0010011 : begin
-            reg_write_o = 1'b1,
-            imm_src_o = 1'b00;
+        7'b0010011 : begin
+            reg_write_o = 1'b1;
+            imm_src_o = 2'b00;
             alu_src_o = 1'b1;
             mem_write_o = 1'b0;
             result_src_o = 2'b00;
@@ -70,19 +70,20 @@ always_comb
             alu_op_o = 2'b10;
             jump_o = 1'b0;
         end
-        6'b1101111 : begin
-            reg_write_o = 1'b1,
-            imm_src_o = 1'b11;
+        //jump operatio : JAL
+        7'b1101111 : begin
+            reg_write_o = 1'b1;
+            imm_src_o = 2'b11;
             alu_src_o = 1'b0;//dont-care value
             mem_write_o = 1'b0;
             result_src_o = 2'b10;
             branch_o = 1'b0;
-            alu_op_o = 2'b10;//dont-care value
+            alu_op_o = 2'b00;//dont-care value
             jump_o = 1'b1;
         end
         default : begin
-            reg_write_o = 1'b1,
-            imm_src_o = 1'b00; //dont-care values
+            reg_write_o = 1'b1;
+            imm_src_o = 2'b00; //dont-care values
             alu_src_o = 1'b0;
             mem_write_o = 1'b0;
             result_src_o = 2'b00;
