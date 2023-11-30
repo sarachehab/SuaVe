@@ -13,15 +13,15 @@ int simcyc = 0;
 class PcInTx
 {
 public:
-    uint32_t PC;
-    uint32_t ImmExt;
-    uint PCSrc;
+    uint32_t pc_i;
+    uint32_t imm_ext_i;
+    uint pcsrc_i;
 };
 
 class PcOutTx
 {
 public:
-    uint32_t PC;
+    uint32_t pc_o;
 };
 
 class PcScb
@@ -49,29 +49,27 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
-        switch (in->PCSrc)
+        switch (in->pcsrc_i)
         {
 
-        // add instruction
-        case 0:
-            if (in->PC + 4 != tx->PC)
+        case 1:
+            if (in->pc_i + 4 != tx->pc_o)
             {
                 std::cout << std::endl;
                 std::cout << "+4 increment mismatch" << std::endl;
-                std::cout << "  Expected: " << in->PC + 4
-                          << "  Actual: " << tx->PC << std::endl;
+                std::cout << "  Expected: " << in->pc_i + 4
+                          << "  Actual: " << tx->pc_o<< std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
-        // sub instruction
-        case 1:
-            if (in->PC + in->ImmExt != tx->PC)
+        case 0:
+            if (in->pc_i + in->imm_ext_i != tx->pc_o)
             {
                 std::cout << std::endl;
                 std::cout << "immediate increment mismatch" << std::endl;
-                std::cout << "  Expected: " << in->PC - in->ImmExt
-                          << "  Actual: " << tx->PC << std::endl;
+                std::cout << "  Expected: " << in->pc_i - in->imm_ext_i
+                          << "  Actual: " << tx->pc_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
@@ -94,8 +92,8 @@ public:
     {
         if (tx != NULL)
         {
-            dut->ImmExt = tx->ImmExt;
-            dut->PCSrc = tx->PCSrc;
+            dut->imm_ext_i = tx->imm_ext_i;
+            dut->pcsrc_i = tx->pcsrc_i;
             delete tx;
         }
     }
@@ -117,9 +115,9 @@ public:
     {
         // create a new transaction item and populate it with data observerd at the interface pin
         PcInTx *tx = new PcInTx();
-        tx->PC = dut->PC;
-        tx->ImmExt = dut->ImmExt;
-        tx->PCSrc = dut->PCSrc;
+        tx->pc_i = dut->pc_o;
+        tx->imm_ext_i = dut->imm_ext_i;
+        tx->pcsrc_i = dut->pcsrc_i;
 
         // pass transaction item to score board
         scb->writeIn(tx);
@@ -144,7 +142,7 @@ public:
         if (simcyc > 0)
         { // create new transaction item and populate it with result observed
             PcOutTx *tx = new PcOutTx();
-            tx->PC = dut->PC;
+            tx->pc_o = dut->pc_o;
 
             // pass transaction item to score board
             scb->writeOut(tx);
@@ -159,9 +157,8 @@ private:
 PcInTx *rndPcInTx()
 {
     PcInTx *tx = new PcInTx();
-    tx->PC = 0;
-    tx->PCSrc = rand() % 2;
-    tx->ImmExt = 4 * (rand() % 25);
+    tx->pcsrc_i = rand() % 2;
+    tx->imm_ext_i = 4 * (rand() % 25);
     return tx;
 }
 
@@ -193,26 +190,24 @@ int main(int argc, char **argv, char **env)
     PcOutMon *outMon = new PcOutMon(dut, scb);
 
     // init clk
-    dut->clk = 1;
-    dut->rst = 0;
+    dut->clk_i = 1;
+    dut->rst_i = 0;
 
     for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
     {
         for (clk = 0; clk < 2; clk++)
         {
-            dut->clk = !dut->clk;
-            dut->eval();
-
-            // if on rising clock edge
-            if (dut->clk == 1)
-            {
+            dut->clk_i = !dut->clk_i;
+            if (dut->clk_i){
                 // generate a randomised transaction item
                 tx = rndPcInTx();
-
                 // drive input into dut
                 drv->drive(tx);
                 // monitor the input interface
                 inMon->monitor();
+                dut->eval();
+            } else{
+                dut->eval();
                 // monitor the output interface
                 outMon->monitor();
             }

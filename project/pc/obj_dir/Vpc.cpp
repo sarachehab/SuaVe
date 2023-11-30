@@ -11,11 +11,11 @@
 Vpc::Vpc(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vpc__Syms(contextp(), _vcname__, this)}
-    , clk{vlSymsp->TOP.clk}
-    , PCSrc{vlSymsp->TOP.PCSrc}
-    , rst{vlSymsp->TOP.rst}
-    , ImmExt{vlSymsp->TOP.ImmExt}
-    , PC{vlSymsp->TOP.PC}
+    , clk_i{vlSymsp->TOP.clk_i}
+    , pcsrc_i{vlSymsp->TOP.pcsrc_i}
+    , rst_i{vlSymsp->TOP.rst_i}
+    , imm_ext_i{vlSymsp->TOP.imm_ext_i}
+    , pc_o{vlSymsp->TOP.pc_o}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
@@ -35,15 +35,27 @@ Vpc::~Vpc() {
 }
 
 //============================================================
-// Evaluation function
+// Evaluation loop
 
-#ifdef VL_DEBUG
-void Vpc___024root___eval_debug_assertions(Vpc___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vpc___024root___eval_static(Vpc___024root* vlSelf);
 void Vpc___024root___eval_initial(Vpc___024root* vlSelf);
 void Vpc___024root___eval_settle(Vpc___024root* vlSelf);
 void Vpc___024root___eval(Vpc___024root* vlSelf);
+#ifdef VL_DEBUG
+void Vpc___024root___eval_debug_assertions(Vpc___024root* vlSelf);
+#endif  // VL_DEBUG
+void Vpc___024root___final(Vpc___024root* vlSelf);
+
+static void _eval_initial_loop(Vpc__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    Vpc___024root___eval_initial(&(vlSymsp->TOP));
+    // Evaluate till stable
+    vlSymsp->__Vm_activity = true;
+    do {
+        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
+        Vpc___024root___eval_settle(&(vlSymsp->TOP));
+        Vpc___024root___eval(&(vlSymsp->TOP));
+    } while (0);
+}
 
 void Vpc::eval_step() {
     VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vpc::eval_step\n"); );
@@ -51,32 +63,15 @@ void Vpc::eval_step() {
     // Debug assertions
     Vpc___024root___eval_debug_assertions(&(vlSymsp->TOP));
 #endif  // VL_DEBUG
+    // Initialize
+    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
+    // Evaluate till stable
     vlSymsp->__Vm_activity = true;
-    vlSymsp->__Vm_deleter.deleteAll();
-    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) {
-        vlSymsp->__Vm_didInit = true;
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial\n"););
-        Vpc___024root___eval_static(&(vlSymsp->TOP));
-        Vpc___024root___eval_initial(&(vlSymsp->TOP));
-        Vpc___024root___eval_settle(&(vlSymsp->TOP));
-    }
-    // MTask 0 start
-    VL_DEBUG_IF(VL_DBG_MSGF("MTask0 starting\n"););
-    Verilated::mtaskId(0);
-    VL_DEBUG_IF(VL_DBG_MSGF("+ Eval\n"););
-    Vpc___024root___eval(&(vlSymsp->TOP));
+    do {
+        VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
+        Vpc___024root___eval(&(vlSymsp->TOP));
+    } while (0);
     // Evaluate cleanup
-    Verilated::endOfThreadMTask(vlSymsp->__Vm_evalMsgQp);
-    Verilated::endOfEval(vlSymsp->__Vm_evalMsgQp);
-}
-
-//============================================================
-// Events and timing
-bool Vpc::eventsPending() { return false; }
-
-uint64_t Vpc::nextTimeSlot() {
-    VL_FATAL_MT(__FILE__, __LINE__, "", "%Error: No delays in the design");
-    return 0;
 }
 
 //============================================================
@@ -89,10 +84,8 @@ const char* Vpc::name() const {
 //============================================================
 // Invoke final blocks
 
-void Vpc___024root___eval_final(Vpc___024root* vlSelf);
-
 VL_ATTR_COLD void Vpc::final() {
-    Vpc___024root___eval_final(&(vlSymsp->TOP));
+    Vpc___024root___final(&(vlSymsp->TOP));
 }
 
 //============================================================
@@ -101,10 +94,6 @@ VL_ATTR_COLD void Vpc::final() {
 const char* Vpc::hierName() const { return vlSymsp->name(); }
 const char* Vpc::modelName() const { return "Vpc"; }
 unsigned Vpc::threads() const { return 1; }
-void Vpc::prepareClone() const { contextp()->prepareClone(); }
-void Vpc::atClone() const {
-    contextp()->threadPoolpOnClone();
-}
 std::unique_ptr<VerilatedTraceConfig> Vpc::traceConfig() const {
     return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
 };
@@ -133,9 +122,6 @@ VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32
 VL_ATTR_COLD void Vpc___024root__trace_register(Vpc___024root* vlSelf, VerilatedVcd* tracep);
 
 VL_ATTR_COLD void Vpc::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (tfp->isOpen()) {
-        vl_fatal(__FILE__, __LINE__, __FILE__,"'Vpc::trace()' shall not be called after 'VerilatedVcdC::open()'.");
-    }
     if (false && levels && options) {}  // Prevent unused
     tfp->spTrace()->addModel(this);
     tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));
