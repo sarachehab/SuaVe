@@ -20,8 +20,8 @@ VL_ATTR_COLD void Vregister_file___024root__trace_init_sub__TOP__0(Vregister_fil
     tracep->declBus(c+40,"rd1_o", false,-1, 31,0);
     tracep->declBus(c+41,"rd2_o", false,-1, 31,0);
     tracep->pushNamePrefix("register_file ");
-    tracep->declBus(c+44,"ADDRESS_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+45,"DATA_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+42,"ADDRESS_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+43,"DATA_WIDTH", false,-1, 31,0);
     tracep->declBit(c+34,"addr3_we_i", false,-1);
     tracep->declBit(c+35,"clk_i", false,-1);
     tracep->declBus(c+36,"addr1_i", false,-1, 4,0);
@@ -33,8 +33,6 @@ VL_ATTR_COLD void Vregister_file___024root__trace_init_sub__TOP__0(Vregister_fil
     for (int i = 0; i < 32; ++i) {
         tracep->declBus(c+2+i*1,"rf", true,(i+0), 31,0);
     }
-    tracep->declBus(c+42,"addr3_data_q", false,-1, 31,0);
-    tracep->declBus(c+43,"addr3_i_q", false,-1, 4,0);
     tracep->pushNamePrefix("unnamedblk1 ");
     tracep->declBus(c+1,"i", false,-1, 31,0);
     tracep->popNamePrefix(2);
@@ -121,8 +119,6 @@ VL_ATTR_COLD void Vregister_file___024root__trace_full_sub_0(Vregister_file___02
     bufp->fullIData(oldp+39,(vlSelf->addr3_wd_i),32);
     bufp->fullIData(oldp+40,(vlSelf->rd1_o),32);
     bufp->fullIData(oldp+41,(vlSelf->rd2_o),32);
-    bufp->fullIData(oldp+42,(vlSelf->register_file__DOT__addr3_data_q),32);
-    bufp->fullCData(oldp+43,(vlSelf->register_file__DOT__addr3_i_q),5);
-    bufp->fullIData(oldp+44,(5U),32);
-    bufp->fullIData(oldp+45,(0x20U),32);
+    bufp->fullIData(oldp+42,(5U),32);
+    bufp->fullIData(oldp+43,(0x20U),32);
 }

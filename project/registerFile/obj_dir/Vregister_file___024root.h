@@ -18,12 +18,10 @@ class Vregister_file___024root final : public VerilatedModule {
     VL_IN8(addr1_i,4,0);
     VL_IN8(addr2_i,4,0);
     VL_IN8(addr3_i,4,0);
-    CData/*4:0*/ register_file__DOT__addr3_i_q;
     CData/*0:0*/ __Vclklast__TOP__clk_i;
     VL_IN(addr3_wd_i,31,0);
     VL_OUT(rd1_o,31,0);
     VL_OUT(rd2_o,31,0);
-    IData/*31:0*/ register_file__DOT__addr3_data_q;
     IData/*31:0*/ register_file__DOT__unnamedblk1__DOT__i;
     VlUnpacked<IData/*31:0*/, 32> register_file__DOT__rf;
     VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;

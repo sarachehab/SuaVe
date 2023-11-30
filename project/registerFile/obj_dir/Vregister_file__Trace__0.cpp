@@ -68,8 +68,6 @@ void Vregister_file___024root__trace_chg_sub_0(Vregister_file___024root* vlSelf,
     bufp->chgIData(oldp+38,(vlSelf->addr3_wd_i),32);
     bufp->chgIData(oldp+39,(vlSelf->rd1_o),32);
     bufp->chgIData(oldp+40,(vlSelf->rd2_o),32);
-    bufp->chgIData(oldp+41,(vlSelf->register_file__DOT__addr3_data_q),32);
-    bufp->chgCData(oldp+42,(vlSelf->register_file__DOT__addr3_i_q),5);
 }
 
 void Vregister_file___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

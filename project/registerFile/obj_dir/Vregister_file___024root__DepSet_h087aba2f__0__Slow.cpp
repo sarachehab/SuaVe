@@ -51,10 +51,10 @@ VL_ATTR_COLD void Vregister_file___024root___eval_initial(Vregister_file___024ro
     Vregister_file__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vregister_file___024root___eval_initial\n"); );
     // Body
-    vlSelf->__Vclklast__TOP__clk_i = vlSelf->clk_i;
     Vregister_file___024root___initial__TOP__0(vlSelf);
     vlSelf->__Vm_traceActivity[1U] = 1U;
     vlSelf->__Vm_traceActivity[0U] = 1U;
+    vlSelf->__Vclklast__TOP__clk_i = vlSelf->clk_i;
 }
 
 void Vregister_file___024root___combo__TOP__0(Vregister_file___024root* vlSelf);
@@ -89,8 +89,6 @@ VL_ATTR_COLD void Vregister_file___024root___ctor_var_reset(Vregister_file___024
     for (int __Vi0=0; __Vi0<32; ++__Vi0) {
         vlSelf->register_file__DOT__rf[__Vi0] = VL_RAND_RESET_I(32);
     }
-    vlSelf->register_file__DOT__addr3_data_q = VL_RAND_RESET_I(32);
-    vlSelf->register_file__DOT__addr3_i_q = VL_RAND_RESET_I(5);
     vlSelf->register_file__DOT__unnamedblk1__DOT__i = 0;
     for (int __Vi0=0; __Vi0<2; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = VL_RAND_RESET_I(1);

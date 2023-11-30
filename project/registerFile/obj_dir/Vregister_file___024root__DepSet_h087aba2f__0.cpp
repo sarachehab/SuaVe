@@ -10,29 +10,21 @@ VL_INLINE_OPT void Vregister_file___024root___sequent__TOP__0(Vregister_file___0
     if (false && vlSelf) {}  // Prevent unused
     Vregister_file__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vregister_file___024root___sequent__TOP__0\n"); );
-    // Body
-    vlSelf->register_file__DOT__addr3_i_q = vlSelf->addr3_i;
-    vlSelf->register_file__DOT__addr3_data_q = (((IData)(vlSelf->addr3_we_i) 
-                                                 & (0U 
-                                                    != (IData)(vlSelf->addr3_i)))
-                                                 ? vlSelf->addr3_wd_i
-                                                 : 
-                                                vlSelf->register_file__DOT__rf
-                                                [vlSelf->addr3_i]);
-}
-
-VL_INLINE_OPT void Vregister_file___024root___sequent__TOP__1(Vregister_file___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vregister_file__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vregister_file___024root___sequent__TOP__1\n"); );
     // Init
     CData/*4:0*/ __Vdlyvdim0__register_file__DOT__rf__v0;
     IData/*31:0*/ __Vdlyvval__register_file__DOT__rf__v0;
+    CData/*0:0*/ __Vdlyvset__register_file__DOT__rf__v0;
     // Body
-    __Vdlyvval__register_file__DOT__rf__v0 = vlSelf->register_file__DOT__addr3_data_q;
-    __Vdlyvdim0__register_file__DOT__rf__v0 = vlSelf->register_file__DOT__addr3_i_q;
-    vlSelf->register_file__DOT__rf[__Vdlyvdim0__register_file__DOT__rf__v0] 
-        = __Vdlyvval__register_file__DOT__rf__v0;
+    __Vdlyvset__register_file__DOT__rf__v0 = 0U;
+    if (((IData)(vlSelf->addr3_we_i) & (0U != (IData)(vlSelf->addr3_i)))) {
+        __Vdlyvval__register_file__DOT__rf__v0 = vlSelf->addr3_wd_i;
+        __Vdlyvset__register_file__DOT__rf__v0 = 1U;
+        __Vdlyvdim0__register_file__DOT__rf__v0 = vlSelf->addr3_i;
+    }
+    if (__Vdlyvset__register_file__DOT__rf__v0) {
+        vlSelf->register_file__DOT__rf[__Vdlyvdim0__register_file__DOT__rf__v0] 
+            = __Vdlyvval__register_file__DOT__rf__v0;
+    }
 }
 
 VL_INLINE_OPT void Vregister_file___024root___combo__TOP__0(Vregister_file___024root* vlSelf) {
@@ -51,9 +43,6 @@ void Vregister_file___024root___eval(Vregister_file___024root* vlSelf) {
     // Body
     if (((~ (IData)(vlSelf->clk_i)) & (IData)(vlSelf->__Vclklast__TOP__clk_i))) {
         Vregister_file___024root___sequent__TOP__0(vlSelf);
-    }
-    if (((IData)(vlSelf->clk_i) & (~ (IData)(vlSelf->__Vclklast__TOP__clk_i)))) {
-        Vregister_file___024root___sequent__TOP__1(vlSelf);
         vlSelf->__Vm_traceActivity[1U] = 1U;
     }
     Vregister_file___024root___combo__TOP__0(vlSelf);
