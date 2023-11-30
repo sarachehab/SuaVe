@@ -25,7 +25,7 @@ class Valu VL_NOT_FINAL : public VerilatedModel {
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-    VL_IN8(&alu_control_i,2,0);
+    VL_IN8(&alu_control_i,3,0);
     VL_OUT8(&eq_o,0,0);
     VL_IN(&src1_i,31,0);
     VL_IN(&src2_i,31,0);
