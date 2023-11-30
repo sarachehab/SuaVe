@@ -5,7 +5,7 @@ module aluDecoder (
     input logic funct7_b5_i,
     input logic op_5_i,
 
-    output logic [3:0] alu_control_o
+    output logic [2:0] alu_control_o
 );
 logic rTypeSub = funct7_b5_i & op_5_i;
 
@@ -27,12 +27,6 @@ always_comb
 
 endmodule
 /*
-alu_op = 00, lw or sw
-alu_op = 10, register or imm
-alu_op = 01 branch
-alu_op = 11 jmp 
-
-
 distinguish between sub, and addi and add
 for sub op5 and f_iunct7_5 is 1 
 for add f_iunct7_5 is 0 and op5 is 1
