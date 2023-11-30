@@ -16,7 +16,12 @@ std::vector<int32_t> simulated_data_memory;
 void build_simulated_data_memory()
 {
     std::ifstream input_file;
-    input_file.open("gaussian.mem");
+    input_file.open("gaussian_hex.txt");
+
+    if (!input_file.is_open())
+    {
+        std::cout << "could not access file" << std::endl;
+    }
 
     int32_t n;
 
@@ -68,22 +73,24 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
-        int32_t base_address = ((in->addr_i) & 0xFFFFFFFC) % 65536;
-        int32_t read_value = 0;
-        int32_t expected_value = tx->rd_o;
+        int32_t base_address = ((in->addr_i) & 0xFFFFFFFC) & 65535;
+
+        int32_t expected_value = 0;
+        int32_t read_value = tx->rd_o;
         std::cout << std::endl
-                  << "expected: " << expected_value << std::endl;
+                  << "simulation_value: " << tx->rd_o << std::endl;
+        int i = 0;
 
         switch (in->byte_op_i)
         {
         case 0:
-            std::cout << std::endl
-                      << "expected: " << expected_value << std::endl;
 
-            for (int i = 0; i < 4; i++)
+            for (i = 0; i < 4; i++)
             {
-                read_value += (simulated_data_memory[base_address + i] & 0xFF) << (8 * i);
+                std::cout << expected_value << std::endl;
+                expected_value += (simulated_data_memory[base_address + i] & 0xFF) << (8 * i);
             }
+            std::cout << "expected value: " << expected_value << std::endl;
 
             if (read_value != expected_value)
             {
@@ -105,11 +112,13 @@ public:
 
         case 1:
 
-            if (simulated_data_memory[(in->addr_i) % 65536] != expected_value)
+            expected_value = simulated_data_memory[(in->addr_i) % 65536];
+
+            if (expected_value != read_value)
             {
                 std::cout << std::endl;
                 std::cout << "DataMemoryScb: read byte mismatch: " << in->addr_i << std::endl;
-                std::cout << "  Expected: " << expected_value << "  Actual: " << simulated_data_memory[(in->addr_i) % 65536] << std::endl;
+                std::cout << "  Expected: " << expected_value << "  Actual: " << read_value << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
 
@@ -206,7 +215,7 @@ private:
 DataMemoryInTx *rndDataMemoryInTx()
 {
     DataMemoryInTx *tx = new DataMemoryInTx();
-    tx->addr_i = (rand() % 65535) + 65536;
+    tx->addr_i = (rand() % 10) + 65536;
     tx->we_i = rand() % 2;
     tx->byte_op_i = rand() % 2;
     tx->wd_i = rand() % 256;

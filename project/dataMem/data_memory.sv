@@ -15,13 +15,13 @@ logic [BYTE_WIDTH-1:0] data_ram [17'h1FFFF:0];
 logic addr = byte_op_i ? addr_i : (addr_i & 32'hFFFFFFFC);
 
 initial begin
-    $readmemh("gaussian.mem", data_ram, START_ADDRESS, END_ADDRESS);
+    $readmemh("gaussian.mem", data_ram, START_ADDRESS, START_ADDRESS+8);
     for (int i = 0; i < START_ADDRESS; i++) begin
         data_ram[i] = {BYTE_WIDTH{1'b0}};
     end;
 end;
 
-always_ff @(posedge clk_i) begin
+always_ff @(negedge clk_i) begin
 
     if (we_i) begin
         data_ram[addr] <= wd_i[BYTE_WIDTH-1:0];
