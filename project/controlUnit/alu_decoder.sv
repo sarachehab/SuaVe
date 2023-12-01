@@ -9,7 +9,6 @@ module aluDecoder (
     output logic byte_address_o
 );
 logic rTypeSub = funct7_b5_i & op_5_i;
-
 always_comb
     case(alu_op_i)
     2'b00:  if(funct3_i[1])begin
