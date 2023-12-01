@@ -16,8 +16,8 @@ always_comb
                 byte_address_o = 1'b0; //for lw and sw
             end
             else begin
-                alu_control_o = 4'b0000; // for lb and sb
-                byte_address_o = 1'b1;// for lb and sb
+                alu_control_o = 4'b0000; // for lbu and sb
+                byte_address_o = 1'b1;// for lbu and sb
             end
     2'b01: alu_control_o = 4'b0001; //subtract for beq
     2'b11: alu_control_o = 4'b1000; //logical shift left for lui
