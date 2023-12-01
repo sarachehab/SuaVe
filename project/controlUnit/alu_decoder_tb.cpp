@@ -1,584 +1,181 @@
-#include <iostream>
-#include <stdlib.h>
-#include <memory>
-#include <vector>
-#include <verilated.h>
-#include <verilated_vcd_c.h>
 #include "Valu_decoder.h"
+#include "verilated.h"
+#include "verilated_vcd_c.h"
+#include "iostream"
+#include <vector>
+#include <iostream>
+#include <string>
 
-#define MAX_SIM_CYC 20
-#define VERIF_START_TIME 7
-int simcyc = 0;
+std::vector <std::string> instructions = {
+    "add", "sub", "and", "or", "slt", "sll","srl","sltu","xor",
+    "addi", "andi", "ori", "slti","slli","srli", "xori",
+    "lui",
+    "lw", "sw", "lb", "sb",
+    "beq",
+    };
 
-std::vector<int> simulated_op_values = {3, 19, 35, 51, 99, 111};
+int answers (std::string instr){
 
-class AluDecoderInTx
-{
-public:
-    uint op_i;
-};
-
-class AluDecoderOutTx
-{
-public:
-    int branch_o;
-    int jump_o;
-    int result_src_o;
-    int mem_write_o;
-    int alu_src_o;
-    int imm_src_o;
-    int reg_write_o;
-    int alu_op_o;
-};
-
-class AluDecoderScb
-{
-public:
-    // input interface monitor port
-    void writeIn(AluDecoderInTx *tx)
-    {
-        in_q.push_back(tx);
+    if(instr == "add" || instr == "addi" || instr == "lw" || instr == "sw" || instr == "lb" || instr == "sb") {
+    return 0b0000;
     }
-
-    // output interface monitor port
-    void writeOut(AluDecoderOutTx *tx)
-    {
-
-        // check queue
-        if (in_q.empty())
-        {
-            std::cout << "Fatal Error in AluDecoderScb: Empty AluDecoderInTx queue" << std::endl;
-            exit(1);
-        }
-
-        // grab transaction item from front of queue
-        AluDecoderInTx *in;
-        in = in_q.front();
-        in_q.pop_front();
-
-        switch (in->op_i)
-        {
-        case 3: // load
-            if (tx->branch_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: branch mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->branch_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->jump_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: jump mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->jump_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->result_src_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: result source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->result_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->mem_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->mem_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_src_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->imm_src_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->imm_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->reg_write_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: register write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->alu_op_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-
-        case 35: // store
-            if (tx->branch_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: branch mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->branch_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->jump_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: jump mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->jump_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->mem_write_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->mem_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_src_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->imm_src_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->imm_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->reg_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: register write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->alu_op_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-
-        case 19: // immediate
-            if (tx->branch_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: branch mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->branch_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->jump_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: jump mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->jump_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->result_src_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: result source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->result_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->mem_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->mem_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_src_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->imm_src_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->imm_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->reg_write_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: register write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 2)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->alu_op_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-
-        case 51:
-            if (tx->branch_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: branch mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->branch_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->jump_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: jump mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->jump_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->result_src_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: result source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->result_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->mem_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->mem_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_src_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->reg_write_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: register write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 2)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->alu_op_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-
-        case 99:
-            if (tx->branch_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: branch mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->branch_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->jump_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: jump mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->jump_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->mem_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->mem_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_src_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->imm_src_o != 2)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->imm_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->reg_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: register write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->alu_op_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-
-        case 111:
-            if (tx->branch_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: branch mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->branch_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->jump_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: jump mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->jump_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->mem_write_o != 0)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 0
-                          << "  Actual: " << tx->mem_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_src_o != 2) // don't care?
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->imm_src_o != 3)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 3
-                          << "  Actual: " << tx->imm_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->reg_write_o != 1)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: register write mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 1
-                          << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 2)
-            {
-                std::cout << std::endl;
-                std::cout << "AluDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->alu_op_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-        }
+    if(instr == "beq") {
+    return 0b0001;
     }
-
-private:
-    std::deque<AluDecoderInTx *> in_q;
-};
-
-class AluDecoderInDrv
-{
-public:
-    AluDecoderInDrv(Valu_decoder *dut)
-    {
-        this->dut = dut;
+    if(instr == "lui" || instr == "sll" || instr == "slli") {
+    return 0b1000;
     }
-
-    void drive(AluDecoderInTx *tx)
-    {
-        if (tx != NULL)
-        {
-            dut->op_i = tx->op_i;
-            delete tx;
-        }
+    if(instr == "sub") {
+    return 0b0001;
     }
-
-private:
-    Valu_decoder *dut;
-};
-
-class AluDecoderInMon
-{
-public:
-    AluDecoderInMon(Valu_decoder *dut, AluDecoderScb *scb)
-    {
-        this->dut = dut;
-        this->scb = scb;
+    if(instr == "sra" || instr == "srai") {
+    return 0b1010;
     }
-
-    void monitor()
-    {
-        // create a new transaction item and populate it with data observerd at the interface pin
-        AluDecoderInTx *tx = new AluDecoderInTx();
-        tx->op_i = dut->op_i;
-
-        // pass transaction item to score board
-        scb->writeIn(tx);
+    if(instr == "srl" || instr == "srli") {
+    return 0b1001;
+    }   
+    if(instr == "sltu" || instr == "sltui") {
+    return 0b0101;
     }
-
-private:
-    Valu_decoder *dut;
-    AluDecoderScb *scb;
-};
-
-class AluDecoderOutMon
-{
-public:
-    AluDecoderOutMon(Valu_decoder *dut, AluDecoderScb *scb)
-    {
-        this->dut = dut;
-        this->scb = scb;
+    if(instr == "slt" || instr == "slti") {
+    return 0b0101;
     }
-
-    void monitor()
-    {
-        if (simcyc > 0)
-        { // create new transaction item and populate it with result observed
-            AluDecoderOutTx *tx = new AluDecoderOutTx();
-            tx->branch_o = dut->branch_o;
-            tx->jump_o = dut->jump_o;
-            tx->result_src_o = dut->result_src_o;
-            tx->mem_write_o = dut->mem_write_o;
-            tx->alu_src_o = dut->alu_src_o;
-            tx->imm_src_o = dut->imm_src_o;
-            tx->reg_write_o = dut->reg_write_o;
-            tx->alu_op_o = dut->alu_op_o;
-
-            // pass transaction item to score board
-            scb->writeOut(tx);
-        }
+    if(instr == "or" || instr == "ori") {
+    return 0b0011;
     }
+    if(instr == "and" || instr == "andi") {
+    return 0b0010;
+    }
+    if(instr == "xor" || instr == "xori") {
+    return 0b0111;
+    }
+    else{
+        return 0;
+    }
+}
+int getaluop (std::string instr) {
 
-private:
-    Valu_decoder *dut;
-    AluDecoderScb *scb;
-};
-
-AluDecoderInTx *rndAluDecoderInTx()
-{
-    AluDecoderInTx *tx = new AluDecoderInTx();
-    tx->op_i = simulated_op_values[rand() % simulated_op_values.size()];
-    return tx;
+    if(instr == "add" || instr == "sub" || instr == "and" || instr == "or" || instr == "slt" || instr == "sll" || instr == "srl" || instr == "sltu" || instr == "xor" || instr == "sra") {
+        return 0b10;
+    }
+    else if(instr == "addi" || instr == "andi" || instr == "ori" || instr == "slti" || instr == "slli" || instr == "srli" || instr == "xori" || instr == "srai" || instr == "sltiu") {
+        return 0b10;
+    }
+    else if(instr == "lw" || instr == "sw" || instr == "lb" || instr == "sb") {
+        return 0b00;
+    }
+    else if(instr == "beq") {
+        return 0b01;
+    }
+        else if(instr == "lui") {
+        return 0b11;
+    }
+    else {
+        return 0b0;
+    }
 }
 
-int main(int argc, char **argv, char **env)
-{
-    int clk;
+int getaluopb5 (std::string instr) {
 
-    // initilize seed
-    srand(time(NULL));
+    if(instr == "add" || instr == "sub" || instr == "and" || instr == "or" || instr == "slt" || instr == "sll" || instr == "srl" || instr == "sltu" || instr == "xor" || instr == "sra") {
+        return 0b1;
+    }
+    else if(instr == "addi" || instr == "andi" || instr == "ori" || instr == "slti" || instr == "slli" || instr == "srli" || instr == "xori" || instr == "srai" || instr == "sltiu") {
+        return 0b0;
+    }
+
+    else {
+        return 0b0;
+    }
+}
+
+
+
+int getfunct3 (std::string instr) {
+
+    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lb" || instr == "sb" || instr == "beq") {
+        return 0x0;
+    }
+
+    else if(instr == "sll" || instr == "slli") {
+        return 0x1;
+    }
+
+    else if(instr == "slt" || instr == "slti" || instr == "lw" || instr == "sw") {
+        return 0x2;
+    }
+    
+    else if(instr == "sltu") {
+        return 0x3;
+    }
+    
+    else if(instr == "xor" || instr == "xori") {
+        return 0x4;
+    }
+    
+    else if(instr == "srl" || instr == "srli" || instr == "sra" || instr == "srai") {
+        return 0x5;
+    }
+    
+    else if(instr == "or" || instr == "ori") {
+        return 0x6;
+    }
+    
+    else if(instr == "and" || instr == "andi") {
+        return 0x7;
+    }
+    else {
+        return 0b000;
+    }
+}
+
+int getfunct7_b5 (std::string instr) {
+    if(instr == "sub" || instr == "sra" || instr == "srai" ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
+
+int main (int argc, char **argv, char **ev){
+
 
     Verilated::commandArgs(argc, argv);
 
-    // init top verilog instance
-    Valu_decoder *dut = new Valu_decoder;
+    //init top verilog instance
+    Valu_decoder * top = new Valu_decoder;
 
     // init trace dump
     Verilated::traceEverOn(true);
-    VerilatedVcdC *tfp = new VerilatedVcdC;
-    dut->trace(tfp, 99);
-    tfp->open("alu_decoder.vcd");
+    VerilatedVcdC* tfp = new VerilatedVcdC;
+    top->trace (tfp,99);
+    tfp->open ("alu_decoder.vcd");
 
-    // init transaction item
-    AluDecoderInTx *tx;
+std::cout << "expected trace file" << std::endl;
+    for(int simcyc=0; simcyc<25; simcyc++){
 
-    // create driver, scoreboard, input monitor, output monitor
-    AluDecoderInDrv *drv = new AluDecoderInDrv(dut);
-    AluDecoderScb *scb = new AluDecoderScb();
-    AluDecoderInMon *inMon = new AluDecoderInMon(dut, scb);
-    AluDecoderOutMon *outMon = new AluDecoderOutMon(dut, scb);
+        top->eval();
+        tfp->dump(simcyc);
+    
+        if(simcyc < instructions.size()) {
+            top->alu_op_i = getaluop(instructions[simcyc]);
+            top->funct3_i = getfunct3(instructions[simcyc]);
+            top->funct7_b5_i = getfunct7_b5(instructions[simcyc]);
+            top->op_5_i = getaluopb5(instructions[simcyc]);
 
-    for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
-    {
-        for (clk = 0; clk < 2; clk++)
-        {
-            tfp->dump(clk + 2 * simcyc);
+            std::cout << answers(instructions[simcyc]) <<std::endl;
+    // simulation finished
 
-            // if on rising clock edge
-            if (clk == 1)
-            {
-                // generate a randomised transaction item
-                tx = rndAluDecoderInTx();
-                drv->drive(tx);
-                // monitor the input interface
-                inMon->monitor();
-                // monitor the output interface
-                outMon->monitor();
-            }
-            dut->eval();
-        }
-
-        if ((Verilated::gotFinish()))
-        {
-            break;
+        if (Verilated::gotFinish()){
+            exit(0);
         }
     }
-
+    }
     tfp->close();
+    exit(0);
+    }
 
-    delete dut;
-    delete outMon;
-    delete inMon;
-    delete scb;
-    delete drv;
 
-    exit(EXIT_SUCCESS);
-}
