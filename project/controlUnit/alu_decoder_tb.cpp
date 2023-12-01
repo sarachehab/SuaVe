@@ -10,13 +10,13 @@ std::vector <std::string> instructions = {
     "add", "sub", "and", "or", "slt", "sll","srl","sltu","xor",
     "addi", "andi", "ori", "slti","slli","srli", "xori",
     "lui",
-    "lw", "sw", "lb", "sb",
+    "lw", "sw", "lbu", "sb",
     "beq",
     };
 
 int answers (std::string instr){
 
-    if(instr == "add" || instr == "addi" || instr == "lw" || instr == "sw" || instr == "lb" || instr == "sb") {
+    if(instr == "add" || instr == "addi" || instr == "lw" || instr == "sw" || instr == "lbu" || instr == "sb") {
     return 0b0000;
     }
     if(instr == "beq") {
@@ -61,7 +61,7 @@ int getaluop (std::string instr) {
     else if(instr == "addi" || instr == "andi" || instr == "ori" || instr == "slti" || instr == "slli" || instr == "srli" || instr == "xori" || instr == "srai" || instr == "sltiu") {
         return 0b10;
     }
-    else if(instr == "lw" || instr == "sw" || instr == "lb" || instr == "sb") {
+    else if(instr == "lw" || instr == "sw" || instr == "lbu" || instr == "sb") {
         return 0b00;
     }
     else if(instr == "beq") {
@@ -93,7 +93,7 @@ int getaluopb5 (std::string instr) {
 
 int getfunct3 (std::string instr) {
 
-    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lb" || instr == "sb" || instr == "beq") {
+    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lbu" || instr == "sb" || instr == "beq") {
         return 0x0;
     }
 
