@@ -12,6 +12,7 @@ module controlUnit_top(
     output logic [1:0] imm_src_o,
     output logic reg_write_o,
     output logic [2:0] alu_control_o
+    output logic byte_address_o
 );
     //internal signals
     logic [1:0] alu_op;
@@ -35,7 +36,8 @@ aluDecoder aluDecoder(
     .funct3_i(funct3_i),
     .funct7_b5_i(funct7_b5_i),
     .op_5_i(op_i[5]),
-    .alu_control_o(alu_control_o)
+    .alu_control_o(alu_control_o),
+    .byte_address_o(byte_address_o)
 );
 
 //only assert pc_src_o if Alu determines if two values are equal and branch instruction is requested
