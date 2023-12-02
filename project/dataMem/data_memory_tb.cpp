@@ -11,26 +11,23 @@
 #define VERIF_START_TIME 7
 int simcyc = 0;
 
-std::vector<int32_t> simulated_data_memory;
+std::vector<int8_t> simulated_data_memory{
+    static_cast<int8_t>(0x55),
+    static_cast<int8_t>(0x42),
+    static_cast<int8_t>(0x4F),
+    static_cast<int8_t>(0x3C),
+    static_cast<int8_t>(0x50),
+    static_cast<int8_t>(0x1A),
+    static_cast<int8_t>(0x18),
+    static_cast<int8_t>(0xB9)};
 
-void build_simulated_data_memory()
+void print_lst()
 {
-    std::ifstream input_file;
-    input_file.open("gaussian_hex.txt");
-
-    if (!input_file.is_open())
+    for (int i = 0; i < simulated_data_memory.size(); i++)
     {
-        std::cout << "could not access file" << std::endl;
+        std::cout << static_cast<int>(simulated_data_memory[i]) << " ";
     }
-
-    int32_t n;
-
-    while (input_file >> n)
-    {
-        simulated_data_memory.push_back(n);
-    }
-
-    input_file.close();
+    std::cout << std::endl;
 }
 
 class DataMemoryInTx
@@ -77,30 +74,31 @@ public:
 
         int32_t expected_value = 0;
         int32_t read_value = tx->rd_o;
-        std::cout << std::endl
-                  << "simulation_value: " << tx->rd_o << std::endl;
         int i = 0;
 
         switch (in->byte_op_i)
         {
         case 0:
 
-            for (i = 0; i < 4; i++)
+            if (in->we_i == 0)
             {
-                std::cout << expected_value << std::endl;
-                expected_value += (simulated_data_memory[base_address + i] & 0xFF) << (8 * i);
-            }
-            std::cout << "expected value: " << expected_value << std::endl;
+                expected_value += (simulated_data_memory[base_address + 3] & 0xFF) << (8 * 3);
 
-            if (read_value != expected_value)
-            {
-                std::cout << std::endl;
-                std::cout << "DataMemoryScb: read word mismatch: " << in->addr_i << std::endl;
-                std::cout << "  Expected: " << expected_value << "  Actual: " << read_value << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
+                for (i = 0; i < 3; i++)
+                {
+                    expected_value += abs((simulated_data_memory[base_address + i] & 0xFF) << (8 * i));
+                }
+
+                if (read_value != expected_value)
+                {
+                    std::cout << std::endl;
+                    std::cout << "DataMemoryScb: read word mismatch: " << in->addr_i << std::endl;
+                    std::cout << "  Expected: " << expected_value << "  Actual: " << read_value << std::endl;
+                    std::cout << "  Simtime: " << simcyc << std::endl;
+                }
             }
 
-            if (in->we_i)
+            else
             {
                 simulated_data_memory[base_address] = (in->wd_i) & (0xFF);
                 simulated_data_memory[base_address + 1] = ((in->wd_i) >> 8) & (0xFF);
@@ -112,19 +110,26 @@ public:
 
         case 1:
 
-            expected_value = simulated_data_memory[(in->addr_i) % 65536];
-
-            if (expected_value != read_value)
+            if (in->we_i == 0)
             {
-                std::cout << std::endl;
-                std::cout << "DataMemoryScb: read byte mismatch: " << in->addr_i << std::endl;
-                std::cout << "  Expected: " << expected_value << "  Actual: " << read_value << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
+                expected_value = simulated_data_memory[(in->addr_i) % 65536];
+
+                if (expected_value < 0)
+                {
+                    expected_value = (1 << 8) + expected_value; // get 2s complement
+                }
+
+                if (expected_value != read_value)
+                {
+                    std::cout << std::endl;
+                    std::cout << "DataMemoryScb: read byte mismatch: " << in->addr_i << std::endl;
+                    std::cout << "  Expected: " << expected_value << "  Actual: " << read_value << std::endl;
+                    std::cout << "  Simtime: " << simcyc << std::endl;
+                }
             }
-
-            if (in->we_i)
+            else
             {
-                simulated_data_memory[in->addr_i] = in->wd_i;
+                simulated_data_memory[(in->addr_i) % 65536] = in->wd_i;
             }
 
             break;
@@ -215,7 +220,7 @@ private:
 DataMemoryInTx *rndDataMemoryInTx()
 {
     DataMemoryInTx *tx = new DataMemoryInTx();
-    tx->addr_i = (rand() % 10) + 65536;
+    tx->addr_i = (rand() % 8) + 65536;
     tx->we_i = rand() % 2;
     tx->byte_op_i = rand() % 2;
     tx->wd_i = rand() % 256;
@@ -225,7 +230,6 @@ DataMemoryInTx *rndDataMemoryInTx()
 int main(int argc, char **argv, char **env)
 {
     int clk;
-    build_simulated_data_memory();
 
     // initilize seed
     srand(time(NULL));

@@ -7,26 +7,10 @@
 #include "Vdata_memory__Syms.h"
 #include "Vdata_memory___024root.h"
 
-VL_ATTR_COLD void Vdata_memory___024root___eval_static__TOP(Vdata_memory___024root* vlSelf);
-
 VL_ATTR_COLD void Vdata_memory___024root___eval_static(Vdata_memory___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vdata_memory__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vdata_memory___024root___eval_static\n"); );
-    // Body
-    Vdata_memory___024root___eval_static__TOP(vlSelf);
-    vlSelf->__Vm_traceActivity[0U] = 1U;
-}
-
-VL_ATTR_COLD void Vdata_memory___024root___eval_static__TOP(Vdata_memory___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vdata_memory__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vdata_memory___024root___eval_static__TOP\n"); );
-    // Body
-    vlSelf->data_memory__DOT__addr = (1U & ((IData)(vlSelf->byte_op_i)
-                                             ? vlSelf->addr_i
-                                             : (0xfffffffcU 
-                                                & vlSelf->addr_i)));
 }
 
 VL_ATTR_COLD void Vdata_memory___024root___eval_initial__TOP(Vdata_memory___024root* vlSelf);
@@ -53,7 +37,7 @@ VL_ATTR_COLD void Vdata_memory___024root___eval_initial__TOP(Vdata_memory___024r
     __Vtemp_1[2U] = 0x67617573U;
     VL_READMEM_N(true, 8, 131072, 0, VL_CVT_PACK_STR_NW(3, __Vtemp_1)
                  ,  &(vlSelf->data_memory__DOT__data_ram)
-                 , 0x10000U, 0x1000aU);
+                 , 0x10000U, 0x10007U);
     vlSelf->data_memory__DOT__unnamedblk1__DOT__i = 0U;
     while ((0x10000U > vlSelf->data_memory__DOT__unnamedblk1__DOT__i)) {
         vlSelf->data_memory__DOT__data_ram[(0x1ffffU 
@@ -117,28 +101,7 @@ VL_ATTR_COLD void Vdata_memory___024root___dump_triggers__stl(Vdata_memory___024
 }
 #endif  // VL_DEBUG
 
-VL_ATTR_COLD void Vdata_memory___024root___stl_sequent__TOP__0(Vdata_memory___024root* vlSelf) {
-    if (false && vlSelf) {}  // Prevent unused
-    Vdata_memory__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vdata_memory___024root___stl_sequent__TOP__0\n"); );
-    // Body
-    vlSelf->data_memory__DOT____VdfgTmp_h8d771d4d__0 
-        = vlSelf->data_memory__DOT__data_ram[vlSelf->data_memory__DOT__addr];
-    vlSelf->rd_o = ((IData)(vlSelf->byte_op_i) ? (IData)(vlSelf->data_memory__DOT____VdfgTmp_h8d771d4d__0)
-                     : ((vlSelf->data_memory__DOT__data_ram
-                         [(0x1ffffU & ((IData)(3U) 
-                                       + (IData)(vlSelf->data_memory__DOT__addr)))] 
-                         << 0x18U) | ((vlSelf->data_memory__DOT__data_ram
-                                       [(0x1ffffU & 
-                                         ((IData)(2U) 
-                                          + (IData)(vlSelf->data_memory__DOT__addr)))] 
-                                       << 0x10U) | 
-                                      ((vlSelf->data_memory__DOT__data_ram
-                                        [(0x1ffffU 
-                                          & ((IData)(1U) 
-                                             + (IData)(vlSelf->data_memory__DOT__addr)))] 
-                                        << 8U) | (IData)(vlSelf->data_memory__DOT____VdfgTmp_h8d771d4d__0)))));
-}
+void Vdata_memory___024root___ico_sequent__TOP__0(Vdata_memory___024root* vlSelf);
 
 VL_ATTR_COLD void Vdata_memory___024root___eval_stl(Vdata_memory___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
@@ -146,7 +109,7 @@ VL_ATTR_COLD void Vdata_memory___024root___eval_stl(Vdata_memory___024root* vlSe
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vdata_memory___024root___eval_stl\n"); );
     // Body
     if ((1ULL & vlSelf->__VstlTriggered.word(0U))) {
-        Vdata_memory___024root___stl_sequent__TOP__0(vlSelf);
+        Vdata_memory___024root___ico_sequent__TOP__0(vlSelf);
     }
 }
 
@@ -209,9 +172,8 @@ VL_ATTR_COLD void Vdata_memory___024root___ctor_var_reset(Vdata_memory___024root
     for (int __Vi0 = 0; __Vi0 < 131072; ++__Vi0) {
         vlSelf->data_memory__DOT__data_ram[__Vi0] = VL_RAND_RESET_I(8);
     }
-    vlSelf->data_memory__DOT__addr = VL_RAND_RESET_I(1);
+    vlSelf->data_memory__DOT__addr = VL_RAND_RESET_I(32);
     vlSelf->data_memory__DOT__unnamedblk1__DOT__i = 0;
-    vlSelf->data_memory__DOT____VdfgTmp_h8d771d4d__0 = 0;
     vlSelf->__Vtrigprevexpr___TOP__clk_i__0 = VL_RAND_RESET_I(1);
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;

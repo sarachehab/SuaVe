@@ -17,13 +17,12 @@ class alignas(VL_CACHE_LINE_BYTES) Vdata_memory___024root final : public Verilat
     VL_IN8(clk_i,0,0);
     VL_IN8(we_i,0,0);
     VL_IN8(byte_op_i,0,0);
-    CData/*0:0*/ data_memory__DOT__addr;
-    CData/*7:0*/ data_memory__DOT____VdfgTmp_h8d771d4d__0;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk_i__0;
     CData/*0:0*/ __VactContinue;
     VL_IN(addr_i,31,0);
     VL_IN(wd_i,31,0);
     VL_OUT(rd_o,31,0);
+    IData/*31:0*/ data_memory__DOT__addr;
     IData/*31:0*/ data_memory__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ __VstlIterCount;
     IData/*31:0*/ __VicoIterCount;
