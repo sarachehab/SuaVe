@@ -206,15 +206,16 @@ int main(int argc, char **argv, char **env)
         {
             tfp->dump(clk + 2 * simcyc);
             dut->clk_i = !dut->clk_i;
-
-            // if on rising clock edge
-            if (dut->clk_i == 1)
-            {
+            if (dut ->clk_i){
                 // generate a randomised transaction item
                 tx = rndRegisterFileInTx();
                 drv->drive(tx);
                 // monitor the input interface
                 inMon->monitor();
+                // if on falling clock edge
+            }
+            if (dut->clk_i == 0)
+            {
                 // monitor the output interface
                 outMon->monitor();
             }
