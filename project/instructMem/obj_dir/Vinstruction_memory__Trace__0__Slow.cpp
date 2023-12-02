@@ -21,7 +21,7 @@ VL_ATTR_COLD void Vinstruction_memory___024root__trace_init_sub__TOP__0(Vinstruc
     tracep->declBus(c+8,"LAST_INSTR_ADDR", false,-1, 31,0);
     tracep->declBus(c+1,"addr_i", false,-1, 31,0);
     tracep->declBus(c+2,"instr_o", false,-1, 31,0);
-    tracep->declBus(c+3,"normalized_address", false,-1, 31,0);
+    tracep->declBus(c+3,"addr", false,-1, 31,0);
     tracep->popNamePrefix(1);
 }
 
@@ -67,8 +67,7 @@ VL_ATTR_COLD void Vinstruction_memory___024root__trace_full_sub_0(Vinstruction_m
     // Body
     bufp->fullIData(oldp+1,(vlSelf->addr_i),32);
     bufp->fullIData(oldp+2,(vlSelf->instr_o),32);
-    bufp->fullIData(oldp+3,((0xfffffffcU & (vlSelf->addr_i 
-                                            - (IData)(0xbfc00000U)))),32);
+    bufp->fullIData(oldp+3,((0xfffffffcU & vlSelf->addr_i)),32);
     bufp->fullIData(oldp+4,(0xcU),32);
     bufp->fullIData(oldp+5,(8U),32);
     bufp->fullIData(oldp+6,(0x20U),32);

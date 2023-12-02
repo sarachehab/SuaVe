@@ -3,13 +3,13 @@ module instruction_memory #(
                 BYTE_SIZE = 8,
                 DATA_WIDTH = 32,
                 FIRST_INSTR_ADDR = 32'hBFC00000,
-                LAST_INSTR_ADDR = 32'hBFC00FFF
+                LAST_INSTR_ADDR  = 32'hBFC00FFF
 )(
-    input logic [DATA_WIDTH-1:0] addr_i,
+    input  logic [DATA_WIDTH-1:0] addr_i,
     output logic [DATA_WIDTH-1:0] instr_o
 );
 
-logic [BYTE_SIZE-1:0] rom [2**ADDR_EXP-1:0];
+logic [BYTE_SIZE-1:0] rom [LAST_INSTR_ADDR:FIRST_INSTR_ADDR];
 
 initial begin
 
@@ -19,8 +19,8 @@ initial begin
 
 end;
 
-logic [DATA_WIDTH-1:0] normalized_address = (addr_i - FIRST_INSTR_ADDR) & 32'hFFFFFFFC;
+logic [DATA_WIDTH-1:0] addr = addr_i & 32'hFFFFFFFC;
 
-assign instr_o = {rom[normalized_address+32'd3], rom[normalized_address+32'd2], rom[normalized_address+32'd1], rom[normalized_address]};
+assign instr_o = {rom[addr+32'd3], rom[addr+32'd2], rom[addr+32'd1], rom[addr]};
 
 endmodule

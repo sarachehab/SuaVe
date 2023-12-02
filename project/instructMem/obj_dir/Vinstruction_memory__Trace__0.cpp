@@ -25,8 +25,7 @@ void Vinstruction_memory___024root__trace_chg_sub_0(Vinstruction_memory___024roo
     // Body
     bufp->chgIData(oldp+0,(vlSelf->addr_i),32);
     bufp->chgIData(oldp+1,(vlSelf->instr_o),32);
-    bufp->chgIData(oldp+2,((0xfffffffcU & (vlSelf->addr_i 
-                                           - (IData)(0xbfc00000U)))),32);
+    bufp->chgIData(oldp+2,((0xfffffffcU & vlSelf->addr_i)),32);
 }
 
 void Vinstruction_memory___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
@@ -35,9 +34,6 @@ void Vinstruction_memory___024root__trace_cleanup(void* voidSelf, VerilatedVcd* 
     Vinstruction_memory___024root* const __restrict vlSelf VL_ATTR_UNUSED = static_cast<Vinstruction_memory___024root*>(voidSelf);
     Vinstruction_memory__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VlUnpacked<CData/*0:0*/, 1> __Vm_traceActivity;
-    for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
-        __Vm_traceActivity[__Vi0] = 0;
-    }
     // Body
     vlSymsp->__Vm_activity = false;
     __Vm_traceActivity[0U] = 0U;

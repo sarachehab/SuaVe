@@ -66,24 +66,22 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
-        int32_t base_address = ((in->addr_i) & 0xFFFFFFFC) & 0xBFC00000;
+        int32_t base_address = ((in->addr_i - 0xBFC00000) & 0xFFFFFFFC);
 
         int32_t expected_instruction = 0;
         int i = 0;
-
-        expected_instruction += (simulated_instruction_memory[base_address + 3] & 0xFF) << (8 * 3);
-
-        for (i = 0; i < 3; i++)
+        
+        for (i = 0; i < 4; i++)
         {
-            expected_instruction += abs((simulated_instruction_memory[base_address + i] & 0xFF) << (8 * i));
+            expected_instruction += unsigned((simulated_instruction_memory[base_address + i] & 0xFF) << (8 * i));
         }
 
         if (expected_instruction != tx->instr_o)
         {
             std::cout << std::endl;
-            std::cout << "InstructionMemoryScb: read instruction mismatch: " << in->addr_i << std::endl;
-            std::cout << "  Expected: " << expected_instruction << "  Actual: " << tx->instr_o << std::endl;
-            std::cout << "  Simtime: " << simcyc << std::endl;
+            std::cout << "InstructionMemoryScb: read instruction mismatch: " << std::hex << in->addr_i << std::endl;
+            std::cout << "Expected: " << std::hex << expected_instruction << "  Actual: " << std::hex << tx->instr_o << std::endl;
+            std::cout << "Simtime: " << simcyc << std::endl;
         }
     }
 
@@ -166,7 +164,7 @@ private:
 InstructionMemoryInTx *rndInstructionMemoryInTx()
 {
     InstructionMemoryInTx *tx = new InstructionMemoryInTx();
-    tx->addr_i = (rand() % 7) + 0xBFC00000;
+    tx->addr_i = (rand() % 20) + 0xBFC00000;
     return tx;
 }
 
