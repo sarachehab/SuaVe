@@ -36,15 +36,27 @@ Vdata_memory::~Vdata_memory() {
 }
 
 //============================================================
-// Evaluation function
+// Evaluation loop
 
-#ifdef VL_DEBUG
-void Vdata_memory___024root___eval_debug_assertions(Vdata_memory___024root* vlSelf);
-#endif  // VL_DEBUG
-void Vdata_memory___024root___eval_static(Vdata_memory___024root* vlSelf);
 void Vdata_memory___024root___eval_initial(Vdata_memory___024root* vlSelf);
 void Vdata_memory___024root___eval_settle(Vdata_memory___024root* vlSelf);
 void Vdata_memory___024root___eval(Vdata_memory___024root* vlSelf);
+#ifdef VL_DEBUG
+void Vdata_memory___024root___eval_debug_assertions(Vdata_memory___024root* vlSelf);
+#endif  // VL_DEBUG
+void Vdata_memory___024root___final(Vdata_memory___024root* vlSelf);
+
+static void _eval_initial_loop(Vdata_memory__Syms* __restrict vlSymsp) {
+    vlSymsp->__Vm_didInit = true;
+    Vdata_memory___024root___eval_initial(&(vlSymsp->TOP));
+    // Evaluate till stable
+    vlSymsp->__Vm_activity = true;
+    do {
+        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
+        Vdata_memory___024root___eval_settle(&(vlSymsp->TOP));
+        Vdata_memory___024root___eval(&(vlSymsp->TOP));
+    } while (0);
+}
 
 void Vdata_memory::eval_step() {
     VL_DEBUG_IF(VL_DBG_MSGF("+++++TOP Evaluate Vdata_memory::eval_step\n"); );
@@ -52,32 +64,15 @@ void Vdata_memory::eval_step() {
     // Debug assertions
     Vdata_memory___024root___eval_debug_assertions(&(vlSymsp->TOP));
 #endif  // VL_DEBUG
+    // Initialize
+    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
+    // Evaluate till stable
     vlSymsp->__Vm_activity = true;
-    vlSymsp->__Vm_deleter.deleteAll();
-    if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) {
-        vlSymsp->__Vm_didInit = true;
-        VL_DEBUG_IF(VL_DBG_MSGF("+ Initial\n"););
-        Vdata_memory___024root___eval_static(&(vlSymsp->TOP));
-        Vdata_memory___024root___eval_initial(&(vlSymsp->TOP));
-        Vdata_memory___024root___eval_settle(&(vlSymsp->TOP));
-    }
-    // MTask 0 start
-    VL_DEBUG_IF(VL_DBG_MSGF("MTask0 starting\n"););
-    Verilated::mtaskId(0);
-    VL_DEBUG_IF(VL_DBG_MSGF("+ Eval\n"););
-    Vdata_memory___024root___eval(&(vlSymsp->TOP));
+    do {
+        VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
+        Vdata_memory___024root___eval(&(vlSymsp->TOP));
+    } while (0);
     // Evaluate cleanup
-    Verilated::endOfThreadMTask(vlSymsp->__Vm_evalMsgQp);
-    Verilated::endOfEval(vlSymsp->__Vm_evalMsgQp);
-}
-
-//============================================================
-// Events and timing
-bool Vdata_memory::eventsPending() { return false; }
-
-uint64_t Vdata_memory::nextTimeSlot() {
-    VL_FATAL_MT(__FILE__, __LINE__, "", "%Error: No delays in the design");
-    return 0;
 }
 
 //============================================================
@@ -90,10 +85,8 @@ const char* Vdata_memory::name() const {
 //============================================================
 // Invoke final blocks
 
-void Vdata_memory___024root___eval_final(Vdata_memory___024root* vlSelf);
-
 VL_ATTR_COLD void Vdata_memory::final() {
-    Vdata_memory___024root___eval_final(&(vlSymsp->TOP));
+    Vdata_memory___024root___final(&(vlSymsp->TOP));
 }
 
 //============================================================
@@ -102,10 +95,6 @@ VL_ATTR_COLD void Vdata_memory::final() {
 const char* Vdata_memory::hierName() const { return vlSymsp->name(); }
 const char* Vdata_memory::modelName() const { return "Vdata_memory"; }
 unsigned Vdata_memory::threads() const { return 1; }
-void Vdata_memory::prepareClone() const { contextp()->prepareClone(); }
-void Vdata_memory::atClone() const {
-    contextp()->threadPoolpOnClone();
-}
 std::unique_ptr<VerilatedTraceConfig> Vdata_memory::traceConfig() const {
     return std::unique_ptr<VerilatedTraceConfig>{new VerilatedTraceConfig{false, false, false}};
 };
@@ -134,9 +123,6 @@ VL_ATTR_COLD static void trace_init(void* voidSelf, VerilatedVcd* tracep, uint32
 VL_ATTR_COLD void Vdata_memory___024root__trace_register(Vdata_memory___024root* vlSelf, VerilatedVcd* tracep);
 
 VL_ATTR_COLD void Vdata_memory::trace(VerilatedVcdC* tfp, int levels, int options) {
-    if (tfp->isOpen()) {
-        vl_fatal(__FILE__, __LINE__, __FILE__,"'Vdata_memory::trace()' shall not be called after 'VerilatedVcdC::open()'.");
-    }
     if (false && levels && options) {}  // Prevent unused
     tfp->spTrace()->addModel(this);
     tfp->spTrace()->addInitCb(&trace_init, &(vlSymsp->TOP));

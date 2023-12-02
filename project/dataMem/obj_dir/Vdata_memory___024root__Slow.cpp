@@ -5,13 +5,12 @@
 #include "verilated.h"
 
 #include "Vdata_memory__Syms.h"
-#include "Vdata_memory__Syms.h"
 #include "Vdata_memory___024root.h"
 
 void Vdata_memory___024root___ctor_var_reset(Vdata_memory___024root* vlSelf);
 
-Vdata_memory___024root::Vdata_memory___024root(Vdata_memory__Syms* symsp, const char* v__name)
-    : VerilatedModule{v__name}
+Vdata_memory___024root::Vdata_memory___024root(Vdata_memory__Syms* symsp, const char* name)
+    : VerilatedModule{name}
     , vlSymsp{symsp}
  {
     // Reset structure values

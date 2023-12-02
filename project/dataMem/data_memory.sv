@@ -1,6 +1,5 @@
 module data_memory # (
-    parameter ADDRESS_WIDTH = 5,
-              DATA_WIDTH    = 32,
+    parameter DATA_WIDTH    = 32,
               BYTE_WIDTH    = 8, 
               START_ADDRESS = 32'h10000,
               END_ADDRESS   = 32'h1FFFF
@@ -11,8 +10,9 @@ module data_memory # (
     output logic [DATA_WIDTH-1:0]       rd_o
 );
 
-logic [BYTE_WIDTH-1:0]      data_ram [17'h1FFFF:0];
-logic [DATA_WIDTH-1:0]   addr;
+logic [BYTE_WIDTH-1:0]  data_ram [END_ADDRESS:0];
+logic [DATA_WIDTH-1:0]  addr;
+
 assign addr = byte_op_i ? addr_i : (addr_i & 32'hFFFFFFFC);
 
 initial begin
