@@ -14,7 +14,7 @@ module pc # (
 
     always_ff @ (negedge clk_i) begin
         if (rst_i)  pc_next <= 32'hBFC00000;
-        else        pc_next <= pcsrc_i ? pc_o + 32'd4 : pc_o + imm_ext_i;
+        else        pc_next <= pcsrc_i ?  pc_o + imm_ext_i : pc_o + 32'd4;
     end 
 
     assign pc_o = pc_next;

@@ -52,18 +52,18 @@ public:
         switch (in->pcsrc_i)
         {
 
-        case 1:
+        case 0:
             if (in->pc_i + 4 != tx->pc_o)
             {
                 std::cout << std::endl;
                 std::cout << "+4 increment mismatch" << std::endl;
                 std::cout << "  Expected: " << in->pc_i + 4
-                          << "  Actual: " << tx->pc_o<< std::endl;
+                          << "  Actual: " << tx->pc_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
-        case 0:
+        case 1:
             if (in->pc_i + in->imm_ext_i != tx->pc_o)
             {
                 std::cout << std::endl;
@@ -198,7 +198,8 @@ int main(int argc, char **argv, char **env)
         for (clk = 0; clk < 2; clk++)
         {
             dut->clk_i = !dut->clk_i;
-            if (dut->clk_i){
+            if (dut->clk_i)
+            {
                 // generate a randomised transaction item
                 tx = rndPcInTx();
                 // drive input into dut
@@ -206,7 +207,9 @@ int main(int argc, char **argv, char **env)
                 // monitor the input interface
                 inMon->monitor();
                 dut->eval();
-            } else{
+            }
+            else
+            {
                 dut->eval();
                 // monitor the output interface
                 outMon->monitor();
