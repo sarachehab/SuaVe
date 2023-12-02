@@ -2,7 +2,7 @@ module data_memory # (
     parameter DATA_WIDTH    = 32,
               BYTE_WIDTH    = 8, 
               START_ADDRESS = 32'h10000,
-              END_ADDRESS   = 32'h1FFFF
+              END_ADDRESS   = 17'h1FFFF
 )(
     input  logic                        clk_i, we_i, byte_op_i,
     input  logic [DATA_WIDTH-1:0]       addr_i,
