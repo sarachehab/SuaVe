@@ -17,12 +17,13 @@
 #include "Vinstruction_memory___024root.h"
 
 // SYMS CLASS (contains all model state)
-class Vinstruction_memory__Syms final : public VerilatedSyms {
+class alignas(VL_CACHE_LINE_BYTES)Vinstruction_memory__Syms final : public VerilatedSyms {
   public:
     // INTERNAL STATE
     Vinstruction_memory* const __Vm_modelp;
     bool __Vm_activity = false;  ///< Used by trace routines to determine change occurred
     uint32_t __Vm_baseCode = 0;  ///< Used by trace routines when tracing multiple models
+    VlDeleter __Vm_deleter;
     bool __Vm_didInit = false;
 
     // MODULE INSTANCE STATE
@@ -34,6 +35,6 @@ class Vinstruction_memory__Syms final : public VerilatedSyms {
 
     // METHODS
     const char* name() { return TOP.name(); }
-} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
+};
 
 #endif  // guard

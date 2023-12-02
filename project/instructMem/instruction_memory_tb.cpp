@@ -70,7 +70,7 @@ public:
 
         int32_t expected_instruction = 0;
         int i = 0;
-        
+
         for (i = 0; i < 4; i++)
         {
             expected_instruction += unsigned((simulated_instruction_memory[base_address + i] & 0xFF) << (8 * i));
@@ -164,7 +164,7 @@ private:
 InstructionMemoryInTx *rndInstructionMemoryInTx()
 {
     InstructionMemoryInTx *tx = new InstructionMemoryInTx();
-    tx->addr_i = (rand() % 20) + 0xBFC00000;
+    tx->addr_i = (rand() % 28) + 0xBFC00000;
     return tx;
 }
 
