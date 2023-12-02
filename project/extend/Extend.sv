@@ -6,8 +6,7 @@ module signExtend # (
     input  logic [2:0] imm_src_i,
     input logic [DATA_WIDTH-1:0] pc_i,
     //output
-    output logic [DATA_WIDTH-1:0] imm_ext_o, //output imm extended into 32 bits
-    output logic [DATA_WIDTH-1:0] pc_target_o,
+    output logic [DATA_WIDTH-1:0] imm_ext_o //output imm extended into 32 bits
 );
 
 always_comb
@@ -27,6 +26,5 @@ always_comb
         default: imm_ext_o = 32'b0;
 
     endcase
-    assign pc_target_o = imm_ext_o + pc_i;
 
 endmodule
