@@ -87,6 +87,17 @@ always_comb begin
             alu_op_o = 2'b10;//dont-care value
             jump_o = 1'b1;
         end
+        //Jump instrucation JALR
+        7'b1100111 : begin
+            reg_write_o = 1'b1;
+            imm_src_o = 3'b000;
+            alu_src_o = 1'b1;
+            mem_write_o = 1'b0;
+            result_src_o = 2'b10;
+            branch_o = 1'b0;
+            alu_op_o = 2'b10;
+            jump_o = 1'b1;
+        end
         //upper type : lui
         7'b0110111 : begin
             reg_write_o = 1'b1;
