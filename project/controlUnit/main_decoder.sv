@@ -3,7 +3,7 @@ module mainDecoder (
     input logic [6:0]                   op_i,
     //outputs:
     output logic                        branch_o,
-    output logic                        jump_o,
+    output logic    [1:0]               jump_o,
     output logic    [1:0]               result_src_o,
     output logic                        mem_write_o,
     output logic                        alu_src_o,
@@ -25,7 +25,7 @@ always_comb begin
             result_src_o = 2'b01;
             branch_o = 1'b0;
             alu_op_o = 2'b00;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
 
         //memory write instruction: sw
@@ -37,7 +37,7 @@ always_comb begin
             result_src_o = 2'b00;//don't-care values 
             branch_o = 1'b0;
             alu_op_o = 2'b00;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
 
         //register operation:
@@ -49,7 +49,7 @@ always_comb begin
             result_src_o = 2'b00;
             branch_o = 1'b0;
             alu_op_o = 2'b10;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
 
         //branch_o operation: beq
@@ -61,7 +61,7 @@ always_comb begin
             result_src_o = 2'b00;//dont-care values
             branch_o = 1'b1;
             alu_op_o = 2'b01;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
 
         //immediate operation:
@@ -73,7 +73,7 @@ always_comb begin
             result_src_o = 2'b00;
             branch_o = 1'b0;
             alu_op_o = 2'b10;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
 
         // Jump instruction JAL
@@ -85,7 +85,7 @@ always_comb begin
             result_src_o = 2'b10;
             branch_o = 1'b0;
             alu_op_o = 2'b00;//dont-care value
-            jump_o = 1'b1;
+            jump_o = 2'b01;
         end
         //Jump instrucation JALR
         7'b1100111 : begin
@@ -96,7 +96,7 @@ always_comb begin
             result_src_o = 2'b10;
             branch_o = 1'b0;
             alu_op_o = 2'b10;
-            jump_o = 1'b1;
+            jump_o = 2'b10;
         end
         //upper type : lui
         7'b0110111 : begin
@@ -107,7 +107,7 @@ always_comb begin
             result_src_o = 2'b00;
             branch_o = 1'b0;
             alu_op_o = 2'b11;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
 
         // reset all variables
@@ -119,7 +119,7 @@ always_comb begin
             result_src_o = 2'b00;
             branch_o = 1'b0;
             alu_op_o = 2'b10;
-            jump_o = 1'b0;
+            jump_o = 2'b00;
         end
     endcase
 end;

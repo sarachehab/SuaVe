@@ -5,7 +5,8 @@ module controlUnit_top(
     input logic [2:0] funct3_i,
     input logic funct7_b5_i,
     //output signal
-    output logic pc_src_o,
+    output logic branch_o
+    output logic [1:0] jump_O
     output logic [1:0] result_src_o,
     output logic mem_write_o,
     output logic alu_src_o,
@@ -17,12 +18,11 @@ module controlUnit_top(
     //internal signals
     logic [1:0] alu_op;
     logic branch;
-    logic jmp;
 
 mainDecoder mainDecoder(
     .op_i(op_i),
     .branch_o(branch),
-    .jump_o(jmp),
+    .jump_o(jump_o),
     .result_src_o(result_src_o),
     .mem_write_o(mem_write_o),
     .alu_src_o(alu_src_o),
@@ -40,9 +40,7 @@ aluDecoder aluDecoder(
     .byte_address_o(byte_address_o)
 );
 
-//only assert pc_src_o if Alu determines if two values are equal and branch instruction is requested
-//also this is or-ed with jump since pc_src_o could also be asserted if jump intruction is requested
-assign pc_src_o = ((zero_i & branch) | jmp);
+assign branch_o = (zero_i & branch)
 
 endmodule
 
