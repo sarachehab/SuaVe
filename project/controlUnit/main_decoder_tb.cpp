@@ -6,11 +6,10 @@
 #include <verilated_vcd_c.h>
 #include "Vmain_decoder.h"
 
-#define MAX_SIM_CYC 20
-#define VERIF_START_TIME 7
+#define MAX_SIM_CYC 200
 int simcyc = 0;
 
-std::vector<int> simulated_op_values = {3, 19, 35, 51, 99, 111};
+std::vector<int> simulated_op_values = {3, 19, 35, 51, 55, 99, 103, 111};
 
 class MainDecoderInTx
 {
@@ -310,6 +309,57 @@ public:
             }
             break;
 
+        case 55: // Upper Immediate
+            if (tx->branch_o != 0)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: branch mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 0
+                          << "  Actual: " << tx->branch_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->jump_o != 0)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: jump mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 1
+                          << "  Actual: " << tx->jump_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->result_src_o != 3)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: result source mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 3
+                          << "  Actual: " << tx->result_src_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->mem_write_o != 0)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 0
+                          << "  Actual: " << tx->mem_write_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->imm_src_o != 4)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 4
+                          << "  Actual: " << tx->imm_src_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->reg_write_o != 1)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: register write mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 1
+                          << "  Actual: " << tx->reg_write_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+
         case 99:
             if (tx->branch_o != 1)
             {
@@ -369,6 +419,73 @@ public:
             }
             break;
 
+        case 103: // JALR
+            if (tx->branch_o != 0)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: branch mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 0
+                          << "  Actual: " << tx->branch_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->jump_o != 1)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: jump mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 1
+                          << "  Actual: " << tx->jump_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->result_src_o != 2)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: result source mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 2
+                          << "  Actual: " << tx->result_src_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->mem_write_o != 0)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: memory write mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 0
+                          << "  Actual: " << tx->mem_write_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->alu_src_o != 1)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 1
+                          << "  Actual: " << tx->alu_src_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->imm_src_o != 0)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: immediate source mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 0
+                          << "  Actual: " << tx->imm_src_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->reg_write_o != 1)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: register write mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 1
+                          << "  Actual: " << tx->reg_write_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            if (tx->alu_op_o != 2)
+            {
+                std::cout << std::endl;
+                std::cout << "MainDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
+                std::cout << "  Expected: " << 2
+                          << "  Actual: " << tx->alu_op_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+
         case 111:
             if (tx->branch_o != 0)
             {
@@ -394,14 +511,6 @@ public:
                           << "  Actual: " << tx->mem_write_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
-            if (tx->alu_src_o != 2) // don't care?
-            {
-                std::cout << std::endl;
-                std::cout << "MainDecoderScb: alu source mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->alu_src_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
             if (tx->imm_src_o != 3)
             {
                 std::cout << std::endl;
@@ -416,14 +525,6 @@ public:
                 std::cout << "MainDecoderScb: register write mismatch for op " << in->op_i << std::endl;
                 std::cout << "  Expected: " << 1
                           << "  Actual: " << tx->reg_write_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            if (tx->alu_op_o != 2)
-            {
-                std::cout << std::endl;
-                std::cout << "MainDecoderScb: alu operation mismatch for op " << in->op_i << std::endl;
-                std::cout << "  Expected: " << 2
-                          << "  Actual: " << tx->alu_op_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
