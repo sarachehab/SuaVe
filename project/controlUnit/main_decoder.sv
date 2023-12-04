@@ -104,7 +104,7 @@ always_comb begin
             imm_src_o = 3'b100;
             alu_src_o = 1'b1;
             mem_write_o = 1'b0;
-            result_src_o = 2'b00;
+            result_src_o = 2'b11;
             branch_o = 1'b0;
             alu_op_o = 2'b11;
             jump_o = 2'b00;
