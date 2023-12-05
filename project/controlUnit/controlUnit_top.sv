@@ -5,14 +5,14 @@ module controlUnit_top(
     input logic [2:0] funct3_i,
     input logic funct7_b5_i,
     //output signal
-    output logic branch_o
-    output logic [1:0] jump_O
+    output logic branch_o,
+    output logic [1:0] jump_o,
     output logic [1:0] result_src_o,
     output logic mem_write_o,
     output logic alu_src_o,
-    output logic [1:0] imm_src_o,
+    output logic [2:0] imm_src_o,
     output logic reg_write_o,
-    output logic [2:0] alu_control_o
+    output logic [3:0] alu_control_o,
     output logic byte_address_o
 );
     //internal signals
