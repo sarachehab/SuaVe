@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-
-module aluDecoder (
-=======
 module alu_decoder (
->>>>>>> 80fb17e (- alu decoder done)
     //inputs:
     input logic [1:0] alu_op_i,
     input logic [2:0] funct3_i,
