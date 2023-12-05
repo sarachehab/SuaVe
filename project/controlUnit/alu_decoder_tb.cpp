@@ -7,16 +7,17 @@
 #include <string>
 
 std::vector <std::string> instructions = {
-    "add", "sub", "and", "or", "slt", "sll","srl","sltu","xor",
+    "add", "sub", "and", "or", "slt", "sll","srl","sltu","xor" ,
     "addi", "andi", "ori", "slti","slli","srli", "xori",
     "lui",
     "lw", "sw", "lbu", "sb",
     "beq",
+    "jalr",
     };
 
 int answers (std::string instr){
 
-    if(instr == "add" || instr == "addi" || instr == "lw" || instr == "sw" || instr == "lbu" || instr == "sb") {
+    if(instr == "add" || instr == "addi" || instr == "lw" || instr == "sw" || instr == "lbu" || instr == "sb"|| instr == "jalr") {
     return 0b0000;
     }
     else if(instr == "beq" || instr = "sub") {
@@ -52,7 +53,7 @@ int answers (std::string instr){
 }
 int getaluop (std::string instr) {
 
-    if(instr == "add" || instr == "sub" || instr == "and" || instr == "or" || instr == "slt" || instr == "sll" || instr == "srl" || instr == "sltu" || instr == "xor" || instr == "sra") {
+    if(instr == "add" || instr == "sub" || instr == "and" || instr == "or" || instr == "slt" || instr == "sll" || instr == "srl" || instr == "sltu" || instr == "xor" || instr == "sra" || instr=="jalr") {
         return 0b10;
     }
     else if(instr == "addi" || instr == "andi" || instr == "ori" || instr == "slti" || instr == "slli" || instr == "srli" || instr == "xori" || instr == "srai" || instr == "sltiu") {
@@ -74,7 +75,7 @@ int getaluop (std::string instr) {
 
 int getaluopb5 (std::string instr) {
 
-    if(instr == "add" || instr == "sub" || instr == "and" || instr == "or" || instr == "slt" || instr == "sll" || instr == "srl" || instr == "sltu" || instr == "xor" || instr == "sra") {
+    if(instr == "add" || instr == "sub" || instr == "and" || instr == "or" || instr == "slt" || instr == "sll" || instr == "srl" || instr == "sltu" || instr == "xor" || instr == "sra" || instr == "jalr") {
         return 0b1;
     }
     else if(instr == "addi" || instr == "andi" || instr == "ori" || instr == "slti" || instr == "slli" || instr == "srli" || instr == "xori" || instr == "srai" || instr == "sltiu") {
@@ -90,7 +91,7 @@ int getaluopb5 (std::string instr) {
 
 int getfunct3 (std::string instr) {
 
-    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lbu" || instr == "sb" || instr == "beq") {
+    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lbu" || instr == "sb" || instr == "beq" || instr == "jalr") {
         return 0x0;
     }
 

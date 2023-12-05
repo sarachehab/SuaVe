@@ -21,12 +21,12 @@ always_comb
             end
     2'b01: alu_control_o = 4'b1000; //subtract for beq
     2'b11: alu_control_o = 4'b0001; //logical shift left for lui
-    
+    //defaut case for 2'b10
     default:    case(funct3_i) // if we have R-type or I-type, because we've dealt with lw, sw and beq
                     3'b000: if (rTypeSub)
                                 alu_control_o = 4'b1000; //subtract as sub has f_iunct7_5 high and op_5 high while addi has op_5 low
                             else
-                                alu_control_o = 4'b0000; //add, addi
+                                alu_control_o = 4'b0000; //add, addi, jalr
                     3'b001: alu_control_o = 4'b0001;    //sll, slli
                     3'b101: if(rTypeSub)
                                 alu_control_o = 4'b1101;    //sra. srai
