@@ -114,7 +114,7 @@ VL_ATTR_COLD void Vpc___024root___dump_triggers__act(Vpc___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if ((1ULL & vlSelf->__VactTriggered.word(0U))) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(negedge clk_i)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(posedge clk_i)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -129,7 +129,7 @@ VL_ATTR_COLD void Vpc___024root___dump_triggers__nba(Vpc___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(negedge clk_i)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(posedge clk_i)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -140,9 +140,11 @@ VL_ATTR_COLD void Vpc___024root___ctor_var_reset(Vpc___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vpc___024root___ctor_var_reset\n"); );
     // Body
     vlSelf->clk_i = VL_RAND_RESET_I(1);
-    vlSelf->pcsrc_i = VL_RAND_RESET_I(1);
+    vlSelf->jump_taken_i = VL_RAND_RESET_I(1);
     vlSelf->rst_i = VL_RAND_RESET_I(1);
+    vlSelf->jalr_instr_i = VL_RAND_RESET_I(1);
     vlSelf->imm_ext_i = VL_RAND_RESET_I(32);
+    vlSelf->jta_jalr_i = VL_RAND_RESET_I(32);
     vlSelf->pc_o = VL_RAND_RESET_I(32);
     vlSelf->pc__DOT__pc_next = VL_RAND_RESET_I(32);
     vlSelf->__Vtrigprevexpr___TOP__clk_i__0 = VL_RAND_RESET_I(1);

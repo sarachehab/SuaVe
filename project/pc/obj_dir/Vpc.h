@@ -26,9 +26,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vpc VL_NOT_FINAL : public VerilatedModel {
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
     VL_IN8(&clk_i,0,0);
-    VL_IN8(&pcsrc_i,0,0);
+    VL_IN8(&jump_taken_i,0,0);
     VL_IN8(&rst_i,0,0);
+    VL_IN8(&jalr_instr_i,0,0);
     VL_IN(&imm_ext_i,31,0);
+    VL_IN(&jta_jalr_i,31,0);
     VL_OUT(&pc_o,31,0);
 
     // CELLS

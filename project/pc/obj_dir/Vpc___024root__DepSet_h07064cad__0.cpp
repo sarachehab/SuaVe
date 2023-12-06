@@ -17,15 +17,25 @@ VL_INLINE_OPT void Vpc___024root___nba_sequent__TOP__0(Vpc___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vpc__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vpc___024root___nba_sequent__TOP__0\n"); );
+    // Init
+    IData/*31:0*/ __Vdly__pc__DOT__pc_next;
+    __Vdly__pc__DOT__pc_next = 0;
     // Body
-    vlSelf->pc__DOT__pc_next = ((IData)(vlSelf->rst_i)
-                                 ? 0xbfc00000U : ((IData)(vlSelf->pcsrc_i)
-                                                   ? 
-                                                  (vlSelf->pc_o 
-                                                   + vlSelf->imm_ext_i)
-                                                   : 
-                                                  ((IData)(4U) 
-                                                   + vlSelf->pc_o)));
+    __Vdly__pc__DOT__pc_next = vlSelf->pc__DOT__pc_next;
+    if (vlSelf->rst_i) {
+        __Vdly__pc__DOT__pc_next = 0xbfc00000U;
+    } else if (vlSelf->jalr_instr_i) {
+        if (vlSelf->jalr_instr_i) {
+            __Vdly__pc__DOT__pc_next = vlSelf->jta_jalr_i;
+        }
+    } else {
+        __Vdly__pc__DOT__pc_next = ((IData)(vlSelf->jump_taken_i)
+                                     ? (vlSelf->pc__DOT__pc_next 
+                                        + vlSelf->imm_ext_i)
+                                     : ((IData)(4U) 
+                                        + vlSelf->pc__DOT__pc_next));
+    }
+    vlSelf->pc__DOT__pc_next = __Vdly__pc__DOT__pc_next;
     vlSelf->pc_o = vlSelf->pc__DOT__pc_next;
 }
 
@@ -103,9 +113,11 @@ void Vpc___024root___eval_debug_assertions(Vpc___024root* vlSelf) {
     // Body
     if (VL_UNLIKELY((vlSelf->clk_i & 0xfeU))) {
         Verilated::overWidthError("clk_i");}
-    if (VL_UNLIKELY((vlSelf->pcsrc_i & 0xfeU))) {
-        Verilated::overWidthError("pcsrc_i");}
+    if (VL_UNLIKELY((vlSelf->jump_taken_i & 0xfeU))) {
+        Verilated::overWidthError("jump_taken_i");}
     if (VL_UNLIKELY((vlSelf->rst_i & 0xfeU))) {
         Verilated::overWidthError("rst_i");}
+    if (VL_UNLIKELY((vlSelf->jalr_instr_i & 0xfeU))) {
+        Verilated::overWidthError("jalr_instr_i");}
 }
 #endif  // VL_DEBUG

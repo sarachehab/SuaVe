@@ -15,11 +15,13 @@ class alignas(VL_CACHE_LINE_BYTES) Vpc___024root final : public VerilatedModule 
 
     // DESIGN SPECIFIC STATE
     VL_IN8(clk_i,0,0);
-    VL_IN8(pcsrc_i,0,0);
+    VL_IN8(jump_taken_i,0,0);
     VL_IN8(rst_i,0,0);
+    VL_IN8(jalr_instr_i,0,0);
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk_i__0;
     CData/*0:0*/ __VactContinue;
     VL_IN(imm_ext_i,31,0);
+    VL_IN(jta_jalr_i,31,0);
     VL_OUT(pc_o,31,0);
     IData/*31:0*/ pc__DOT__pc_next;
     IData/*31:0*/ __VstlIterCount;

@@ -12,9 +12,11 @@ Vpc::Vpc(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vpc__Syms(contextp(), _vcname__, this)}
     , clk_i{vlSymsp->TOP.clk_i}
-    , pcsrc_i{vlSymsp->TOP.pcsrc_i}
+    , jump_taken_i{vlSymsp->TOP.jump_taken_i}
     , rst_i{vlSymsp->TOP.rst_i}
+    , jalr_instr_i{vlSymsp->TOP.jalr_instr_i}
     , imm_ext_i{vlSymsp->TOP.imm_ext_i}
+    , jta_jalr_i{vlSymsp->TOP.jta_jalr_i}
     , pc_o{vlSymsp->TOP.pc_o}
     , rootp{&(vlSymsp->TOP)}
 {

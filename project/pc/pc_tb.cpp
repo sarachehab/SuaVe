@@ -7,15 +7,14 @@
 #include "Vpc.h"
 
 #define MAX_SIM_CYC 20
-#define VERIF_START_TIME 7
 int simcyc = 0;
+uint32_t expected_pc = 0xBFC00000;
 
 class PcInTx
 {
 public:
-    uint32_t pc_i;
-    uint32_t imm_ext_i;
-    uint pcsrc_i;
+    uint32_t imm_ext_i, jta_jalr_i;
+    uint jump_taken_i, rst_i, jalr_instr_i;
 };
 
 class PcOutTx
@@ -49,30 +48,65 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
-        switch (in->pcsrc_i)
+        if (in->rst_i)
+        {
+            expected_pc = 0xBFC00000;
+            if (tx->pc_o != expected_pc)
+            {
+                std::cout << std::endl;
+                std::cout << "rst mismatch" << std::endl;
+                std::cout << "  Expected: " << expected_pc
+                          << "  Actual: " << tx->pc_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+        }
+
+        else
         {
 
-        case 0:
-            if (in->pc_i + 4 != tx->pc_o)
+            switch (in->jump_taken_i)
             {
-                std::cout << std::endl;
-                std::cout << "+4 increment mismatch" << std::endl;
-                std::cout << "  Expected: " << in->pc_i + 4
-                          << "  Actual: " << tx->pc_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
 
-        case 1:
-            if (in->pc_i + in->imm_ext_i != tx->pc_o)
-            {
-                std::cout << std::endl;
-                std::cout << "immediate increment mismatch" << std::endl;
-                std::cout << "  Expected: " << in->pc_i - in->imm_ext_i
-                          << "  Actual: " << tx->pc_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
+            case 0:
+                expected_pc = expected_pc + 4;
+                if (tx->pc_o != expected_pc)
+                {
+                    std::cout << std::endl;
+                    std::cout << "+4 increment mismatch" << std::endl;
+                    std::cout << "  Expected: " << expected_pc
+                              << "  Actual: " << tx->pc_o << std::endl;
+                    std::cout << "  Simtime: " << simcyc << std::endl;
+                }
+                break;
+
+            case 1:
+                if (in->jalr_instr_i)
+                {
+                    expected_pc = in->jta_jalr_i;
+                    if (tx->pc_o != expected_pc)
+                    {
+                        std::cout << std::endl;
+                        std::cout << "JALR increment mismatch" << std::endl;
+                        std::cout << "  Expected: " << expected_pc
+                                  << "  Actual: " << tx->pc_o << std::endl;
+                        std::cout << "  Simtime: " << simcyc << std::endl;
+                    }
+                }
+                else
+                {
+                    expected_pc += in->imm_ext_i;
+                    if (tx->pc_o != expected_pc)
+                    {
+                        std::cout << std::endl;
+                        std::cout << "immediate increment mismatch" << std::endl;
+                        std::cout << "  Expected: " << expected_pc
+                                  << "  Actual: " << tx->pc_o << std::endl;
+                        std::cout << "  Simtime: " << simcyc << std::endl;
+                    }
+                }
+
+                break;
             }
-            break;
         }
     }
 
@@ -93,7 +127,10 @@ public:
         if (tx != NULL)
         {
             dut->imm_ext_i = tx->imm_ext_i;
-            dut->pcsrc_i = tx->pcsrc_i;
+            dut->jalr_instr_i = tx->jalr_instr_i;
+            dut->jta_jalr_i = tx->jta_jalr_i;
+            dut->jump_taken_i = tx->jump_taken_i;
+            dut->rst_i = tx->rst_i;
             delete tx;
         }
     }
@@ -115,9 +152,11 @@ public:
     {
         // create a new transaction item and populate it with data observerd at the interface pin
         PcInTx *tx = new PcInTx();
-        tx->pc_i = dut->pc_o;
         tx->imm_ext_i = dut->imm_ext_i;
-        tx->pcsrc_i = dut->pcsrc_i;
+        tx->jalr_instr_i = dut->jalr_instr_i;
+        tx->jta_jalr_i = dut->jta_jalr_i;
+        tx->jump_taken_i = dut->jump_taken_i;
+        tx->rst_i = dut->rst_i;
 
         // pass transaction item to score board
         scb->writeIn(tx);
@@ -157,8 +196,14 @@ private:
 PcInTx *rndPcInTx()
 {
     PcInTx *tx = new PcInTx();
-    tx->pcsrc_i = rand() % 2;
     tx->imm_ext_i = 4 * (rand() % 25);
+    tx->jump_taken_i = rand() % 2;
+    tx->jta_jalr_i = 4 * (rand() % 25) + 0xBFC00000;
+    tx->jalr_instr_i = 0;
+    if (tx->jump_taken_i)
+    {
+        tx->jalr_instr_i = rand() % 2;
+    }
     return tx;
 }
 
@@ -197,24 +242,24 @@ int main(int argc, char **argv, char **env)
     {
         for (clk = 0; clk < 2; clk++)
         {
+            tfp->dump(clk + 2 * simcyc);
             dut->clk_i = !dut->clk_i;
             if (dut->clk_i)
             {
                 // generate a randomised transaction item
                 tx = rndPcInTx();
-                // drive input into dut
+                tx->rst_i = (simcyc % 10 == 0) ? 1 : 0;
                 drv->drive(tx);
                 // monitor the input interface
                 inMon->monitor();
-                dut->eval();
+                // if on falling clock edge
             }
-            else
+            if (dut->clk_i == 0)
             {
-                dut->eval();
                 // monitor the output interface
                 outMon->monitor();
             }
-            tfp->dump(clk + 2 * simcyc);
+            dut->eval();
         }
 
         if ((Verilated::gotFinish()))
