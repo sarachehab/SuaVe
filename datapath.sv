@@ -24,8 +24,9 @@ module datapath # (
     always_comb begin
         case (result_src_i)
             2'b00: reg_wd = alu_out_o;     // R and I type instructions
-            2'b01: reg_wd = data_mem_rd;    // load instruction
-            2'b11: reg_wd = pc_next_i;      // JAL instruction
+            2'b01: reg_wd = data_mem_rd;
+            2'b10: reg_wd = pc_next_i;      // load instruction
+            2'b11: reg_wd = imm_ext_i;      // JAL instruction
             default: reg_wd = {DATA_WIDTH{1'b0}};   // including store instruction
         endcase
     end

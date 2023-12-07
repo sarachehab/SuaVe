@@ -7,9 +7,10 @@
 
 #include "verilated.h"
 
+
 class Vcpu__Syms;
 
-class Vcpu___024root final : public VerilatedModule {
+class alignas(VL_CACHE_LINE_BYTES) Vcpu___024root final : public VerilatedModule {
   public:
 
     // DESIGN SPECIFIC STATE
@@ -27,11 +28,16 @@ class Vcpu___024root final : public VerilatedModule {
     CData/*1:0*/ cpu__DOT__controlUnit_top__DOT__alu_op;
     CData/*0:0*/ cpu__DOT__controlUnit_top__DOT__branch;
     CData/*0:0*/ cpu__DOT__controlUnit_top__DOT__jmp;
-    CData/*0:0*/ __Vclklast__TOP__clk_i;
+    CData/*7:0*/ __VdfgTmp_hc6c9cc1a__0;
+    CData/*7:0*/ __VdfgTmp_h0f734668__0;
+    CData/*7:0*/ __VdfgTmp_h0cdf22a8__0;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__clk_i__0;
+    CData/*0:0*/ __VactContinue;
+    SData/*15:0*/ __VdfgTmp_hee5fc8f3__0;
     VL_OUT(a0_o,31,0);
-    IData/*31:0*/ cpu__DOT__instr;
     IData/*31:0*/ cpu__DOT__imm_ext;
     IData/*31:0*/ cpu__DOT__alu_out;
+    IData/*24:0*/ cpu__DOT____Vcellinp__extend_unit__instr_i;
     IData/*31:0*/ cpu__DOT__datapath__DOT__reg_rd1;
     IData/*31:0*/ cpu__DOT__datapath__DOT__reg_rd2;
     IData/*31:0*/ cpu__DOT__datapath__DOT____Vcellinp__datapath_alu__src2_i;
@@ -39,22 +45,28 @@ class Vcpu___024root final : public VerilatedModule {
     IData/*31:0*/ cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr;
     IData/*31:0*/ cpu__DOT__datapath__DOT__datapath_data_memory__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ cpu__DOT__program_counter__DOT__pc_next;
+    IData/*23:0*/ __VdfgTmp_h2e56604c__0;
+    IData/*31:0*/ __VstlIterCount;
+    IData/*31:0*/ __VactIterCount;
     VlUnpacked<IData/*31:0*/, 32> cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf;
     VlUnpacked<CData/*7:0*/, 131072> cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram;
     VlUnpacked<CData/*7:0*/, 4096> cpu__DOT__instruction_memory__DOT__rom;
     VlUnpacked<CData/*0:0*/, 4> __Vm_traceActivity;
+    VlTriggerVec<1> __VstlTriggered;
+    VlTriggerVec<2> __VactTriggered;
+    VlTriggerVec<2> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vcpu__Syms* const vlSymsp;
 
     // CONSTRUCTORS
-    Vcpu___024root(Vcpu__Syms* symsp, const char* name);
+    Vcpu___024root(Vcpu__Syms* symsp, const char* v__name);
     ~Vcpu___024root();
     VL_UNCOPYABLE(Vcpu___024root);
 
     // INTERNAL METHODS
     void __Vconfigure(bool first);
-} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
+};
 
 
 #endif  // guard

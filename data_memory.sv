@@ -16,7 +16,7 @@ logic [DATA_WIDTH-1:0]  addr;
 assign addr = byte_op_i ? addr_i : (addr_i & 32'hFFFFFFFC);
 
 initial begin
-    $readmemh("triangle.mem", data_ram, START_ADDRESS, START_ADDRESS+7);
+    $readmemh("gaussian.mem", data_ram, START_ADDRESS, START_ADDRESS+7);
     for (int i = 0; i < START_ADDRESS; i++) begin
         data_ram[i] = {BYTE_WIDTH{1'b0}};
     end

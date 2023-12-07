@@ -67,34 +67,36 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
         bufp->chgBit(oldp+36,(vlSelf->cpu__DOT__alu_src));
         bufp->chgBit(oldp+37,(vlSelf->cpu__DOT__reg_write));
         bufp->chgBit(oldp+38,(vlSelf->cpu__DOT__byte_address));
-        bufp->chgIData(oldp+39,(vlSelf->cpu__DOT__instr),32);
+        bufp->chgIData(oldp+39,((((IData)(vlSelf->__VdfgTmp_hc6c9cc1a__0) 
+                                  << 0x18U) | vlSelf->__VdfgTmp_h2e56604c__0)),32);
         bufp->chgIData(oldp+40,(vlSelf->cpu__DOT__program_counter__DOT__pc_next),32);
         bufp->chgIData(oldp+41,(((IData)(4U) + vlSelf->cpu__DOT__program_counter__DOT__pc_next)),32);
         bufp->chgIData(oldp+42,(vlSelf->cpu__DOT__imm_ext),32);
         bufp->chgCData(oldp+43,(vlSelf->cpu__DOT__result_src),2);
         bufp->chgCData(oldp+44,(vlSelf->cpu__DOT__imm_src),3);
         bufp->chgCData(oldp+45,(vlSelf->cpu__DOT__alu_control),4);
-        bufp->chgCData(oldp+46,((0x7fU & vlSelf->cpu__DOT__instr)),7);
-        bufp->chgCData(oldp+47,((7U & (vlSelf->cpu__DOT__instr 
-                                       >> 0xcU))),3);
-        bufp->chgBit(oldp+48,((1U & (vlSelf->cpu__DOT__instr 
-                                     >> 0x1eU))));
+        bufp->chgCData(oldp+46,((0x7fU & (IData)(vlSelf->__VdfgTmp_h0f734668__0))),7);
+        bufp->chgCData(oldp+47,((7U & ((IData)(vlSelf->__VdfgTmp_h0cdf22a8__0) 
+                                       >> 4U))),3);
+        bufp->chgBit(oldp+48,((1U & ((IData)(vlSelf->__VdfgTmp_hc6c9cc1a__0) 
+                                     >> 6U))));
         bufp->chgCData(oldp+49,(vlSelf->cpu__DOT__controlUnit_top__DOT__alu_op),2);
         bufp->chgBit(oldp+50,(vlSelf->cpu__DOT__controlUnit_top__DOT__branch));
         bufp->chgBit(oldp+51,(vlSelf->cpu__DOT__controlUnit_top__DOT__jmp));
-        bufp->chgBit(oldp+52,((1U & (vlSelf->cpu__DOT__instr 
+        bufp->chgBit(oldp+52,((1U & ((IData)(vlSelf->__VdfgTmp_h0f734668__0) 
                                      >> 5U))));
-        bufp->chgBit(oldp+53,((IData)((0x40000020U 
-                                       == (0x40000020U 
-                                           & vlSelf->cpu__DOT__instr)))));
-        bufp->chgCData(oldp+54,((0x1fU & (vlSelf->cpu__DOT__instr 
+        bufp->chgBit(oldp+53,((1U & (((IData)(vlSelf->__VdfgTmp_hc6c9cc1a__0) 
+                                      >> 6U) & ((IData)(vlSelf->__VdfgTmp_h0f734668__0) 
+                                                >> 5U)))));
+        bufp->chgCData(oldp+54,((0x1fU & (vlSelf->__VdfgTmp_h2e56604c__0 
                                           >> 0xfU))),5);
-        bufp->chgCData(oldp+55,((0x1fU & (vlSelf->cpu__DOT__instr 
-                                          >> 0x14U))),5);
-        bufp->chgCData(oldp+56,((0x1fU & (vlSelf->cpu__DOT__instr 
+        bufp->chgCData(oldp+55,(((0x10U & ((IData)(vlSelf->__VdfgTmp_hc6c9cc1a__0) 
+                                           << 4U)) 
+                                 | (0xfU & (vlSelf->__VdfgTmp_h2e56604c__0 
+                                            >> 0x14U)))),5);
+        bufp->chgCData(oldp+56,((0x1fU & ((IData)(vlSelf->__VdfgTmp_hee5fc8f3__0) 
                                           >> 7U))),5);
-        bufp->chgIData(oldp+57,((vlSelf->cpu__DOT__instr 
-                                 >> 7U)),25);
+        bufp->chgIData(oldp+57,(vlSelf->cpu__DOT____Vcellinp__extend_unit__instr_i),25);
         bufp->chgIData(oldp+58,((0xfffffffcU & vlSelf->cpu__DOT__program_counter__DOT__pc_next)),32);
     }
     if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[3U])) {
@@ -111,7 +113,7 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
     bufp->chgBit(oldp+67,(vlSelf->trigger_i));
     bufp->chgIData(oldp+68,(vlSelf->a0_o),32);
     bufp->chgBit(oldp+69,((((vlSelf->cpu__DOT__datapath__DOT__reg_rd1 
-                             == vlSelf->cpu__DOT__datapath__DOT____Vcellinp__datapath_alu__src2_i) 
+                             != vlSelf->cpu__DOT__datapath__DOT____Vcellinp__datapath_alu__src2_i) 
                             & (IData)(vlSelf->cpu__DOT__controlUnit_top__DOT__branch)) 
                            | (IData)(vlSelf->cpu__DOT__controlUnit_top__DOT__jmp))));
     bufp->chgIData(oldp+70,(((IData)(vlSelf->cpu__DOT__byte_address)
@@ -137,9 +139,11 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
                                                  | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                  [(0x1ffffU 
                                                    & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))),32);
-    bufp->chgIData(oldp+71,(((0U == (IData)(vlSelf->cpu__DOT__result_src))
-                              ? vlSelf->cpu__DOT__alu_out
-                              : ((1U == (IData)(vlSelf->cpu__DOT__result_src))
+    bufp->chgIData(oldp+71,(((2U & (IData)(vlSelf->cpu__DOT__result_src))
+                              ? ((1U & (IData)(vlSelf->cpu__DOT__result_src))
+                                  ? vlSelf->cpu__DOT__imm_ext
+                                  : ((IData)(4U) + vlSelf->cpu__DOT__program_counter__DOT__pc_next))
+                              : ((1U & (IData)(vlSelf->cpu__DOT__result_src))
                                   ? ((IData)(vlSelf->cpu__DOT__byte_address)
                                       ? ((IData)(vlSelf->cpu__DOT__byte_address)
                                           ? vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
@@ -168,10 +172,7 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
                                                          [
                                                          (0x1ffffU 
                                                           & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))
-                                  : ((3U == (IData)(vlSelf->cpu__DOT__result_src))
-                                      ? ((IData)(4U) 
-                                         + vlSelf->cpu__DOT__program_counter__DOT__pc_next)
-                                      : 0U)))),32);
+                                  : vlSelf->cpu__DOT__alu_out))),32);
 }
 
 void Vcpu___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

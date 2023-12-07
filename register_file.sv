@@ -25,6 +25,7 @@ module register_file #(
         rf[28] <= {{31{1'b0}} , trigger_i};
         if (addr3_we_i && addr3_i != 0) begin
             rf[addr3_i] <= addr3_wd_i;
+            $display("Write addr3_i %b", addr3_i );
         end
     end
 

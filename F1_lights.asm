@@ -25,9 +25,6 @@ default:
 reset:
     add a0, zero, zero
 
-check_trigger:
-    bne t3, s2, check_trigger
-
 f1lights:
     jal ra, wait_second
     slli a0, a0, 0x1

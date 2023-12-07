@@ -42,7 +42,7 @@ alu_decoder aluDecoder(
     .byte_address_o(byte_address_o)
 );
 
-assign JB_instr_o = (zero_i & branch) | jmp;
+assign JB_instr_o = (~(zero_i) & branch) | jmp;
 
 endmodule
 
