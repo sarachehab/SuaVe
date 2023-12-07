@@ -1,4 +1,4 @@
-module reg_file #(
+module register_file #(
     parameter ADDRESS_WIDTH = 5,
               DATA_WIDTH    = 32
 )(
@@ -12,13 +12,16 @@ module reg_file #(
 
     initial begin
         for (int i = 0; i < 32; i++)
-            rf[i] = DATA_WIDTH'b0;
+            rf[i] = {DATA_WIDTH{1'b0}};
     end
-
-    always_ff @(posedge clk_i) 
-        if (addr3_we_i) rf[addr3_i] <= addr3_wd_i;
 
     assign rd1_o = rf[addr1_i];
     assign rd2_o = rf[addr2_i];
+    
+    always_ff @(negedge clk_i) begin
+        if (addr3_we_i && addr3_i != 0) begin
+            rf[addr3_i] <= addr3_wd_i;
+        end
+    end
 
 endmodule

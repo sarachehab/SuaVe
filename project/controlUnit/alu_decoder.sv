@@ -19,24 +19,24 @@ always_comb
                 alu_control_o = 4'b0000; // for lbu and sb
                 byte_address_o = 1'b1;// for lbu and sb
             end
-    2'b01: alu_control_o = 4'b0001; //subtract for beq
-    2'b11: alu_control_o = 4'b1000; //logical shift left for lui
-    
+    2'b01: alu_control_o = 4'b1000; //subtract for beq
+    2'b11: alu_control_o = 4'b0001; //logical shift left for lui
+    //defaut case for 2'b10
     default:    case(funct3_i) // if we have R-type or I-type, because we've dealt with lw, sw and beq
                     3'b000: if (rTypeSub)
-                                alu_control_o = 4'b0001; //subtract as sub has f_iunct7_5 high and op_5 high while addi has op_5 low
+                                alu_control_o = 4'b1000; //subtract as sub has f_iunct7_5 high and op_5 high while addi has op_5 low
                             else
-                                alu_control_o = 4'b0000; //add, addi
-                    3'b001: alu_control_o = 4'b1000;    //sll, slli
+                                alu_control_o = 4'b0000; //add, addi, jalr
+                    3'b001: alu_control_o = 4'b0001;    //sll, slli
                     3'b101: if(rTypeSub)
-                                alu_control_o = 4'b1010;    //sra. srai
+                                alu_control_o = 4'b1101;    //sra. srai
                             else
-                                alu_control_o = 4'b1001;    //srl, srli 
-                    3'b011: alu_control_o = 4'b0101; //sltu, sltiu
-                    3'b010: alu_control_o = 4'b0101; //slt, slti
-                    3'b110: alu_control_o = 4'b0011; // or, ori
-                    3'b111: alu_control_o = 4'b0010; //and, andi
-                    3'b100: alu_control_o = 4'b0111; // xor, xori
+                                alu_control_o = 4'b0101;    //srl, srli 
+                    3'b011: alu_control_o = 4'b0011; //sltu, sltiu
+                    3'b010: alu_control_o = 4'b0010; //slt, slti
+                    3'b110: alu_control_o = 4'b0110; // or, ori
+                    3'b111: alu_control_o = 4'b0111; //and, andi
+                    3'b100: alu_control_o = 4'b0100; // xor, xori
 
                     default: alu_control_o = 4'b0000;
                 endcase

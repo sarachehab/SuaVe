@@ -6,11 +6,11 @@
 #include <verilated_vcd_c.h>
 #include "Valu.h"
 
-#define MAX_SIM_CYC 20
+#define MAX_SIM_CYC 200
 #define VERIF_START_TIME 7
 int simcyc = 0;
 
-std::vector<uint> possible_alu_control_i = {0, 1, 2, 3, 5};
+std::vector<uint> possible_alu_control_i = {0, 1, 2, 3, 4, 5, 6, 7, 8, 13};
 
 class AluInTx
 {
@@ -52,6 +52,9 @@ public:
         in = in_q.front();
         in_q.pop_front();
 
+        uint32_t src1_uint = in->src1_i;
+        uint32_t src2_uint = in->src2_i;
+
         switch (in->alu_control_i)
         {
 
@@ -66,9 +69,93 @@ public:
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
+        
+        //  shift left logical instruction
+        case 1:
+            if ((in->src1_i << in->src2_i) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: sll mismatch" << std::endl;
+                std::cout << "  Expected: " << (in->src1_i << in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+
+        // slt instruction
+        case 2:
+            if ((in->src1_i < in->src2_i) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: slt mismatch" << std::endl;
+                std::cout << "  Expected: " << (in->src1_i < in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+
+        // set less than unsigned instruction 
+        case 3:
+            if ( (unsigned(in->src1_i) < unsigned(in->src2_i)) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: sltu mismatch" << std::endl;
+                std::cout << "  Expected: " << (unsigned(in->src1_i) < unsigned(in->src2_i))
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+        
+        // xor instruction 
+        case 4:
+            if ((in->src1_i ^ in->src2_i) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: xor mismatch" << std::endl;
+                std::cout << "  Expected: " << (in->src1_i ^ in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+
+        // shift right logical
+        case 5:
+            if ((src1_uint >> src2_uint) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: srl mismatch" << std::endl;
+                std::cout << "  Expected: " << (src1_uint >> src2_uint)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+
+        // or instruction
+        case 6:
+            if ((in->src1_i | in->src2_i) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: or mismatch" << std::endl;
+                std::cout << "  Expected: " << (in->src1_i | in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
+        
+         // and instruction
+        case 7:
+            if ((in->src1_i & in->src2_i) != tx->alu_result_o)
+            {
+                std::cout << std::endl;
+                std::cout << "AluScb: and mismatch" << std::endl;
+                std::cout << "  Expected: " << (in->src1_i & in->src2_i)
+                          << "  Actual: " << tx->alu_result_o << std::endl;
+                std::cout << "  Simtime: " << simcyc << std::endl;
+            }
+            break;
 
         // sub instruction
-        case 1:
+        case 8:
             if ((in->src1_i - in->src2_i != tx->alu_result_o) && ((in->src1_i == in->src2_i) == tx->eq_o))
             {
                 std::cout << std::endl;
@@ -81,41 +168,18 @@ public:
             }
             break;
 
-        // and instruction
-        case 2:
-            if ((in->src1_i & in->src2_i) != tx->alu_result_o)
+        // shift right arithemetic instruction
+        case 13:
+            if (in->src1_i >> (in->src2_i & 0x1F) != tx->alu_result_o)
             {
                 std::cout << std::endl;
-                std::cout << "AluScb: and mismatch" << std::endl;
-                std::cout << "  Expected: " << (in->src1_i & in->src2_i)
+                std::cout << "AluScb: sra mismatch" << std::endl;
+                std::cout << "  Expected: " << (in->src1_i >> (in->src2_i & 0x1F))
                           << "  Actual: " << tx->alu_result_o << std::endl;
                 std::cout << "  Simtime: " << simcyc << std::endl;
             }
             break;
 
-        // or instruction
-        case 3:
-            if ((in->src1_i | in->src2_i) != tx->alu_result_o)
-            {
-                std::cout << std::endl;
-                std::cout << "AluScb: or mismatch" << std::endl;
-                std::cout << "  Expected: " << (in->src1_i | in->src2_i)
-                          << "  Actual: " << tx->alu_result_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
-
-        // slt instruction
-        case 5:
-            if ((in->src1_i < in->src2_i) != tx->alu_result_o)
-            {
-                std::cout << std::endl;
-                std::cout << "AluScb: slt mismatch" << std::endl;
-                std::cout << "  Expected: " << (in->src1_i < in->src2_i)
-                          << "  Actual: " << tx->alu_result_o << std::endl;
-                std::cout << "  Simtime: " << simcyc << std::endl;
-            }
-            break;
         }
     }
 
@@ -204,7 +268,7 @@ AluInTx *rndAluInTx()
     AluInTx *tx = new AluInTx();
     tx->src1_i = rand() % 100;
     tx->src2_i = rand() % 100;
-    tx->alu_control_i = possible_alu_control_i[rand() % 5];
+    tx->alu_control_i = possible_alu_control_i[rand() % possible_alu_control_i.size()];
     return tx;
 }
 
