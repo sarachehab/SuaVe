@@ -116,7 +116,7 @@ int main(int argc, char **argv, char **env) {
             top->zero_i = 0;
             top->op_i = getopcode(instructions[simcyc]);
             top->funct3_i = getfunct3(instructions[simcyc]);
-            top->funct7_b5_i = getfunct7_b5(instructions[simcyc]);
+            top->funct7_5_i = getfunct7_b5(instructions[simcyc]);
         }
 
         if (Verilated::gotFinish())  exit(0);

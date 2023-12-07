@@ -1,9 +1,9 @@
 module controlUnit_top(
     //input signals
-    input logic zero,
-    input logic [6:0] op,
-    input logic [2:0] funct3,
-    input logic funct7_5,
+    input logic zero_i,
+    input logic [6:0] op_i,
+    input logic [2:0] funct3_i,
+    input logic funct7_5_i,
     //output signal
     output logic JB_instr_o,
     output logic JALR_instr_o,
@@ -35,11 +35,11 @@ main_decoder mainDecoder(
 
 alu_decoder aluDecoder(
     .alu_op_i(alu_op),
-    .funct3_i(funct3),
-    .funct7_b5_i(funct7_5),
+    .funct3_i(funct3_i),
+    .funct7_b5_i(funct7_5_i),
     .op_5_i(op_i[5]),
-    .alu_control_o(alu_control),
-    .byte_address_o(byte_address)
+    .alu_control_o(alu_control_o),
+    .byte_address_o(byte_address_o)
 );
 
 assign JB_instr_o = (zero_i & branch) | jmp;
