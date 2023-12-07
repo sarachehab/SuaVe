@@ -1,13 +1,13 @@
-module RISCV32I #(
+module cpu #(
     parameter DATA_WIDTH = 32
 )(
-    input logic clk_i, rst_i,
+    input logic clk_i, rst_i, trigger_i,
     output logic [DATA_WIDTH-1:0] a0_o
 );
 
 
     logic   JB_instr, JALR_instr, mem_write, alu_src, reg_write, byte_address, zero;
-    logic [DATA_WIDTH-1:0] instr, pc, pc_plus_4, rs1_plus_imm, imm_ext; 
+    logic [DATA_WIDTH-1:0] instr, pc_var, pc_plus_4, imm_ext, alu_out; 
     logic [1:0] result_src; 
     logic [2:0] imm_src;
     logic [3:0] alu_control;
@@ -15,10 +15,10 @@ module RISCV32I #(
 controlUnit_top controlUnit_top(
     .op_i(instr[6:0]),
     .funct3_i(instr[14:12]),
-    .funct7_b5_i(instr[30]),
+    .funct7_5_i(instr[30]),
     .zero_i(zero),
-    .branch_o(branch_ex),
-    .jump_o(jump_ex),
+    .JB_instr_o(JB_instr),
+    .JALR_instr_o(JALR_instr),
     .result_src_o(result_src),
     .mem_write_o(mem_write),
     .alu_src_o(alu_src),
@@ -35,6 +35,7 @@ datapath datapath(
     .reg_addr2_i(instr[24:20]),
     .reg_addr3_i(instr[11:7]),
     .reg_we_i(reg_write),
+    .trigger_i(trigger_i),
     .result_src_i(result_src),
     .imm_ext_i(imm_ext),
     .pc_next_i(pc_plus_4),
@@ -43,7 +44,8 @@ datapath datapath(
     .alu_control_i(alu_control),
     .alu_src_i(alu_src),
     .eq_o(zero),
-    .a0_o(a0_o)
+    .a0_o(a0_o),
+    .alu_out_o(alu_out)
 );
 
 extend_unit extend_unit(
@@ -54,19 +56,18 @@ extend_unit extend_unit(
 );
 
 instruction_memory instruction_memory(
-    .addr_i(pc),
+    .addr_i(pc_var),
     .instr_o(instr)
 );
 
-pc pc(
+pc program_counter(
     .clk_i(clk_i),
     .jump_taken_i(JB_instr),
     .rst_i(rst_i),
-    .jalr__instr_i(JALR_instr),
+    .jalr_instr_i(JALR_instr),
     .imm_ext_i(imm_ext),
-    .jta_jalr_i(jalr_instr),
-    .pc_o(pc),
+    .jta_jalr_i(alu_out),
+    .pc_o(pc_var),
     .pc_plus4_o(pc_plus_4)
 );
 endmodule
-
