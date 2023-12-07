@@ -110,7 +110,7 @@ VL_ATTR_COLD void Vcpu___024root__trace_init_sub__TOP__0(Vcpu___024root* vlSelf,
     tracep->declBus(c+73,"DATA_WIDTH", false,-1, 31,0);
     tracep->declBus(c+75,"BYTE_WIDTH", false,-1, 31,0);
     tracep->declBus(c+76,"START_ADDRESS", false,-1, 31,0);
-    tracep->declBus(c+77,"END_ADDRESS", false,-1, 16,0);
+    tracep->declBus(c+77,"END_ADDRESS", false,-1, 31,0);
     tracep->declBit(c+66,"clk_i", false,-1);
     tracep->declBit(c+36,"we_i", false,-1);
     tracep->declBit(c+39,"byte_op_i", false,-1);
@@ -300,24 +300,24 @@ VL_ATTR_COLD void Vcpu___024root__trace_full_sub_0(Vcpu___024root* vlSelf, Veril
                                   [(0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]
                                    : 0U) : ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                              [(0x1ffffU 
-                                               & ((IData)(3U) 
-                                                  + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                               & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)] 
                                              << 0x18U) 
                                             | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                 [(0x1ffffU 
-                                                  & ((IData)(2U) 
+                                                  & ((IData)(1U) 
                                                      + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                 << 0x10U) 
                                                | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                    [
                                                    (0x1ffffU 
-                                                    & ((IData)(1U) 
+                                                    & ((IData)(2U) 
                                                        + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                    << 8U) 
                                                   | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                   [
                                                   (0x1ffffU 
-                                                   & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))),32);
+                                                   & ((IData)(3U) 
+                                                      + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))]))))),32);
     bufp->fullIData(oldp+72,(((2U & (IData)(vlSelf->cpu__DOT__result_src))
                                ? ((1U & (IData)(vlSelf->cpu__DOT__result_src))
                                    ? vlSelf->cpu__DOT__imm_ext
@@ -331,28 +331,28 @@ VL_ATTR_COLD void Vcpu___024root__trace_full_sub_0(Vcpu___024root* vlSelf, Veril
                                            : 0U) : 
                                       ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                         [(0x1ffffU 
-                                          & ((IData)(3U) 
-                                             + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                          & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)] 
                                         << 0x18U) | 
                                        ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                          [(0x1ffffU 
-                                           & ((IData)(2U) 
+                                           & ((IData)(1U) 
                                               + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                          << 0x10U) 
                                         | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                             [(0x1ffffU 
-                                              & ((IData)(1U) 
+                                              & ((IData)(2U) 
                                                  + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                             << 8U) 
                                            | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                            [(0x1ffffU 
-                                             & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))
+                                             & ((IData)(3U) 
+                                                + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))]))))
                                    : vlSelf->cpu__DOT__alu_out))),32);
     bufp->fullIData(oldp+73,(0x20U),32);
     bufp->fullIData(oldp+74,(5U),32);
     bufp->fullIData(oldp+75,(8U),32);
     bufp->fullIData(oldp+76,(0x10000U),32);
-    bufp->fullIData(oldp+77,(0x1ffffU),17);
+    bufp->fullIData(oldp+77,(0x1ffffU),32);
     bufp->fullIData(oldp+78,(0xbfc00000U),32);
     bufp->fullIData(oldp+79,(0xbfc00fffU),32);
 }

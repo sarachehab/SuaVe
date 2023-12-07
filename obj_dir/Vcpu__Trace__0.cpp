@@ -122,23 +122,23 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
                                  [(0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]
                                   : 0U) : ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                             [(0x1ffffU 
-                                              & ((IData)(3U) 
-                                                 + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                              & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)] 
                                             << 0x18U) 
                                            | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                [(0x1ffffU 
-                                                 & ((IData)(2U) 
+                                                 & ((IData)(1U) 
                                                     + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                << 0x10U) 
                                               | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                   [
                                                   (0x1ffffU 
-                                                   & ((IData)(1U) 
+                                                   & ((IData)(2U) 
                                                       + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                   << 8U) 
                                                  | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                  [(0x1ffffU 
-                                                   & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))),32);
+                                                   & ((IData)(3U) 
+                                                      + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))]))))),32);
     bufp->chgIData(oldp+71,(((2U & (IData)(vlSelf->cpu__DOT__result_src))
                               ? ((1U & (IData)(vlSelf->cpu__DOT__result_src))
                                   ? vlSelf->cpu__DOT__imm_ext
@@ -153,25 +153,25 @@ void Vcpu___024root__trace_chg_sub_0(Vcpu___024root* vlSelf, VerilatedVcd::Buffe
                                                    (vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                     [
                                                     (0x1ffffU 
-                                                     & ((IData)(3U) 
-                                                        + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                                     & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)] 
                                                     << 0x18U) 
                                                    | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                        [
                                                        (0x1ffffU 
-                                                        & ((IData)(2U) 
+                                                        & ((IData)(1U) 
                                                            + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                        << 0x10U) 
                                                       | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                           [
                                                           (0x1ffffU 
-                                                           & ((IData)(1U) 
+                                                           & ((IData)(2U) 
                                                               + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                           << 8U) 
                                                          | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                          [
                                                          (0x1ffffU 
-                                                          & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))
+                                                          & ((IData)(3U) 
+                                                             + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))]))))
                                   : vlSelf->cpu__DOT__alu_out))),32);
 }
 

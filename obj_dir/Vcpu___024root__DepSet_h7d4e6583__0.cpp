@@ -50,38 +50,57 @@ VL_INLINE_OPT void Vcpu___024root___nba_sequent__TOP__0(Vcpu___024root* vlSelf) 
     __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 = 0U;
     __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 = 0U;
     __Vdlyvset__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 = 0U;
-    if (vlSelf->cpu__DOT__mem_write) {
+    if (VL_UNLIKELY(vlSelf->cpu__DOT__mem_write)) {
+        VL_WRITEF("dataram[starting%x] is %x\nexpecting wd_i %x:\n",
+                  32,vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr,
+                  32,((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
+                       [(0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                       << 0x18U) | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
+                                     [(0x1ffffU & ((IData)(2U) 
+                                                   + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                     << 0x10U) | ((
+                                                   vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
+                                                   [
+                                                   (0x1ffffU 
+                                                    & ((IData)(1U) 
+                                                       + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                                   << 8U) 
+                                                  | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
+                                                  [
+                                                  (0x1ffffU 
+                                                   & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))),
+                  32,vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
         __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 
-            = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+            = (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
+               >> 0x18U);
         __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 = 1U;
         __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 
             = (0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr);
         if ((1U & (~ (IData)(vlSelf->cpu__DOT__byte_address)))) {
             __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 
-                = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
-                            >> 8U));
+                = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
             __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 = 1U;
             __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 
-                = (0x1ffffU & ((IData)(1U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
+                = (0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
             __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2 
                 = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
-                            >> 0x10U));
+                            >> 8U));
             __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2 
                 = (0x1ffffU & ((IData)(2U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
             __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3 
-                = (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
-                   >> 0x18U);
+                = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
+                            >> 0x10U));
             __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3 
-                = (0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
+                = (0x1ffffU & ((IData)(1U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
         }
     }
     __Vdlyvval__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v0 
         = vlSelf->trigger_i;
-    if (VL_UNLIKELY(((IData)(vlSelf->cpu__DOT__reg_write) 
-                     & (0U != (0x1fU & ((IData)(vlSelf->__VdfgTmp_hee5fc8f3__0) 
-                                        >> 7U)))))) {
-        VL_WRITEF("Write addr3_i %b\n",5,(0x1fU & ((IData)(vlSelf->__VdfgTmp_hee5fc8f3__0) 
-                                                   >> 7U)));
+    if (((IData)(vlSelf->cpu__DOT__reg_write) & (0U 
+                                                 != 
+                                                 (0x1fU 
+                                                  & ((IData)(vlSelf->__VdfgTmp_hee5fc8f3__0) 
+                                                     >> 7U))))) {
         __Vdlyvval__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 
             = ((2U & (IData)(vlSelf->cpu__DOT__result_src))
                 ? ((1U & (IData)(vlSelf->cpu__DOT__result_src))
@@ -93,26 +112,25 @@ VL_INLINE_OPT void Vcpu___024root___nba_sequent__TOP__0(Vcpu___024root* vlSelf) 
                             ? vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                            [(0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]
                             : 0U) : ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
-                                      [(0x1ffffU & 
-                                        ((IData)(3U) 
-                                         + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
+                                      [(0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)] 
                                       << 0x18U) | (
                                                    (vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                     [
                                                     (0x1ffffU 
-                                                     & ((IData)(2U) 
+                                                     & ((IData)(1U) 
                                                         + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                     << 0x10U) 
                                                    | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                        [
                                                        (0x1ffffU 
-                                                        & ((IData)(1U) 
+                                                        & ((IData)(2U) 
                                                            + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
                                                        << 8U) 
                                                       | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
                                                       [
                                                       (0x1ffffU 
-                                                       & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))
+                                                       & ((IData)(3U) 
+                                                          + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))]))))
                     : vlSelf->cpu__DOT__alu_out));
         __Vdlyvset__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 = 1U;
         __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 

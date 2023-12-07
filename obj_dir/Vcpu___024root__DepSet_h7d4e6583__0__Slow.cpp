@@ -34,7 +34,6 @@ VL_ATTR_COLD void Vcpu___024root___eval_initial__TOP(Vcpu___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___eval_initial__TOP\n"); );
     // Init
     VlWide<3>/*95:0*/ __Vtemp_1;
-    VlWide<4>/*127:0*/ __Vtemp_3;
     // Body
     vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf[0U] = 0U;
     vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf[1U] = 0U;
@@ -70,11 +69,11 @@ VL_ATTR_COLD void Vcpu___024root___eval_initial__TOP(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf[0x1fU] = 0U;
     vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__unnamedblk1__DOT__i = 0x20U;
     __Vtemp_1[0U] = 0x2e6d656dU;
-    __Vtemp_1[1U] = 0x6e676c65U;
-    __Vtemp_1[2U] = 0x74726961U;
+    __Vtemp_1[1U] = 0x7369616eU;
+    __Vtemp_1[2U] = 0x67617573U;
     VL_READMEM_N(true, 8, 131072, 0, VL_CVT_PACK_STR_NW(3, __Vtemp_1)
                  ,  &(vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram)
-                 , 0x10000U, 0x10007U);
+                 , 0x10000U, ~0ULL);
     vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__unnamedblk1__DOT__i = 0U;
     while ((0x10000U > vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__unnamedblk1__DOT__i)) {
         vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram[(0x1ffffU 
@@ -83,11 +82,7 @@ VL_ATTR_COLD void Vcpu___024root___eval_initial__TOP(Vcpu___024root* vlSelf) {
             = ((IData)(1U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__unnamedblk1__DOT__i);
     }
     VL_WRITEF("Loading rom.\n");
-    __Vtemp_3[0U] = 0x2e6d656dU;
-    __Vtemp_3[1U] = 0x67687473U;
-    __Vtemp_3[2U] = 0x315f6c69U;
-    __Vtemp_3[3U] = 0x46U;
-    VL_READMEM_N(true, 8, 4096, 3217031168, VL_CVT_PACK_STR_NW(4, __Vtemp_3)
+    VL_READMEM_N(true, 8, 4096, 3217031168, std::string{"pdf.hex"}
                  ,  &(vlSelf->cpu__DOT__instruction_memory__DOT__rom)
                  , 3217031168, ~0ULL);
     VL_WRITEF("Program written to ROM successfully\n");
