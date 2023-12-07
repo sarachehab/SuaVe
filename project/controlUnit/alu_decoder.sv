@@ -19,26 +19,62 @@ always_comb
                 alu_control_o = 4'b0000; // for lbu and sb
                 byte_address_o = 1'b1;// for lbu and sb
             end
-    2'b01: alu_control_o = 4'b1000; //subtract for beq
-    2'b11: alu_control_o = 4'b0001; //logical shift left for lui
+    2'b01: begin
+        alu_control_o = 4'b1000; //subtract for beq
+        byte_address_o = 1'b0; //for lw and sw
+    end
+    2'b11: begin
+        alu_control_o = 4'b0001; //logical shift left for lui
+        byte_address_o = 1'b0; //for lw and sw
+    end
     //defaut case for 2'b10
     default:    case(funct3_i) // if we have R-type or I-type, because we've dealt with lw, sw and beq
-                    3'b000: if (rTypeSub)
+                    3'b000: if (rTypeSub) begin
                                 alu_control_o = 4'b1000; //subtract as sub has f_iunct7_5 high and op_5 high while addi has op_5 low
-                            else
+                                byte_address_o = 1'b0; //for lw and sw
+                            end
+                            else begin
                                 alu_control_o = 4'b0000; //add, addi, jalr
-                    3'b001: alu_control_o = 4'b0001;    //sll, slli
-                    3'b101: if(rTypeSub)
+                                byte_address_o = 1'b0; //for lw and sw
+                            end
+                    3'b001: begin
+                        alu_control_o = 4'b0001;    //sll, slli
+                        byte_address_o = 1'b0; //for lw and sw
+                    end
+                    3'b101: if(rTypeSub) begin
                                 alu_control_o = 4'b1101;    //sra. srai
-                            else
+                                byte_address_o = 1'b0; //for lw and sw
+                            end
+                            else begin
                                 alu_control_o = 4'b0101;    //srl, srli 
-                    3'b011: alu_control_o = 4'b0011; //sltu, sltiu
-                    3'b010: alu_control_o = 4'b0010; //slt, slti
-                    3'b110: alu_control_o = 4'b0110; // or, ori
-                    3'b111: alu_control_o = 4'b0111; //and, andi
-                    3'b100: alu_control_o = 4'b0100; // xor, xori
+                                byte_address_o = 1'b0; //for lw and sw
+                            end
+                    3'b011: begin 
+                        alu_control_o = 4'b0011; //sltu, sltiu
+                        byte_address_o = 1'b0; //for lw and sw
+                    end
+                    3'b010: begin
+                        alu_control_o = 4'b0010; //slt, slti
+                        byte_address_o = 1'b0; //for lw and sw
 
-                    default: alu_control_o = 4'b0000;
+                    end
+                    3'b110:begin
+                        alu_control_o = 4'b0110; // or, ori
+                        byte_address_o = 1'b0; //for lw and sw
+                    end
+                    3'b111: begin
+                        alu_control_o = 4'b0111; //and, andi
+                        byte_address_o = 1'b0; //for lw and sw
+                    end
+                    3'b100: begin
+                        alu_control_o = 4'b0100; // xor, xori
+                        byte_address_o = 1'b0; //for lw and sw
+                    end
+
+                    default: begin
+                        alu_control_o = 4'b0000;
+                        byte_address_o = 1'b0; //for lw and sw
+                    end
                 endcase
     endcase
 
