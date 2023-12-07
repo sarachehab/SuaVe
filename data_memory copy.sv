@@ -1,0 +1,49 @@
+module data_memory # (
+    parameter DATA_WIDTH    = 32,
+              BYTE_WIDTH    = 8, 
+              START_ADDRESS = 32'h10000,
+              END_ADDRESS   = 32'h1FFFF
+)(
+    input  logic                        clk_i, we_i, byte_op_i,
+    input  logic [DATA_WIDTH-1:0]       addr_i,
+    input  logic [DATA_WIDTH-1:0]       wd_i,
+    output logic [DATA_WIDTH-1:0]       rd_o
+);
+
+logic [BYTE_WIDTH-1:0]  data_ram [END_ADDRESS:0];
+logic [DATA_WIDTH-1:0]  addr;
+
+assign addr = byte_op_i ? ( (addr_i & 32'hFFFFFFFC) + 32'h3 - (addr_i & 32'h3))  : (addr_i & 32'hFFFFFFFC);
+
+initial begin
+    $readmemh("gaussian.mem", data_ram, START_ADDRESS);
+    for (int i = 0; i < START_ADDRESS; i++) begin
+        data_ram[i] = {BYTE_WIDTH{1'b0}};
+    end
+end
+
+always_comb begin
+    case (byte_op_i)
+        1'b0: rd_o = {data_ram[addr+0], data_ram[addr+1], data_ram[addr+2], data_ram[addr+3]};
+        1'b1: rd_o = {{3*BYTE_WIDTH{1'b0}}, data_ram[addr]};    // only implementing LBU
+        default: rd_o = {DATA_WIDTH{1'b0}};
+    endcase
+end
+
+always_ff @(negedge clk_i) begin
+
+    if (we_i) begin
+        if (!byte_op_i) begin
+            data_ram[addr+3] <= wd_i[BYTE_WIDTH-1:0];
+            data_ram[addr+2] <= wd_i[2*BYTE_WIDTH-1:BYTE_WIDTH];
+            data_ram[addr+1] <= wd_i[3*BYTE_WIDTH-1:2*BYTE_WIDTH];
+            data_ram[addr+0] <= wd_i[4*BYTE_WIDTH-1:3*BYTE_WIDTH];
+        end else 
+            data_ram[addr] <= wd_i[BYTE_WIDTH-1:0];
+        $display("dataram[starting%h] is %h", addr_i, rd_o);
+        $display("expecting wd_i %h:",wd_i);
+        $display("byte_op_i: %b",byte_op_i);
+    end
+end
+
+endmodule

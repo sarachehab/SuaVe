@@ -24,7 +24,7 @@ end
 
 always_comb begin
     case (byte_op_i)
-        1'b0: rd_o = {data_ram[addr+0], data_ram[addr+1], data_ram[addr+2], data_ram[addr+3]};
+        1'b0: rd_o = {data_ram[addr+3], data_ram[addr+2], data_ram[addr+1], data_ram[addr+0]};
         1'b1: rd_o = {{3*BYTE_WIDTH{1'b0}}, data_ram[addr]};    // only implementing LBU
         default: rd_o = {DATA_WIDTH{1'b0}};
     endcase
@@ -33,15 +33,16 @@ end
 always_ff @(negedge clk_i) begin
 
     if (we_i) begin
-        data_ram[addr+0] <= wd_i[4*BYTE_WIDTH-1:3*BYTE_WIDTH];
-
         if (!byte_op_i) begin
-            data_ram[addr+3] <= wd_i[BYTE_WIDTH-1:0];
-            data_ram[addr+2] <= wd_i[2*BYTE_WIDTH-1:BYTE_WIDTH];
-            data_ram[addr+1] <= wd_i[3*BYTE_WIDTH-1:2*BYTE_WIDTH];
-        end
-        $display("dataram[starting%h] is %h", addr, {data_ram[addr+3], data_ram[addr+2],data_ram[addr+1] ,data_ram[addr+0]});
+            data_ram[addr+0] <= wd_i[BYTE_WIDTH-1:0];
+            data_ram[addr+1] <= wd_i[2*BYTE_WIDTH-1:BYTE_WIDTH];
+            data_ram[addr+2] <= wd_i[3*BYTE_WIDTH-1:2*BYTE_WIDTH];
+            data_ram[addr+3] <= wd_i[4*BYTE_WIDTH-1:3*BYTE_WIDTH];
+        end else 
+            data_ram[addr] <= wd_i[BYTE_WIDTH-1:0];
+        $display("dataram[starting%h] is %h", addr_i, rd_o);
         $display("expecting wd_i %h:",wd_i);
+        $display("byte_op_i: %b",byte_op_i);
     end
 end
 

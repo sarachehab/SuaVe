@@ -5,10 +5,12 @@
 #include <iostream>
 #include <fstream>
 
-#define MAX_SIM_CYC 20000
+#define MAX_SIM_CYC 124455
+// clk 247390 is when it starts a0_o reading
 
 int main(int argc, char **argv, char **env)
 {
+  bool printClk = 1;
   std::ofstream pdfFile;
   pdfFile.open("gaussian.txt");
   int simcyc;
@@ -30,6 +32,7 @@ int main(int argc, char **argv, char **env)
   top->rst_i = 1;
   // top->trigger_i = 1;
 
+  int readEvery4Cyc = 0;
   for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
   {
     for (tick = 0; tick < 2; tick++)
@@ -40,10 +43,22 @@ int main(int argc, char **argv, char **env)
     }
     if (top->a0_o != 0)
     {
-      pdfFile << top->a0_o << "\n";
-      std::cout << top->a0_o << std::endl;
+      if (printClk){
+        std::cout << simcyc << std::endl;
+        printClk = 0;
+      }
+      // pdfFile << top->a0_o << "\n";
+      //std::cout << top->a0_o << std::endl;
     }
-    pdfFile << top->a0_o << "\n";
+
+    if (simcyc > 123685){
+      readEvery4Cyc++;
+      if (readEvery4Cyc == 4){
+        pdfFile << top->a0_o << "\n";
+        readEvery4Cyc = 0;
+      }
+    }
+
     // std::cout << top->a0_o << std::endl;
     //  vbdPlot(int (top->a0_o), 0, 255);
     //  vbdCycle(simcyc);
