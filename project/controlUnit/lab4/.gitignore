@@ -1,8 +1,0 @@
-instrmem/obj_dir
-controlunit/obj_dir
-signextend/obj_dir
-dataPath/obj_dir
-*.vcd
-.vscode
-*.cfg
-vbuddy.cpp
