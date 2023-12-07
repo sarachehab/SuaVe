@@ -10,7 +10,7 @@ s0 - maximum counter value
 s1 - maximum wait timer
 s2 - trigger val
 
-t0 - trigger
+t3 - trigger
 
 
 
