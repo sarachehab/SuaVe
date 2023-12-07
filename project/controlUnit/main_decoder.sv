@@ -4,7 +4,11 @@ module main_decoder (
     //outputs:
     output logic                        branch_o,
     output logic                        jump_o,
+<<<<<<< HEAD
     output logic                         JALR_o,
+=======
+    output logic                        jalr_o
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
     output logic    [1:0]               result_src_o,
     output logic                        mem_write_o,
     output logic                        alu_src_o,
@@ -27,7 +31,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b00;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
 
         //memory write instruction: sw
@@ -40,7 +48,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b00;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
 
         //register operation:
@@ -53,7 +65,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b10;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
 
         //branch_o operation: beq
@@ -66,7 +82,11 @@ always_comb begin
             branch_o = 1'b1;
             alu_op_o = 2'b01;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
 
         //immediate operation:
@@ -79,7 +99,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b10;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
 
         // Jump instruction JAL
@@ -92,7 +116,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b00;//dont-care value
             jump_o = 1'b1;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
         //Jump instrucation JALR
         7'b1100111 : begin
@@ -104,7 +132,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b10;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b1;
+=======
+            jalr_o = 1'b1;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
         //upper type : lui
         7'b0110111 : begin
@@ -116,7 +148,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b11;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
 
         // reset all variables
@@ -129,7 +165,11 @@ always_comb begin
             branch_o = 1'b0;
             alu_op_o = 2'b10;
             jump_o = 1'b0;
+<<<<<<< HEAD
             JALR_o = 1'b0;
+=======
+            jalr_o = 1'b0;
+>>>>>>> 7489efb981b3cf68f16fa903aef3804b699c6eee
         end
     endcase
 end;
