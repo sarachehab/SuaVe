@@ -5,14 +5,22 @@
 #include <iostream>
 #include <fstream>
 
-#define MAX_SIM_CYC 124455
-// clk 247390 is when it starts a0_o reading
+#define MAX_SIM_CYC 20000000
+// clk 247390 is when it starts a0_o reading for gaussian
 
 int main(int argc, char **argv, char **env)
 {
-  bool printClk = 1;
   std::ofstream pdfFile;
-  pdfFile.open("gaussian.txt");
+  // pdfFile.open("gaussian.txt");
+  // pdfFile.open("sine.txt");
+  pdfFile.open("triangle.txt");
+  // pdfFile.open("noisy.txt");
+
+  if (!pdfFile.is_open())
+  {
+    std::cout << "pdfFile is not open" << std::endl;
+  }
+
   int simcyc;
   int tick;
 
@@ -23,16 +31,12 @@ int main(int argc, char **argv, char **env)
   top->trace(tfp, 99);
   tfp->open("cpu_run_reference.vcd");
 
-  // if (vbdOpen() != 1)
-  //   return (-1);
-  // vbdHeader("Running reference");
-  // vbdSetMode(1); // Flag mode set to one-shot
-
   top->clk_i = 1;
   top->rst_i = 1;
   // top->trigger_i = 1;
 
-  int readEvery4Cyc = 0;
+  int  cntReading = 0;
+  bool currentlyReading = false;
   for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
   {
     for (tick = 0; tick < 2; tick++)
@@ -41,36 +45,30 @@ int main(int argc, char **argv, char **env)
       top->clk_i = !top->clk_i;
       top->eval();
     }
-    if (top->a0_o != 0)
+
+    if (top->a0_o == -1)
     {
-      if (printClk){
-        std::cout << simcyc << std::endl;
-        printClk = 0;
-      }
-      // pdfFile << top->a0_o << "\n";
-      //std::cout << top->a0_o << std::endl;
+      currentlyReading = true;
     }
 
-    if (simcyc > 123685){
-      readEvery4Cyc++;
-      if (readEvery4Cyc == 4){
+    if (currentlyReading)
+    {
+      cntReading++;
+      if (cntReading%3 == 2){
         pdfFile << top->a0_o << "\n";
-        readEvery4Cyc = 0;
       }
     }
-
-    // std::cout << top->a0_o << std::endl;
-    //  vbdPlot(int (top->a0_o), 0, 255);
-    //  vbdCycle(simcyc);
 
     top->rst_i = (simcyc < 3);
 
-    // // either simulation finished, or 'q' is pressed
+    if (cntReading > 256 * 3)
+      break;
+
+    // either simulation finished
     if (Verilated::gotFinish())
       break;
   }
   pdfFile.close();
-  // vbdClose();
   tfp->close();
   printf("Exiting\n");
   exit(0);
