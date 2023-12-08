@@ -42,10 +42,10 @@ module cache (
   
 //write enable to be done buy utsav
 
-  read_data_o = (tag==cache_tag[set][0]) ? cache_tag[set][0]:
-                (tag==cache_tag[set][1]) ? cache_tag[set][1]:
-                (tag==cache_tag[set][2]) ? cache_tag[set][2]:
-                (tag==cache_tag[set][3]) ? cache_tag[set][3]:
+  read_data_o = (tag==cache_tag[set][0]) ? cache_data[set][0]:
+                (tag==cache_tag[set][1]) ? cache_data[set][1]:
+                (tag==cache_tag[set][2]) ? cache_data[set][2]:
+                (tag==cache_tag[set][3]) ? cache_data[set][3]:
                 32'b0;
                 
                 
