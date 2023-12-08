@@ -34,16 +34,12 @@ int main(int argc, char **argv, char **env)
       top->clk_i = !top->clk_i;
       top->eval();
     }
-    top->trigger_i = (simcyc > 5);
+    top->trigger_i = (vbdValue() > 50);
+    top->rst_i = (simcyc > 3) ? vbdFlag() : 1;
+
     vbdBar(top->a0_o & 0xFF);
 
     vbdCycle(simcyc);
-
-    top->rst_i = vbdFlag();
-    if (simcyc < 3)
-    {
-      top->rst_i = 1;
-    }
 
     // either simulation finished, or 'q' is pressed
     if ((Verilated::gotFinish()) || (vbdGetkey() == 'q'))
