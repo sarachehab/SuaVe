@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **env)
   std::ofstream pdfFile;
   // pdfFile.open("gaussian.txt");
   // pdfFile.open("sine.txt");
-  pdfFile.open("triangle.txt");
+  pdfFile.open("noisy.txt");
   // pdfFile.open("noisy.txt");
 
   if (!pdfFile.is_open())
@@ -35,7 +35,7 @@ int main(int argc, char **argv, char **env)
   top->rst_i = 1;
   // top->trigger_i = 1;
 
-  int  cntReading = 0;
+  int cntReading = 0;
   bool currentlyReading = false;
   for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
   {
@@ -54,7 +54,8 @@ int main(int argc, char **argv, char **env)
     if (currentlyReading)
     {
       cntReading++;
-      if (cntReading%3 == 2){
+      if (cntReading % 3 == 2)
+      {
         pdfFile << top->a0_o << "\n";
       }
     }
