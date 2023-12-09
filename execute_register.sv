@@ -13,7 +13,7 @@ module execute_register (
     output   logic   [REGISTER_WIDTH-1:0]    rs1_e_o, rs2_e_o, rd_e_o,
     output   logic   [3:0]                   alu_control_e_o,
     output   logic   [1:0]                   result_src_e_o,
-    output   logic                           reg_write_e_o, mem_write_e_o, jump_e_o, branch_e_o, jalr_e_o, alu_src_e_o, byte_op_d_i
+    output   logic                           reg_write_e_o, mem_write_e_o, jump_e_o, branch_e_o, jalr_e_o, alu_src_e_o, byte_op_e_o
 );
 
 always_ff @ (posedge clk) begin

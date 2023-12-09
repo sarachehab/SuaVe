@@ -5,7 +5,7 @@ module write_register (
     input   logic                           clk,
     input   logic   [DATA_WIDTH-1:0]        alu_result_m_i, pc_plus4_m_i, read_data_m_i, imm_ext_m_i,
     input   logic   [REGISTER_WIDTH-1:0]    rd_m_i,
-    input   logic   [1:0]                   result_src_m_i
+    input   logic   [1:0]                   result_src_m_i,
     input   logic                           reg_write_m_i,
 
     output   logic   [DATA_WIDTH-1:0]        alu_result_w_o, pc_plus4_w_o, read_data_w_o, imm_ext_w_o,

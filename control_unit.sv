@@ -1,12 +1,11 @@
 module control_unit(
     //input signals
-    input   logic               zero_i,
     input   logic [6:0]         op_i,
     input   logic [2:0]         funct3_i,
     input   logic               funct7_5_i,
     //output signal
     output logic                jump_o,
-    output logic                branch_o
+    output logic                branch_o,
     output logic                jalr_o,
     output logic [1:0]          result_src_o,
     output logic                mem_write_o,

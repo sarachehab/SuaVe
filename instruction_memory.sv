@@ -4,8 +4,8 @@ module instruction_memory #(
                 FIRST_INSTR_ADDR = 32'hBFC00000,
                 LAST_INSTR_ADDR  = 32'hBFC00FFF
 )(
-    input  logic [DATA_WIDTH-1:0] addr_i,
-    output logic [DATA_WIDTH-1:0] instr_o
+    input  logic [DATA_WIDTH-1:0] addr_f_i,
+    output logic [DATA_WIDTH-1:0] instr_f_o
 );
 
 logic [BYTE_SIZE-1:0] rom [LAST_INSTR_ADDR:FIRST_INSTR_ADDR];
