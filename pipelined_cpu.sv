@@ -139,7 +139,7 @@ execute_stage #(DATA_WIDTH) pipeline_execute_stage (
     .rd2_e_i(rd2_e),
     .pc_e_i(pc_e),
     .imm_ext_e_i(imm_ext_e),
-    .alu_result_m_i(alu_result_m),
+    .alu_result_m_i(result_src_m[0] ? imm_ext_m : alu_result_m),
     .result_w_i(result_w),
     .alu_control_e_i(alu_control_e),
     .forward1_e_i(forward1_e), 
@@ -154,7 +154,7 @@ execute_stage #(DATA_WIDTH) pipeline_execute_stage (
 
 // MEMORY STAGE
 
-logic   [DATA_WIDTH-1:0]        alu_result_m, write_data_m, pc_plus4_m, imm_ext_m, read_data_m;
+logic   [DATA_WIDTH-1:0]        alu_result_m, write_data_m, pc_plus4_m, imm_ext_m, read_data_m, ;
 logic   [REG_ADDR_LENGTH-1:0]   rd_m;
 logic   [1:0]                   result_src_m;
 logic                           reg_write_m, mem_write_m, byte_op_m;
