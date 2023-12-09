@@ -11,9 +11,9 @@ always_ff @ (posedge clk) begin
     case (rst)
         1'b0:
             if (en_i) begin
-            instr_d_o <= instr_f_i;
-            pc_d_o <= pc_f_i;
-            pc_plus4_d_o <= pc_plus4_f_i;
+                instr_d_o <= instr_f_i;
+                pc_d_o <= pc_f_i;
+                pc_plus4_d_o <= pc_plus4_f_i;
             end
         1'b1: begin    
             instr_d_o <= {DATA_WIDTH{1'b0}};
