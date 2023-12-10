@@ -22,22 +22,22 @@ int main(int argc, char **argv, char **env)
   vbdHeader("Running F1");
   vbdSetMode(1); // Flag mode set to one-shot
 
-  top->clk_i = 1;
-  top->rst_i = 1;
-  top->trigger_i = 0;
+  top->clk = 1;
+  top->rst = 1;
+  top->trigger = 0;
 
   for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
   {
     for (tick = 0; tick < 2; tick++)
     {
       tfp->dump(2 * simcyc + tick);
-      top->clk_i = !top->clk_i;
+      top->clk = !top->clk;
       top->eval();
     }
-    top->trigger_i = (vbdValue() > 50);
-    top->rst_i = (simcyc > 3) ? vbdFlag() : 1;
+    top->trigger = (vbdValue() > 50);
+    top->rst = (simcyc > 3) ? vbdFlag() : 1;
 
-    vbdBar(top->a0_o & 0xFF);
+    vbdBar(top->a0 & 0xFF);
 
     vbdCycle(simcyc);
 

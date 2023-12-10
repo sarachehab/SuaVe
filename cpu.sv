@@ -1,4 +1,4 @@
-module pipelined_cpu (
+module cpu #(
     parameter   DATA_WIDTH = 32,
                 REG_ADDR_LENGTH = 5
 )(
@@ -108,7 +108,6 @@ execute_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_execute_register (
     .alu_control_d_i(alu_control_d),
     .result_src_d_i(result_src_d),
     .reg_write_d_i(reg_write_d),
-    .result_src_d_i(result_src_d),
     .mem_write_d_i(mem_write_d),
     .jump_d_i(jump_d),
     .jalr_d_i(jalr_d),
@@ -139,7 +138,7 @@ execute_stage #(DATA_WIDTH) pipeline_execute_stage (
     .rd2_e_i(rd2_e),
     .pc_e_i(pc_e),
     .imm_ext_e_i(imm_ext_e),
-    .alu_result_m_i(result_src_m[0] ? imm_ext_m : alu_result_m),
+    .result_m_i(result_m),
     .result_w_i(result_w),
     .alu_control_e_i(alu_control_e),
     .forward1_e_i(forward1_e), 
@@ -154,7 +153,7 @@ execute_stage #(DATA_WIDTH) pipeline_execute_stage (
 
 // MEMORY STAGE
 
-logic   [DATA_WIDTH-1:0]        alu_result_m, write_data_m, pc_plus4_m, imm_ext_m, read_data_m, ;
+logic   [DATA_WIDTH-1:0]        alu_result_m, result_m, write_data_m, pc_plus4_m, imm_ext_m, read_data_m;
 logic   [REG_ADDR_LENGTH-1:0]   rd_m;
 logic   [1:0]                   result_src_m;
 logic                           reg_write_m, mem_write_m, byte_op_m;
@@ -231,14 +230,16 @@ always_comb begin
 
     jb_taken_e = ((~zero_e) & branch_e) | jump_e;
 
+    result_m = result_src_m[0] ? imm_ext_m : alu_result_m;
+
 end
 
 // DATA-HAZARD UNIT
 
 logic   [1:0]   forward1_e, forward2_e;
-logic           stall_f, stall_d, flush_d, flush_e;
+logic           stall_f, stall_d, flush_d, flush_e, jb_taken_e;
 
-data_hazard #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_data_hazard (
+hazard_unit #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_hazard_unit (
     .rs1_d_i(rs1_d),
     .rs2_d_i(rs2_d),
     .rs1_e_i(rs1_e),
@@ -248,7 +249,7 @@ data_hazard #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_data_hazard (
     .rd_w_i(rd_w),
     .result_src_e_i(result_src_e),
     .jb_taken_e_i(jb_taken_e),
-    .jalr_e_i(jarl_e),
+    .jalr_e_i(jalr_e),
     .reg_write_m_i(reg_write_m),
     .reg_write_w_i(reg_write_w),
     .stall_f_o(stall_f),
@@ -256,7 +257,7 @@ data_hazard #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_data_hazard (
     .flush_d_o(flush_d),
     .flush_e_o(flush_e),
     .forward1_e_o(forward1_e),
-    .forward_2_e_o(forward2_e)
+    .forward2_e_o(forward2_e)
 );
 
 

@@ -1,4 +1,4 @@
-module write_register (
+module write_register # (
     parameter   DATA_WIDTH = 32,
                 REGISTER_WIDTH = 5
 )(
@@ -15,7 +15,7 @@ module write_register (
 
 );
 
-always_ff @ (posedge clk) {
+always_ff @ (posedge clk) begin
     reg_write_w_o <= reg_write_m_i; 
     result_src_w_o <= result_src_m_i;
 
@@ -25,7 +25,7 @@ always_ff @ (posedge clk) {
     pc_plus4_w_o <= pc_plus4_m_i;
 
     rd_w_o <= rd_m_i;
-}
+end
 
 endmodule
 

@@ -12,7 +12,7 @@ module pc # (
         pc_next = 32'hBFC00000;
     end
 
-    always_ff @ (posedge clk_i) begin
+    always_ff @ (posedge clk) begin
         if (rst_i)  pc_next <= 32'hBFC00000;
         else begin
             if (en_i)

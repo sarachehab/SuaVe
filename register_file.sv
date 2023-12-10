@@ -21,7 +21,7 @@ module register_file #(
     assign rd2_o = rf[addr2_i];
     assign a0_o = rf[5'd10];
     
-    always_ff @(negedge clk_i) begin
+    always_ff @(negedge clk) begin
         rf[19] <= {{31{1'b0}} , trigger_i};
         if (addr3_we_i && addr3_i != 0) begin
             rf[addr3_i] <= addr3_wd_i;

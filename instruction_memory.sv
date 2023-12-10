@@ -18,8 +18,8 @@ initial begin
 
 end;
 
-logic [DATA_WIDTH-1:0] addr = addr_i & 32'hFFFFFFFC;
+logic [DATA_WIDTH-1:0] addr = addr_f_i & 32'hFFFFFFFC;
 
-assign instr_o = {rom[addr+32'd0], rom[addr+32'd1], rom[addr+32'd2], rom[addr+32'd3]};
+assign instr_f_o = {rom[addr+32'd0], rom[addr+32'd1], rom[addr+32'd2], rom[addr+32'd3]};
 
 endmodule

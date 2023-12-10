@@ -5,15 +5,15 @@
 #include <iostream>
 #include <fstream>
 
-#define MAX_SIM_CYC 20000000
-// clk 247390 is when it starts a0_o reading for gaussian
+#define MAX_SIM_CYC 2000000
+// clk 247390 is when it starts a0 reading for gaussian
 
 int main(int argc, char **argv, char **env)
 {
   std::ofstream pdfFile;
   // pdfFile.open("gaussian.txt");
   // pdfFile.open("sine.txt");
-  pdfFile.open("noisy.txt");
+  pdfFile.open("gaussian.txt");
   // pdfFile.open("noisy.txt");
 
   if (!pdfFile.is_open())
@@ -31,8 +31,8 @@ int main(int argc, char **argv, char **env)
   top->trace(tfp, 99);
   tfp->open("cpu_run_reference.vcd");
 
-  top->clk_i = 1;
-  top->rst_i = 1;
+  top->clk = 1;
+  top->rst = 1;
   // top->trigger_i = 1;
 
   int cntReading = 0;
@@ -42,11 +42,11 @@ int main(int argc, char **argv, char **env)
     for (tick = 0; tick < 2; tick++)
     {
       tfp->dump(2 * simcyc + tick);
-      top->clk_i = !top->clk_i;
+      top->clk = !top->clk;
       top->eval();
     }
 
-    if (top->a0_o == -1)
+    if (top->a0 == -1)
     {
       currentlyReading = true;
     }
@@ -56,11 +56,11 @@ int main(int argc, char **argv, char **env)
       cntReading++;
       if (cntReading % 3 == 2)
       {
-        pdfFile << top->a0_o << "\n";
+        pdfFile << top->a0 << "\n";
       }
     }
 
-    top->rst_i = (simcyc < 3);
+    top->rst = (simcyc < 3);
 
     if (cntReading > 256 * 3)
       break;

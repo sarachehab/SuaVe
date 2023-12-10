@@ -1,4 +1,4 @@
-module execute_register (
+module execute_register # (
     parameter   DATA_WIDTH = 32,
                 REGISTER_WIDTH = 5
 )(
@@ -7,7 +7,7 @@ module execute_register (
     input   logic   [REGISTER_WIDTH-1:0]    rs1_d_i, rs2_d_i, rd_d_i,
     input   logic   [3:0]                   alu_control_d_i,
     input   logic   [1:0]                   result_src_d_i,
-    input   logic                           rst_i, reg_write_d_i, result_src_d_i, mem_write_d_i, jump_d_i, jalr_d_i, branch_d_i, alu_src_d_i, byte_op_d_i,
+    input   logic                           rst_i, reg_write_d_i, mem_write_d_i, jump_d_i, jalr_d_i, branch_d_i, alu_src_d_i, byte_op_d_i,
 
     output   logic   [DATA_WIDTH-1:0]        rd1_e_o, rd2_e_o, ext_imm_e_o, pc_e_o, pc_plus4_e_o,
     output   logic   [REGISTER_WIDTH-1:0]    rs1_e_o, rs2_e_o, rd_e_o,
@@ -17,7 +17,7 @@ module execute_register (
 );
 
 always_ff @ (posedge clk) begin
-    case (rst)
+    case (rst_i)
         1'b0: begin
             rd1_e_o <= rd1_d_i;
             rd2_e_o <= rd2_d_i;
@@ -40,7 +40,7 @@ always_ff @ (posedge clk) begin
             alu_src_e_o <= alu_src_d_i;
             byte_op_e_o <= byte_op_d_i;
         end
-        1'b1: 
+        1'b1: begin
             rd1_e_o <= {DATA_WIDTH{1'b0}};
             rd2_e_o <= {DATA_WIDTH{1'b0}};
             pc_e_o <= {DATA_WIDTH{1'b0}}; 
@@ -61,6 +61,7 @@ always_ff @ (posedge clk) begin
             branch_e_o <= 1'b0;
             alu_src_e_o <= 1'b0;
             byte_op_e_o <= 1'b0;
+        end
     endcase
 end
 

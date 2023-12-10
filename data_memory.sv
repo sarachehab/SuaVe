@@ -17,7 +17,7 @@ assign addr = byte_op_i ? addr_i : (addr_i & 32'hFFFFFFFC);
 
 initial begin
     // $readmemh("gaussian.mem", data_ram, START_ADDRESS);
-    $readmemh("noisy.mem", data_ram, START_ADDRESS);
+    $readmemh("gaussian.mem", data_ram, START_ADDRESS);
     // $readmemh("sine.mem", data_ram, START_ADDRESS);
     // $readmemh("noisy.mem", data_ram, START_ADDRESS);
     for (int i = 0; i < START_ADDRESS; i++) begin
@@ -33,7 +33,7 @@ always_comb begin
     endcase
 end
 
-always_ff @(negedge clk_i) begin
+always_ff @(negedge clk) begin
     if (we_i)
         case (byte_op_i)
             1'b1: data_ram[addr] <= wd_i[BYTE_WIDTH-1:0];
