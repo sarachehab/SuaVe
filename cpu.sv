@@ -264,3 +264,4 @@ hazard_unit #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_hazard_unit (
 endmodule
 
 
+
