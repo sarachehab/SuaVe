@@ -4,33 +4,145 @@
 
 #include "verilated.h"
 
+#include "Vcpu__Syms.h"
 #include "Vcpu___024root.h"
 
-extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_ha986a0c0_0;
-extern const VlUnpacked<CData/*2:0*/, 128> Vcpu__ConstPool__TABLE_ha5941d2e_0;
-extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h529afe2e_0;
-extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h29afd16c_0;
-extern const VlUnpacked<CData/*1:0*/, 128> Vcpu__ConstPool__TABLE_ha1b5330d_0;
-extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h974edfa5_0;
-extern const VlUnpacked<CData/*1:0*/, 128> Vcpu__ConstPool__TABLE_h25645c8f_0;
-extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_hf32ca493_0;
-extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h105add6f_0;
-extern const VlUnpacked<CData/*3:0*/, 64> Vcpu__ConstPool__TABLE_h2c28dff1_0;
-extern const VlUnpacked<CData/*0:0*/, 64> Vcpu__ConstPool__TABLE_hfa800c22_0;
-
-VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
+void Vcpu___024root___eval_act(Vcpu___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___sequent__TOP__0\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___eval_act\n"); );
+}
+
+VL_INLINE_OPT void Vcpu___024root___nba_sequent__TOP__0(Vcpu___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___nba_sequent__TOP__0\n"); );
+    // Init
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0;
+    __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0 = 0;
+    CData/*4:0*/ __Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1;
+    __Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 0;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1;
+    __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 0;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1;
+    __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 0;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
+    __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
+    __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 0;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
+    __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 0;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
+    __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
+    __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 0;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
+    __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 0;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2;
+    __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2 = 0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2;
+    __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2 = 0;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3;
+    __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3 = 0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3;
+    __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3 = 0;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4;
+    __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4 = 0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4;
+    __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4 = 0;
+    // Body
+    __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 0U;
+    __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 0U;
+    __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 0U;
+    if (vlSelf->cpu__DOT__mem_write_m) {
+        if (vlSelf->cpu__DOT__byte_op_m) {
+            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 
+                = (0xffU & vlSelf->cpu__DOT__write_data_m);
+            __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 1U;
+            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 
+                = (0x1ffffU & vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr);
+        } else if ((1U & (~ (IData)(vlSelf->cpu__DOT__byte_op_m)))) {
+            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 
+                = (0xffU & vlSelf->cpu__DOT__write_data_m);
+            __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 1U;
+            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 
+                = (0x1ffffU & vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr);
+            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2 
+                = (0xffU & (vlSelf->cpu__DOT__write_data_m 
+                            >> 8U));
+            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2 
+                = (0x1ffffU & ((IData)(1U) + vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr));
+            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3 
+                = (0xffU & (vlSelf->cpu__DOT__write_data_m 
+                            >> 0x10U));
+            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3 
+                = (0x1ffffU & ((IData)(2U) + vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr));
+            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4 
+                = (vlSelf->cpu__DOT__write_data_m >> 0x18U);
+            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4 
+                = (0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr));
+        }
+    }
+    __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0 
+        = vlSelf->trigger;
+    if (((IData)(vlSelf->cpu__DOT__reg_write_w) & (0U 
+                                                   != (IData)(vlSelf->cpu__DOT__rd_w)))) {
+        __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1 
+            = vlSelf->cpu__DOT__result_w;
+        __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 1U;
+        __Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1 
+            = vlSelf->cpu__DOT__rd_w;
+    }
+    if (__Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0) {
+        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0] 
+            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
+    }
+    if (__Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1) {
+        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1] 
+            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
+        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2] 
+            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2;
+        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3] 
+            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3;
+        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4] 
+            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4;
+    }
+    vlSelf->cpu__DOT__pipeline_register_file__DOT__rf[0x13U] 
+        = __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0;
+    if (__Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1) {
+        vlSelf->cpu__DOT__pipeline_register_file__DOT__rf[__Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1] 
+            = __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1;
+    }
+    vlSelf->a0 = vlSelf->cpu__DOT__pipeline_register_file__DOT__rf
+        [0xaU];
+}
+
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h524972ea_0;
+extern const VlUnpacked<CData/*2:0*/, 128> Vcpu__ConstPool__TABLE_ha62fcc6c_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h356a26d2_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_hae527aed_0;
+extern const VlUnpacked<CData/*1:0*/, 128> Vcpu__ConstPool__TABLE_he9de6950_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h5a39c6bc_0;
+extern const VlUnpacked<CData/*1:0*/, 128> Vcpu__ConstPool__TABLE_h9e07eb29_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h78f2d6f9_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h77a192f1_0;
+extern const VlUnpacked<CData/*3:0*/, 64> Vcpu__ConstPool__TABLE_hba1a01eb_0;
+extern const VlUnpacked<CData/*0:0*/, 64> Vcpu__ConstPool__TABLE_h937a1e03_0;
+
+VL_INLINE_OPT void Vcpu___024root___nba_sequent__TOP__1(Vcpu___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___nba_sequent__TOP__1\n"); );
     // Init
     CData/*6:0*/ __Vtableidx1;
+    __Vtableidx1 = 0;
     CData/*5:0*/ __Vtableidx2;
+    __Vtableidx2 = 0;
     IData/*31:0*/ __Vdly__cpu__DOT__pipeline_program_counter__DOT__pc_next;
+    __Vdly__cpu__DOT__pipeline_program_counter__DOT__pc_next = 0;
     // Body
     __Vdly__cpu__DOT__pipeline_program_counter__DOT__pc_next 
         = vlSelf->cpu__DOT__pipeline_program_counter__DOT__pc_next;
-    vlSelf->cpu__DOT__write_data_m = vlSelf->cpu__DOT__write_data_e;
-    vlSelf->cpu__DOT__mem_write_m = vlSelf->cpu__DOT__mem_write_e;
     if (vlSelf->rst) {
         __Vdly__cpu__DOT__pipeline_program_counter__DOT__pc_next = 0xbfc00000U;
     } else if ((1U & (~ (IData)(vlSelf->cpu__DOT__stall_f)))) {
@@ -48,9 +160,11 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     }
     vlSelf->cpu__DOT__pc_plus4_w = vlSelf->cpu__DOT__pc_plus4_m;
     vlSelf->cpu__DOT__alu_result_w = vlSelf->cpu__DOT__alu_result_m;
-    vlSelf->cpu__DOT__reg_write_w = vlSelf->cpu__DOT__reg_write_m;
     vlSelf->cpu__DOT__result_src_w = vlSelf->cpu__DOT__result_src_m;
     vlSelf->cpu__DOT__imm_ext_w = vlSelf->cpu__DOT__imm_ext_m;
+    vlSelf->cpu__DOT__write_data_m = vlSelf->cpu__DOT__write_data_e;
+    vlSelf->cpu__DOT__mem_write_m = vlSelf->cpu__DOT__mem_write_e;
+    vlSelf->cpu__DOT__reg_write_w = vlSelf->cpu__DOT__reg_write_m;
     vlSelf->cpu__DOT__rd_w = vlSelf->cpu__DOT__rd_m;
     vlSelf->cpu__DOT__read_data_w = ((IData)(vlSelf->cpu__DOT__byte_op_m)
                                       ? ((IData)(vlSelf->cpu__DOT__byte_op_m)
@@ -86,7 +200,6 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr 
         = ((IData)(vlSelf->cpu__DOT__byte_op_m) ? vlSelf->cpu__DOT__alu_result_m
             : (0xfffffffcU & vlSelf->cpu__DOT__alu_result_m));
-    vlSelf->cpu__DOT__reg_write_m = vlSelf->cpu__DOT__reg_write_e;
     vlSelf->cpu__DOT__result_src_m = vlSelf->cpu__DOT__result_src_e;
     vlSelf->cpu__DOT__result_w = ((2U & (IData)(vlSelf->cpu__DOT__result_src_w))
                                    ? ((1U & (IData)(vlSelf->cpu__DOT__result_src_w))
@@ -96,6 +209,7 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                                        ? vlSelf->cpu__DOT__read_data_w
                                        : vlSelf->cpu__DOT__alu_result_w));
     vlSelf->cpu__DOT__imm_ext_m = vlSelf->cpu__DOT__imm_ext_e;
+    vlSelf->cpu__DOT__reg_write_m = vlSelf->cpu__DOT__reg_write_e;
     vlSelf->cpu__DOT__rd_m = vlSelf->cpu__DOT__rd_e;
     if (vlSelf->cpu__DOT__flush_e) {
         if (vlSelf->cpu__DOT__flush_e) {
@@ -103,18 +217,18 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
             vlSelf->cpu__DOT__branch_e = 0U;
             vlSelf->cpu__DOT__jump_e = 0U;
             vlSelf->cpu__DOT__alu_src_e = 0U;
-            vlSelf->cpu__DOT__rd1_e = 0U;
-            vlSelf->cpu__DOT__rd2_e = 0U;
             vlSelf->cpu__DOT__rs1_e = 0U;
+            vlSelf->cpu__DOT__rd1_e = 0U;
             vlSelf->cpu__DOT__rs2_e = 0U;
-            vlSelf->cpu__DOT__mem_write_e = 0U;
+            vlSelf->cpu__DOT__rd2_e = 0U;
             vlSelf->cpu__DOT__pc_e = 0U;
             vlSelf->cpu__DOT__jalr_e = 0U;
+            vlSelf->cpu__DOT__mem_write_e = 0U;
             vlSelf->cpu__DOT__byte_op_e = 0U;
             vlSelf->cpu__DOT__pc_plus4_e = 0U;
-            vlSelf->cpu__DOT__reg_write_e = 0U;
             vlSelf->cpu__DOT__result_src_e = 0U;
             vlSelf->cpu__DOT__imm_ext_e = 0U;
+            vlSelf->cpu__DOT__reg_write_e = 0U;
             vlSelf->cpu__DOT__rd_e = 0U;
         }
     } else {
@@ -122,22 +236,22 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
         vlSelf->cpu__DOT__branch_e = vlSelf->cpu__DOT__branch_d;
         vlSelf->cpu__DOT__jump_e = vlSelf->cpu__DOT__jump_d;
         vlSelf->cpu__DOT__alu_src_e = vlSelf->cpu__DOT__alu_src_d;
-        vlSelf->cpu__DOT__rd1_e = vlSelf->cpu__DOT__pipeline_register_file__DOT__rf
-            [(0x1fU & (vlSelf->cpu__DOT__instr_d >> 0xfU))];
-        vlSelf->cpu__DOT__rd2_e = vlSelf->cpu__DOT__pipeline_register_file__DOT__rf
-            [(0x1fU & (vlSelf->cpu__DOT__instr_d >> 0x14U))];
         vlSelf->cpu__DOT__rs1_e = (0x1fU & (vlSelf->cpu__DOT__instr_d 
                                             >> 0xfU));
+        vlSelf->cpu__DOT__rd1_e = vlSelf->cpu__DOT__pipeline_register_file__DOT__rf
+            [(0x1fU & (vlSelf->cpu__DOT__instr_d >> 0xfU))];
         vlSelf->cpu__DOT__rs2_e = (0x1fU & (vlSelf->cpu__DOT__instr_d 
                                             >> 0x14U));
-        vlSelf->cpu__DOT__mem_write_e = vlSelf->cpu__DOT__mem_write_d;
+        vlSelf->cpu__DOT__rd2_e = vlSelf->cpu__DOT__pipeline_register_file__DOT__rf
+            [(0x1fU & (vlSelf->cpu__DOT__instr_d >> 0x14U))];
         vlSelf->cpu__DOT__pc_e = vlSelf->cpu__DOT__pc_d;
         vlSelf->cpu__DOT__jalr_e = vlSelf->cpu__DOT__jalr_d;
+        vlSelf->cpu__DOT__mem_write_e = vlSelf->cpu__DOT__mem_write_d;
         vlSelf->cpu__DOT__byte_op_e = vlSelf->cpu__DOT__byte_op_d;
         vlSelf->cpu__DOT__pc_plus4_e = vlSelf->cpu__DOT__pc_plus4_d;
-        vlSelf->cpu__DOT__reg_write_e = vlSelf->cpu__DOT__reg_write_d;
         vlSelf->cpu__DOT__result_src_e = vlSelf->cpu__DOT__result_src_d;
         vlSelf->cpu__DOT__imm_ext_e = vlSelf->cpu__DOT__imm_ext_d;
+        vlSelf->cpu__DOT__reg_write_e = vlSelf->cpu__DOT__reg_write_d;
         vlSelf->cpu__DOT__rd_e = (0x1fU & (vlSelf->cpu__DOT__instr_d 
                                            >> 7U));
     }
@@ -296,23 +410,23 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     vlSelf->cpu__DOT__flush_e = ((IData)(vlSelf->cpu__DOT__pipeline_hazard_unit__DOT__lw_stall) 
                                  | (IData)(vlSelf->cpu__DOT__flush_d));
     __Vtableidx1 = (0x7fU & vlSelf->cpu__DOT__instr_d);
-    vlSelf->cpu__DOT__reg_write_d = Vcpu__ConstPool__TABLE_ha986a0c0_0
+    vlSelf->cpu__DOT__reg_write_d = Vcpu__ConstPool__TABLE_h524972ea_0
         [__Vtableidx1];
-    vlSelf->cpu__DOT__imm_src_d = Vcpu__ConstPool__TABLE_ha5941d2e_0
+    vlSelf->cpu__DOT__imm_src_d = Vcpu__ConstPool__TABLE_ha62fcc6c_0
         [__Vtableidx1];
-    vlSelf->cpu__DOT__alu_src_d = Vcpu__ConstPool__TABLE_h529afe2e_0
+    vlSelf->cpu__DOT__alu_src_d = Vcpu__ConstPool__TABLE_h356a26d2_0
         [__Vtableidx1];
-    vlSelf->cpu__DOT__mem_write_d = Vcpu__ConstPool__TABLE_h29afd16c_0
+    vlSelf->cpu__DOT__mem_write_d = Vcpu__ConstPool__TABLE_hae527aed_0
         [__Vtableidx1];
-    vlSelf->cpu__DOT__result_src_d = Vcpu__ConstPool__TABLE_ha1b5330d_0
+    vlSelf->cpu__DOT__result_src_d = Vcpu__ConstPool__TABLE_he9de6950_0
         [__Vtableidx1];
-    vlSelf->cpu__DOT__branch_d = Vcpu__ConstPool__TABLE_h974edfa5_0
+    vlSelf->cpu__DOT__branch_d = Vcpu__ConstPool__TABLE_h5a39c6bc_0
         [__Vtableidx1];
     vlSelf->cpu__DOT__pipeline_control_unit__DOT__alu_op 
-        = Vcpu__ConstPool__TABLE_h25645c8f_0[__Vtableidx1];
-    vlSelf->cpu__DOT__jump_d = Vcpu__ConstPool__TABLE_hf32ca493_0
+        = Vcpu__ConstPool__TABLE_h9e07eb29_0[__Vtableidx1];
+    vlSelf->cpu__DOT__jump_d = Vcpu__ConstPool__TABLE_h78f2d6f9_0
         [__Vtableidx1];
-    vlSelf->cpu__DOT__jalr_d = Vcpu__ConstPool__TABLE_h105add6f_0
+    vlSelf->cpu__DOT__jalr_d = Vcpu__ConstPool__TABLE_h77a192f1_0
         [__Vtableidx1];
     vlSelf->cpu__DOT__imm_ext_d = ((4U & (IData)(vlSelf->cpu__DOT__imm_src_d))
                                     ? ((2U & (IData)(vlSelf->cpu__DOT__imm_src_d))
@@ -371,115 +485,81 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                      << 5U) | ((0x1cU & (vlSelf->cpu__DOT__instr_d 
                                          >> 0xaU)) 
                                | (IData)(vlSelf->cpu__DOT__pipeline_control_unit__DOT__alu_op)));
-    vlSelf->cpu__DOT__alu_control_d = Vcpu__ConstPool__TABLE_h2c28dff1_0
+    vlSelf->cpu__DOT__alu_control_d = Vcpu__ConstPool__TABLE_hba1a01eb_0
         [__Vtableidx2];
-    vlSelf->cpu__DOT__byte_op_d = Vcpu__ConstPool__TABLE_hfa800c22_0
+    vlSelf->cpu__DOT__byte_op_d = Vcpu__ConstPool__TABLE_h937a1e03_0
         [__Vtableidx2];
 }
 
-VL_INLINE_OPT void Vcpu___024root___sequent__TOP__1(Vcpu___024root* vlSelf) {
+void Vcpu___024root___eval_nba(Vcpu___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___sequent__TOP__1\n"); );
-    // Init
-    IData/*31:0*/ __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0;
-    CData/*4:0*/ __Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1;
-    IData/*31:0*/ __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___eval_nba\n"); );
     // Body
-    __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 0U;
-    __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 0U;
-    __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 0U;
-    if (vlSelf->cpu__DOT__mem_write_m) {
-        if (vlSelf->cpu__DOT__byte_op_m) {
-            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 
-                = (0xffU & vlSelf->cpu__DOT__write_data_m);
-            __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 = 1U;
-            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0 
-                = (0x1ffffU & vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr);
-        } else if ((1U & (~ (IData)(vlSelf->cpu__DOT__byte_op_m)))) {
-            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 
-                = (0xffU & vlSelf->cpu__DOT__write_data_m);
-            __Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 = 1U;
-            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1 
-                = (0x1ffffU & vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr);
-            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2 
-                = (0xffU & (vlSelf->cpu__DOT__write_data_m 
-                            >> 8U));
-            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2 
-                = (0x1ffffU & ((IData)(1U) + vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr));
-            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3 
-                = (0xffU & (vlSelf->cpu__DOT__write_data_m 
-                            >> 0x10U));
-            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3 
-                = (0x1ffffU & ((IData)(2U) + vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr));
-            __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4 
-                = (vlSelf->cpu__DOT__write_data_m >> 0x18U);
-            __Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4 
-                = (0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__pipeline_data_memory__DOT__addr));
-        }
+    if ((2ULL & vlSelf->__VnbaTriggered.word(0U))) {
+        Vcpu___024root___nba_sequent__TOP__0(vlSelf);
+        vlSelf->__Vm_traceActivity[1U] = 1U;
     }
-    __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0 
-        = vlSelf->trigger;
-    if (((IData)(vlSelf->cpu__DOT__reg_write_w) & (0U 
-                                                   != (IData)(vlSelf->cpu__DOT__rd_w)))) {
-        __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1 
-            = vlSelf->cpu__DOT__result_w;
-        __Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1 = 1U;
-        __Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1 
-            = vlSelf->cpu__DOT__rd_w;
+    if ((1ULL & vlSelf->__VnbaTriggered.word(0U))) {
+        Vcpu___024root___nba_sequent__TOP__1(vlSelf);
+        vlSelf->__Vm_traceActivity[2U] = 1U;
     }
-    if (__Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0) {
-        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0] 
-            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v0;
-    }
-    if (__Vdlyvset__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1) {
-        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1] 
-            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v1;
-        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2] 
-            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v2;
-        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3] 
-            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v3;
-        vlSelf->cpu__DOT__pipeline_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4] 
-            = __Vdlyvval__cpu__DOT__pipeline_data_memory__DOT__data_ram__v4;
-    }
-    vlSelf->cpu__DOT__pipeline_register_file__DOT__rf[0x13U] 
-        = __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v0;
-    if (__Vdlyvset__cpu__DOT__pipeline_register_file__DOT__rf__v1) {
-        vlSelf->cpu__DOT__pipeline_register_file__DOT__rf[__Vdlyvdim0__cpu__DOT__pipeline_register_file__DOT__rf__v1] 
-            = __Vdlyvval__cpu__DOT__pipeline_register_file__DOT__rf__v1;
-    }
-    vlSelf->a0 = vlSelf->cpu__DOT__pipeline_register_file__DOT__rf
-        [0xaU];
 }
+
+void Vcpu___024root___eval_triggers__act(Vcpu___024root* vlSelf);
+#ifdef VL_DEBUG
+VL_ATTR_COLD void Vcpu___024root___dump_triggers__act(Vcpu___024root* vlSelf);
+#endif  // VL_DEBUG
+#ifdef VL_DEBUG
+VL_ATTR_COLD void Vcpu___024root___dump_triggers__nba(Vcpu___024root* vlSelf);
+#endif  // VL_DEBUG
 
 void Vcpu___024root___eval(Vcpu___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vcpu__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vcpu___024root___eval\n"); );
+    // Init
+    VlTriggerVec<2> __VpreTriggered;
+    IData/*31:0*/ __VnbaIterCount;
+    CData/*0:0*/ __VnbaContinue;
     // Body
-    if (((IData)(vlSelf->clk) & (~ (IData)(vlSelf->__Vclklast__TOP__clk)))) {
-        Vcpu___024root___sequent__TOP__0(vlSelf);
-        vlSelf->__Vm_traceActivity[1U] = 1U;
+    __VnbaIterCount = 0U;
+    __VnbaContinue = 1U;
+    while (__VnbaContinue) {
+        __VnbaContinue = 0U;
+        vlSelf->__VnbaTriggered.clear();
+        vlSelf->__VactIterCount = 0U;
+        vlSelf->__VactContinue = 1U;
+        while (vlSelf->__VactContinue) {
+            vlSelf->__VactContinue = 0U;
+            Vcpu___024root___eval_triggers__act(vlSelf);
+            if (vlSelf->__VactTriggered.any()) {
+                vlSelf->__VactContinue = 1U;
+                if (VL_UNLIKELY((0x64U < vlSelf->__VactIterCount))) {
+#ifdef VL_DEBUG
+                    Vcpu___024root___dump_triggers__act(vlSelf);
+#endif
+                    VL_FATAL_MT("cpu.sv", 1, "", "Active region did not converge.");
+                }
+                vlSelf->__VactIterCount = ((IData)(1U) 
+                                           + vlSelf->__VactIterCount);
+                __VpreTriggered.andNot(vlSelf->__VactTriggered, vlSelf->__VnbaTriggered);
+                vlSelf->__VnbaTriggered.thisOr(vlSelf->__VactTriggered);
+                Vcpu___024root___eval_act(vlSelf);
+            }
+        }
+        if (vlSelf->__VnbaTriggered.any()) {
+            __VnbaContinue = 1U;
+            if (VL_UNLIKELY((0x64U < __VnbaIterCount))) {
+#ifdef VL_DEBUG
+                Vcpu___024root___dump_triggers__nba(vlSelf);
+#endif
+                VL_FATAL_MT("cpu.sv", 1, "", "NBA region did not converge.");
+            }
+            __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
+            Vcpu___024root___eval_nba(vlSelf);
+        }
     }
-    if (((~ (IData)(vlSelf->clk)) & (IData)(vlSelf->__Vclklast__TOP__clk))) {
-        Vcpu___024root___sequent__TOP__1(vlSelf);
-        vlSelf->__Vm_traceActivity[2U] = 1U;
-    }
-    // Final
-    vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
 }
 
 #ifdef VL_DEBUG

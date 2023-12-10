@@ -7,9 +7,10 @@
 
 #include "verilated.h"
 
+
 class Vcpu__Syms;
 
-class Vcpu___024root final : public VerilatedModule {
+class alignas(VL_CACHE_LINE_BYTES) Vcpu___024root final : public VerilatedModule {
   public:
 
     // DESIGN SPECIFIC STATE
@@ -57,7 +58,8 @@ class Vcpu___024root final : public VerilatedModule {
         CData/*0:0*/ cpu__DOT__jb_taken_e;
         CData/*1:0*/ cpu__DOT__pipeline_control_unit__DOT__alu_op;
         CData/*0:0*/ cpu__DOT__pipeline_hazard_unit__DOT__lw_stall;
-        CData/*0:0*/ __Vclklast__TOP__clk;
+        CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
+        CData/*0:0*/ __VactContinue;
         VL_OUT(a0,31,0);
         IData/*31:0*/ cpu__DOT__pc_d;
         IData/*31:0*/ cpu__DOT__pc_plus4_d;
@@ -78,9 +80,9 @@ class Vcpu___024root final : public VerilatedModule {
         IData/*31:0*/ cpu__DOT__alu_result_w;
         IData/*31:0*/ cpu__DOT__pc_plus4_w;
         IData/*31:0*/ cpu__DOT__read_data_w;
-        IData/*31:0*/ cpu__DOT__imm_ext_w;
     };
     struct {
+        IData/*31:0*/ cpu__DOT__imm_ext_w;
         IData/*31:0*/ cpu__DOT__result_w;
         IData/*31:0*/ cpu__DOT__pipeline_program_counter__DOT__pc_next;
         IData/*31:0*/ cpu__DOT__pipeline_register_file__DOT__unnamedblk1__DOT__i;
@@ -88,23 +90,28 @@ class Vcpu___024root final : public VerilatedModule {
         IData/*31:0*/ cpu__DOT__pipeline_execute_stage__DOT__src2;
         IData/*31:0*/ cpu__DOT__pipeline_data_memory__DOT__addr;
         IData/*31:0*/ cpu__DOT__pipeline_data_memory__DOT__unnamedblk1__DOT__i;
+        IData/*31:0*/ __VstlIterCount;
+        IData/*31:0*/ __VactIterCount;
         VlUnpacked<CData/*7:0*/, 4096> cpu__DOT__pipeline_instruction_memory__DOT__rom;
         VlUnpacked<IData/*31:0*/, 32> cpu__DOT__pipeline_register_file__DOT__rf;
         VlUnpacked<CData/*7:0*/, 131072> cpu__DOT__pipeline_data_memory__DOT__data_ram;
         VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
     };
+    VlTriggerVec<1> __VstlTriggered;
+    VlTriggerVec<2> __VactTriggered;
+    VlTriggerVec<2> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vcpu__Syms* const vlSymsp;
 
     // CONSTRUCTORS
-    Vcpu___024root(Vcpu__Syms* symsp, const char* name);
+    Vcpu___024root(Vcpu__Syms* symsp, const char* v__name);
     ~Vcpu___024root();
     VL_UNCOPYABLE(Vcpu___024root);
 
     // INTERNAL METHODS
     void __Vconfigure(bool first);
-} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
+};
 
 
 #endif  // guard

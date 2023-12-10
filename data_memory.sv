@@ -23,7 +23,6 @@ initial begin
     for (int i = 0; i < START_ADDRESS; i++) begin
         data_ram[i] = {BYTE_WIDTH{1'b0}};
     end
-    data_ram[32'h100] = 3;
 end
 
 always_comb begin
