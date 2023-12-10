@@ -239,7 +239,7 @@ end
 logic   [1:0]   forward1_e, forward2_e;
 logic           stall_f, stall_d, flush_d, flush_e, jb_taken_e;
 
-hazard_unit #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_hazard_unit (
+hazard_unit #(REG_ADDR_LENGTH) pipeline_hazard_unit (
     .rs1_d_i(rs1_d),
     .rs2_d_i(rs2_d),
     .rs1_e_i(rs1_e),
@@ -259,7 +259,6 @@ hazard_unit #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_hazard_unit (
     .forward1_e_o(forward1_e),
     .forward2_e_o(forward2_e)
 );
-
 
 endmodule
 
