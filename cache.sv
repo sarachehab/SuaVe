@@ -67,7 +67,7 @@ always_comb begin
 			count[set][3]++;
 		end
 		else begin
-			//handle read miss by simply reading from data memory ... run this by neil
+			//handle read miss by simply reading from data memory ... discuss this
 			//but then also write this to cache... somehow possibly create a new signal for read miss
 			read_data_o = 32'b0;
 			hit = 1'b0;
