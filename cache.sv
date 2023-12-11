@@ -1,90 +1,106 @@
-
-/*----message for neil------
-
-our memory range is ->                    00 01 FF FF :: 00 00 00 00
-so most significant byte is always zero   ^              ^
-so lets take same random address (in binary like) : 0000 , 1010 , 1001 , 01______00
-                                                    ^^^^   ^^^^   ||||   ^^##
-                                                        tag       block  block__byte
-so i think it might be possible to make the tag 8bit instead of 24?
-
-i am also thinkning that we should split our cache into 2 sv files with a top file: 
-  1>cache memory which 
-
-
-
-
-*/
-
-// tag == 24 bits
-// set == 4 bits
-// block offset == 2 bits
-// byte offset == 2 bits (00) 
 module cache (
-  input logic clk_i,
-  input logic [7:0] address_i,
-  input logic write_enable_i,
-  input logic [31:0] write_data_i,
-  
-  output logic [31:0] read_data_o
+	input logic clk_i,
+	input logic [31:0] address_i,
+	input logic write_enable_i,
+	input logic [31:0] write_data_i,
+	//output signals
+	output logic [31:0] read_data_o,
+	output logic hit_o
 );
+	//cache parameters
+	parameter set_bits = 4;
+	parameter tag_bits = 26;
+	parameter data_width = 32;
 
+	// Data and tag
+	logic [data_width-1:0] cache_data [((2**set_bits)-1):0][3:0];
+	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
+	logic valid [((2**set_bits)-1):0][3:0];
+	logic [7:0] count [((2**set_bits)-1):0][3:0];
 
-  // cache parameters
-  parameter set_bits = 4;
-  parameter block_offset_bits = 2;
-  parameter byte_offset_bits = 2;
-  parameter tag_bits = 24;
-  parameter data_width = 32;
-  parameter ways = 4;
+	//Signals to control cache access
+	logic [tag_bits-1:0] tag;
+	logic [3:0] set;
+	logic hit;
+	//logic [1:0] byte_offset;
 
-  logic[23:0] tag;
-  logic hit_0_or_1, hit_2_or_3;
-  logic [1:0]hit;
-  
-  // Data and tag
-  logic [data_width-1:0] cache_data [((2**set_bits)-1):0][3:0];
-  logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];  
+	assign tag = address_i[31:6];
+	assign set = address_i[5:2];
+	//assign byte_offset = address_i[1:0];
+	assign hit_o = hit;
 
-  // Signals to control cache access
-  logic [3:0] set;
-  logic [1:0] block_offset;
-  logic [1:0] byte_offset;
+	//reset on startup
+	initial begin
+		hit = 1'b0;
+        for (int i = 0; i < (2**set_bits); i = i + 1) begin
+            for (int j = 0; j < 4; j = j + 1) begin
+                valid[i][j] = 1'b0;
+            end
+        end
+        for (int i = 0; i < (2**set_bits); i = i + 1) begin
+            for (int j = 0; j < 4; j = j + 1) begin
+                count[i][j] = 8'b0;
+            end
+        end
+	end
+//add your thing here neil...
 
-  // Cache read operation
- always_ff @(posedge clk_i) begin
-    set <= address_i[7:4];
-    block_offset <= address_i[3:2];
-    byte_offset <= address_i[1:0];
+	always_ff @(negedge clk_i) begin
+		//if there is no miss at all
+		if(write_enable_i & hit) begin
+			if (tag == cache_tag[set][0]) begin 
+				cache_data[set][0] <= write_data_i;
+			end
+			else if (tag == cache_tag[set][1]) begin
+				cache_data[set][1] <= write_data_i;
+			end
+			else if (tag == cache_tag[set][2]) begin
+				cache_data[set][2] <= write_data_i;
+			end
+			else if (tag == cache_tag[set][3]) begin
+				cache_data[set][3] <= write_data_i;
+			end
+			else begin
+				//handle what happens for write miss ... 
+				//this shouldn't happen technically so what do i do here?
+			end
+		end
+		//miss cases:
+		else if (write_enable_i) begin
+			//first we must handle a cold miss ... easily done here
+			if(~valid[set][0]) begin
+				cache_data[set][0] <= write_data_i;
+				cache_tag[set][0] <= tag;
+				valid[set][0] <= 1'b1;
+			end
+			else if(~valid[set][1]) begin
+				cache_data[set][1] <= write_data_i;
+				cache_tag[set][1] <= tag;
+				valid[set][1] <= 1'b1;
+			end
+			else if(~valid[set][2]) begin
+				cache_data[set][2] <= write_data_i;
+				cache_tag[set][2] <= tag;
+				valid[set][2] <= 1'b1;
+			end
+			else if(~valid[set][3]) begin
+				cache_data[set][3] <= write_data_i;
+				cache_tag[set][3] <= tag;
+				valid[set][3] <= 1'b1;
+			end
+			//if not cold miss must be a conflict miss so we handle here:
+			else begin 
+				//handle conflict miss... replace least recently used value 
+				 
+				//check search count for lowest one and replace that one...
 
-/*write enable to be done buy utsav
+				//then need to handle dirtyness since main memory needs to be updates somehow?
 
-require logic to check if cache block is occupied, if it is occupied, check if proceeding block is occupied? 
-
-if entire set has been filled we need a system to fetch
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-  read_data_o = (tag==cache_tag[set][0]) ? cache_data[set][0]:
-                (tag==cache_tag[set][1]) ? cache_data[set][1]:
-                (tag==cache_tag[set][2]) ? cache_data[set][2]:
-                (tag==cache_tag[set][3]) ? cache_data[set][3]:
-                32'b0;
-                
-                
-                
-
- end
+			end
+		end
+	end
 endmodule
+
+
+
+
