@@ -43,8 +43,36 @@ module cache (
             end
         end
 	end
-//add your thing here neil...
 
+always_comb begin
+
+		if (tag == cache_tag[set][0]) begin 
+			read_data_o = cache_data[set][0];
+			hit = valid[set][0];
+			count[set][0]++;
+		end
+		else if (tag == cache_tag[set][1])begin
+			read_data_o = cache_data[set][1];
+			hit = valid[set][1];		
+			count[set][1]++; 
+		end
+		else if (tag == cache_tag[set][2])begin
+			read_data_o = cache_data[set][2];
+			hit = valid[set][2];
+			count[set][2]++;
+		end
+		else if (tag == cache_tag[set][3])begin
+			read_data_o = cache_data[set][3];
+			hit = valid[set][3];
+			count[set][3]++;
+		end
+		else begin
+			//handle read miss by simply reading from data memory ... run this by neil
+			//but then also write this to cache... somehow possibly create a new signal for read miss
+			read_data_o = 32'b0;
+			hit = 1'b0;
+		end
+end
 	always_ff @(negedge clk_i) begin
 		//if there is no miss at all
 		if(write_enable_i & hit) begin
