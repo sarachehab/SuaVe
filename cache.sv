@@ -17,17 +17,17 @@ module cache (
 	logic [data_width-1:0] cache_data [((2**set_bits)-1):0][3:0];
 	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
 	logic valid [((2**set_bits)-1):0][3:0];
-	logic [1:0] count [((2**set_bits)-1):0][3:0];
+
+  //keeps track of most recently used associative set
+  int unsigned count [16];
 
 	//Signals to control cache access
 	logic [tag_bits-1:0] tag;
 	logic [3:0] set;
 	logic hit;
-	//logic [1:0] byte_offset;
 
 	assign tag = address_i[31:6];
 	assign set = address_i[5:2];
-	//assign byte_offset = address_i[1:0];
 	assign hit_o = hit;
 
 	//reset on startup
@@ -38,10 +38,8 @@ module cache (
                 valid[i][j] = 1'b0;
             end
         end
-        for (int i = 0; i < (2**set_bits); i = i + 1) begin
-            for (int j = 0; j < 4; j = j + 1) begin
-                count[i][j] = 8'b0;
-            end
+        for (int i = 0; i < 16; i = i + 1) begin
+          count[i] = 0;
         end
 	end
 
@@ -50,29 +48,31 @@ always_comb begin
 		if (tag == cache_tag[set][0]) begin 
 			read_data_o = cache_data[set][0];
 			hit = valid[set][0];
-			count[set][0]++;
+			count[set]++;
 		end
 		else if (tag == cache_tag[set][1])begin
 			read_data_o = cache_data[set][1];
 			hit = valid[set][1];		
-			count[set][1]++; 
+			count[set]++; 
 		end
 		else if (tag == cache_tag[set][2])begin
 			read_data_o = cache_data[set][2];
 			hit = valid[set][2];
-			count[set][2]++;
+			count[set]++;
 		end
 		else if (tag == cache_tag[set][3])begin
 			read_data_o = cache_data[set][3];
 			hit = valid[set][3];
-			count[set][3]++;
+			count[set] = 0;
 		end
 		else begin
-			mem_read_address = address_i;
-			read_data_o = write_data_i
-			hit = 1'b0;
+			//handle read miss by simply reading from data memory ... discuss this
+			//but then also write this to cache... somehow possibly create a new signal for read miss
+			read_data_o = 32'b0;
+			hit = 1'b0;
 		end
 end
+  always_ff@(posedge clk_i)
 	always_ff @(negedge clk_i) begin
 		//if there is no miss at all
 		if(write_enable_i && hit) begin
