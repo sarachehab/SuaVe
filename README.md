@@ -18,8 +18,8 @@ Can everyone check the below table so it is correct?
 |                | Sara Chehab | Lu Ju | Neil Radhu | Utsav Goel |
 |----------------|-------------|-------|------------|------------|
 | Alu            | ✖           | ✔ ✖  |            |            |
-| InstructionMem | ✖           | ✔    |            | ✔          |
-| RegisterFile   | ✖           | ✔ ✖  |            |            |
+| InstructionMem | ✖           |       |            | ✔         |
+| RegisterFile   | ✖           | ✔    |            |            |
 | Extend         | ✔ ✖         |      | ✔          |            |
 | PC             | ✔ ✖         |      |            |            |
 | DataMem        | ✖           | ✔ ✖  |            |            |
