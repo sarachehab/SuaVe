@@ -7,7 +7,7 @@ Draft version for who is doing which part of README
 <br>
 | README | Alu | InstructMem | RegFile | Extend | PC | DataMem | ControlU | CPU | DataHazard | Pipeline | Cache |
 |--------|-----|-------------|---------|--------|----|---------|----------|-----|------------|----------|-------|
-| Sara   |     |             |         |        | ✔  |         |          | ✔  |            | ✔        |       |
+| Sara   |     |             |  ✔      |        | ✔  |         |          | ✔  |            | ✔        |       |
 | Lu     | ✔   |             |         |        |    | ✔       |          | ✔  | ✔         | ✔        |       |
 | Neil   |     |             |         | ✔      |    |         | ✔        |     |           |          | ✔     |
 | Utsav  |     | ✔           |         |        |    |         | ✔        |     |           |          | ✔     |
@@ -17,7 +17,7 @@ Can everyone check the below table so it is correct?
 <br>
 |                | Sara Chehab | Lu Ju | Neil Radhu | Utsav Goel |
 |----------------|-------------|-------|------------|------------|
-| Alu            | ✖           | ✔ ✖  | ✔         |            |
+| Alu            | ✖           | ✔ ✖  |            |            |
 | InstructionMem | ✖           | ✔    |            | ✔          |
 | RegisterFile   | ✖           | ✔ ✖  |            |            |
 | Extend         | ✔ ✖         |      | ✔          |            |
@@ -25,7 +25,7 @@ Can everyone check the below table so it is correct?
 | DataMem        | ✖           | ✔ ✖  |            |            |
 | ControlUnit    |              |      | ✔ ✖       | ✔ ✖       |
 | DataPath       |              |  ✔   |            | ✖         |
-| CPU            | ✖           | ✖    | ✔          | ✖         |
+| CPU            | ✖           | ✖    | ✔ ✖        | ✖         |
 | Pipeline       | ✔           | ✖    |            |            |
 | Cache          |              |      | ✔ ✖       | ✔ ✖       |
 
@@ -36,7 +36,7 @@ so right now Lu&Sara are agreeing on: Lu is doing
 - pdf testing for main single cycle cpu
 - alu 
 
-What ig you are doing
+What ig what Sara is doing
 - pipelining schemetic (eg the choice of the stages and the cycle implementation)
 - F1 testing and implementation 
 - PC
