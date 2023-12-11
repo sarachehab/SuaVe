@@ -4,6 +4,7 @@ module cache (
 	input logic write_enable_i,
 	input logic [31:0] write_data_i,
 	//output signals
+	output logic [31:0] mem_read_address_o,
 	output logic [31:0] read_data_o,
 	output logic hit_o
 );
@@ -16,7 +17,7 @@ module cache (
 	logic [data_width-1:0] cache_data [((2**set_bits)-1):0][3:0];
 	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
 	logic valid [((2**set_bits)-1):0][3:0];
-	logic [7:0] count [((2**set_bits)-1):0][3:0];
+	logic [1:0] count [((2**set_bits)-1):0][3:0];
 
 	//Signals to control cache access
 	logic [tag_bits-1:0] tag;
@@ -67,15 +68,14 @@ always_comb begin
 			count[set][3]++;
 		end
 		else begin
-			//handle read miss by simply reading from data memory ... run this by neil
-			//but then also write this to cache... somehow possibly create a new signal for read miss
-			read_data_o = 32'b0;
-			hit = 1'b0;
+			mem_read_address = address_i;
+			read_data_o = write_data_i
+			hit = 1'b0;
 		end
 end
 	always_ff @(negedge clk_i) begin
 		//if there is no miss at all
-		if(write_enable_i & hit) begin
+		if(write_enable_i && hit) begin
 			if (tag == cache_tag[set][0]) begin 
 				cache_data[set][0] <= write_data_i;
 			end
@@ -127,6 +127,7 @@ end
 			end
 		end
 	end
+
 endmodule
 
 
