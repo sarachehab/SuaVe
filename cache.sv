@@ -1,36 +1,39 @@
-module cache (
-	input logic clk_i,
-	input logic [31:0] address_i,
-	input logic write_enable_i,
-	input logic [31:0] write_data_i,
-	//output signals
-	output logic [31:0] mem_read_address_o,
-	output logic [31:0] read_data_o,
-	output logic hit_o
-);
+module cache#(
 	//cache parameters
-	parameter set_bits = 4;
-	parameter tag_bits = 26;
-	parameter data_width = 32;
+	parameter 	set_bits = 4,
+			 	tag_bits = 26,
+				width = 32
+)(	//input signals
+	input logic clk_i , write_enable_i , byte_op, 
+	input logic [width:0] address_i , write_data_i,
+	//output signals
+	output logic hit_o, // needed or not ? 
+	output logic [width-1:0] read_data_o,
+	//memory interface signals
+	input logic [width-1:0] mem_incoming data_i,
+	output logic [width-1:0] mem_address_o , mem_write_data_o,
+	output logic mem_write_enable_o , mem_byte_op_o
 
+);
+//------------------------------Data_Structures------------------------------
 	// Data and tag
 	logic [data_width-1:0] cache_data [((2**set_bits)-1):0][3:0];
 	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
 	logic valid [((2**set_bits)-1):0][3:0];
-
-  //keeps track of most recently used associative set
-  int unsigned count [16];
-
+	logic [1:0] age [((2**set_bits)-1):0][3:0];
+  	//keeps track of most recently used associative set
+	//int unsigned count [16];
+//------------------------------Internal_signals------------------------------
 	//Signals to control cache access
 	logic [tag_bits-1:0] tag;
 	logic [3:0] set;
-	logic hit;
-
+	logic hit , readmiss;
+	logic [1:0] LRU_pointer;
+//------------------------------Assign_values------------------------------
 	assign tag = address_i[31:6];
 	assign set = address_i[5:2];
 	assign hit_o = hit;
-
-	//reset on startup
+//------------------------------Startup_Procedure------------------------------
 	initial begin
 		hit = 1'b0;
         for (int i = 0; i < (2**set_bits); i = i + 1) begin
@@ -39,95 +42,97 @@ module cache (
             end
         end
         for (int i = 0; i < 16; i = i + 1) begin
-          count[i] = 0;
+        	count[i] = 0;
         end
 	end
+//------------------------------Internal_Functions------------------------------
+    function logic [1:0] get_min (logic [1:0] ages [3:0]);
+		logic [1:0] result;
+		for(int i = 0 ; i < 4 i++) begin
+			if(ages[i] == 2'b00) result = i;
+		end
+        return result;
+    endfunction
 
-always_comb begin
-
-		if (tag == cache_tag[set][0]) begin 
+	function logic [1:0] LRU_calc (logic [1:0] a);
+		logic [1:0] result;
+		if(a == 2'b00) result = 2'b00;
+		else result = a - 2'b01;
+		return result;
+	endfunction
+//------------------------------Combinational_Read------------------------------
+	always_comb begin
+		if (tag == cache_tag[set][0] && valid[set][0] == 1) begin 
 			read_data_o = cache_data[set][0];
-			hit = valid[set][0];
-			count[set]++;
+			hit = 1;
+			age[set][0] = 2'b11;
+			age[set][1] = LRU_calc(age[set][1]);
+			age[set][2] = LRU_calc(age[set][2]);
+			age[set][3] = LRU_calc(age[set][3]);
 		end
-		else if (tag == cache_tag[set][1])begin
+		else if (tag == cache_tag[set][1] && valid[set][1] == 1)begin
 			read_data_o = cache_data[set][1];
-			hit = valid[set][1];		
-			count[set]++; 
+			hit = 1;
+			age[set][1] = 2'b11;
+			age[set][0] = LRU_calc(age[set][0]);
+			age[set][2] = LRU_calc(age[set][2]);
+			age[set][3] = LRU_calc(age[set][3]);
 		end
-		else if (tag == cache_tag[set][2])begin
+		else if (tag == cache_tag[set][2] && valid[set][2] == 1)begin
 			read_data_o = cache_data[set][2];
-			hit = valid[set][2];
-			count[set]++;
+			hit = 1;
+			age[set][2] = 2'b11;
+			age[set][0] = LRU_calc(age[set][0]);
+			age[set][1] = LRU_calc(age[set][1]);
+			age[set][3] = LRU_calc(age[set][3]);
 		end
-		else if (tag == cache_tag[set][3])begin
+		else if (tag == cache_tag[set][3] && valid[set][3] == 1)begin
 			read_data_o = cache_data[set][3];
-			hit = valid[set][3];
-			count[set] = 0;
+			hit = 1;
+			age[set][3] = 2'b11;
+			age[set][0] = LRU_calc(age[set][0]);
+			age[set][1] = LRU_calc(age[set][1]);
+			age[set][2] = LRU_calc(age[set][2]);
 		end
 		else begin
-			//handle read miss by simply reading from data memory ... discuss this
-			//but then also write this to cache... somehow possibly create a new signal for read miss
-			read_data_o = 32'b0;
-			hit = 1'b0;
-		end
-end
-  always_ff@(posedge clk_i)
-	always_ff @(negedge clk_i) begin
-		//if there is no miss at all
-		if(write_enable_i && hit) begin
-			if (tag == cache_tag[set][0]) begin 
-				cache_data[set][0] <= write_data_i;
-			end
-			else if (tag == cache_tag[set][1]) begin
-				cache_data[set][1] <= write_data_i;
-			end
-			else if (tag == cache_tag[set][2]) begin
-				cache_data[set][2] <= write_data_i;
-			end
-			else if (tag == cache_tag[set][3]) begin
-				cache_data[set][3] <= write_data_i;
-			end
-			else begin
-				//handle what happens for write miss ... 
-				//this shouldn't happen technically so what do i do here?
+			mem_read_address_o = address_i;
+			read_data_o = write_data_i;
+			hit = 0;
+			readmiss = 1;
+			genvar i;
+			for (i = 0 ; i < 4 ; i++) begin
+				if(i == LRU_pointer) age[set][i] == 2'b11;
+				else age[set][i] = LRU_calc(age[set][i]);
 			end
 		end
-		//miss cases:
-		else if (write_enable_i) begin
-			//first we must handle a cold miss ... easily done here
-			if(~valid[set][0]) begin
-				cache_data[set][0] <= write_data_i;
-				cache_tag[set][0] <= tag;
-				valid[set][0] <= 1'b1;
-			end
-			else if(~valid[set][1]) begin
-				cache_data[set][1] <= write_data_i;
-				cache_tag[set][1] <= tag;
-				valid[set][1] <= 1'b1;
-			end
-			else if(~valid[set][2]) begin
-				cache_data[set][2] <= write_data_i;
-				cache_tag[set][2] <= tag;
-				valid[set][2] <= 1'b1;
-			end
-			else if(~valid[set][3]) begin
-				cache_data[set][3] <= write_data_i;
-				cache_tag[set][3] <= tag;
-				valid[set][3] <= 1'b1;
-			end
-			//if not cold miss must be a conflict miss so we handle here:
-			else begin 
-				//handle conflict miss... replace least recently used value 
-				 
-				//check search count for lowest one and replace that one...
+		LRU_pointer = get_min(age[set]);
+	end
+//------------------------------Synchronous_write------------------------------
+	always_ff@(negedge clk_i) begin
+		if(write_enable_i && !hit) begin
+			//write to mem
+			//ignore cache write for now atleast :(
+			mem_write_enable_o <= 0;
+			mem_address_o = address_i;
+			mem_write_data_o <= write_data_i;
+		end
+		else if(write_enable_i && hit) begin
+			//write to cache and mem...
+			mem_write_enable_o <= 0;
+			mem_address_o = address_i;
+			mem_write_data_o <= write_data_i;
 
-				//then need to handle dirtyness since main memory needs to be updates somehow?
-
-			end
+			cache_data[set][LRU_pointer] = write_data_i;
+			cache_tag[set][LRU_pointer] = tag;
+			valid[set][LRU_pointer] = 1;
+		end
+		else if(readmiss) begin
+			//write to cache...
+			cache_data[set][LRU_pointer] = write_data_i;
+			cache_tag[set][LRU_pointer] = tag;
+			valid[set][LRU_pointer] = 1;
 		end
 	end
-
 endmodule
 
 
