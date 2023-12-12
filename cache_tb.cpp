@@ -51,17 +51,17 @@ int main(int argc, char **argv, char **env) {
             top->write_data_i = 0x05;
         }
         if(simcyc ==1){
-            top->address_i = 0x10;
-            top->write_data_i = 0x57;
+            top->address_i = 0x0;
+            top->write_data_i = 0x60;
         }
         if(simcyc ==2){
             top->address_i = 0x100;
-            top->write_data_i = 0x34;
+            top->write_data_i = 0x65;
         }
-        // if(simcyc ==3 ){
-        //     top->address_i = 0x1000;
-        //     top->write_data_i = 0x257;
-        // }
+        if(simcyc == 3){
+            top->address_i = 0x1000;
+            top->write_data_i = 0x257;
+        }
         // if(simcyc ==4 ){ //when fully populated
         //     top->address_i = 0x10000;
         //     top->write_data_i = 0xFFFF;
