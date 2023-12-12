@@ -26,19 +26,25 @@ void Vcache___024root__trace_chg_sub_0(Vcache___024root* vlSelf, VerilatedVcd::B
     if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[0U])) {
         bufp->chgIData(oldp+0,(vlSelf->cache__DOT__unnamedblk1__DOT__i),32);
         bufp->chgIData(oldp+1,(vlSelf->cache__DOT__unnamedblk1__DOT__unnamedblk2__DOT__j),32);
-        bufp->chgIData(oldp+2,(vlSelf->cache__DOT__unnamedblk3__DOT__i),32);
-        bufp->chgIData(oldp+3,(vlSelf->cache__DOT__unnamedblk3__DOT__unnamedblk4__DOT__j),32);
     }
-    bufp->chgBit(oldp+4,(vlSelf->clk_i));
-    bufp->chgIData(oldp+5,(vlSelf->address_i),32);
+    if (VL_UNLIKELY(vlSelf->__Vm_traceActivity[1U])) {
+        bufp->chgBit(oldp+2,(vlSelf->cache__DOT__hit));
+        bufp->chgBit(oldp+3,(vlSelf->cache__DOT__readmiss));
+        bufp->chgCData(oldp+4,(vlSelf->cache__DOT__LRU_pointer),2);
+    }
+    bufp->chgBit(oldp+5,(vlSelf->clk_i));
     bufp->chgBit(oldp+6,(vlSelf->write_enable_i));
-    bufp->chgIData(oldp+7,(vlSelf->write_data_i),32);
-    bufp->chgIData(oldp+8,(vlSelf->read_data_o),32);
+    bufp->chgIData(oldp+7,(vlSelf->address_i),32);
+    bufp->chgIData(oldp+8,(vlSelf->write_data_i),32);
     bufp->chgBit(oldp+9,(vlSelf->hit_o));
-    bufp->chgIData(oldp+10,((vlSelf->address_i >> 6U)),26);
-    bufp->chgCData(oldp+11,((0xfU & (vlSelf->address_i 
+    bufp->chgIData(oldp+10,(vlSelf->read_data_o),32);
+    bufp->chgIData(oldp+11,(vlSelf->mem_incoming_data_i),32);
+    bufp->chgIData(oldp+12,(vlSelf->mem_address_o),32);
+    bufp->chgIData(oldp+13,(vlSelf->mem_write_data_o),32);
+    bufp->chgBit(oldp+14,(vlSelf->mem_write_enable_o));
+    bufp->chgIData(oldp+15,((vlSelf->address_i >> 6U)),26);
+    bufp->chgCData(oldp+16,((0xfU & (vlSelf->address_i 
                                      >> 2U))),4);
-    bufp->chgBit(oldp+12,(vlSelf->cache__DOT__hit));
 }
 
 void Vcache___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
@@ -49,4 +55,5 @@ void Vcache___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {
     // Body
     vlSymsp->__Vm_activity = false;
     vlSymsp->TOP.__Vm_traceActivity[0U] = 0U;
+    vlSymsp->TOP.__Vm_traceActivity[1U] = 0U;
 }

@@ -14,9 +14,13 @@ Vcache::Vcache(VerilatedContext* _vcontextp__, const char* _vcname__)
     , clk_i{vlSymsp->TOP.clk_i}
     , write_enable_i{vlSymsp->TOP.write_enable_i}
     , hit_o{vlSymsp->TOP.hit_o}
+    , mem_write_enable_o{vlSymsp->TOP.mem_write_enable_o}
     , address_i{vlSymsp->TOP.address_i}
     , write_data_i{vlSymsp->TOP.write_data_i}
     , read_data_o{vlSymsp->TOP.read_data_o}
+    , mem_incoming_data_i{vlSymsp->TOP.mem_incoming_data_i}
+    , mem_address_o{vlSymsp->TOP.mem_address_o}
+    , mem_write_data_o{vlSymsp->TOP.mem_write_data_o}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context
@@ -41,6 +45,7 @@ Vcache::~Vcache() {
 void Vcache___024root___eval_initial(Vcache___024root* vlSelf);
 void Vcache___024root___eval_settle(Vcache___024root* vlSelf);
 void Vcache___024root___eval(Vcache___024root* vlSelf);
+QData Vcache___024root___change_request(Vcache___024root* vlSelf);
 #ifdef VL_DEBUG
 void Vcache___024root___eval_debug_assertions(Vcache___024root* vlSelf);
 #endif  // VL_DEBUG
@@ -50,12 +55,27 @@ static void _eval_initial_loop(Vcache__Syms* __restrict vlSymsp) {
     vlSymsp->__Vm_didInit = true;
     Vcache___024root___eval_initial(&(vlSymsp->TOP));
     // Evaluate till stable
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
     vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Initial loop\n"););
         Vcache___024root___eval_settle(&(vlSymsp->TOP));
         Vcache___024root___eval(&(vlSymsp->TOP));
-    } while (0);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = Vcache___024root___change_request(&(vlSymsp->TOP));
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("cache.sv", 1, "",
+                "Verilated model didn't DC converge\n"
+                "- See https://verilator.org/warn/DIDNOTCONVERGE");
+        } else {
+            __Vchange = Vcache___024root___change_request(&(vlSymsp->TOP));
+        }
+    } while (VL_UNLIKELY(__Vchange));
 }
 
 void Vcache::eval_step() {
@@ -67,11 +87,26 @@ void Vcache::eval_step() {
     // Initialize
     if (VL_UNLIKELY(!vlSymsp->__Vm_didInit)) _eval_initial_loop(vlSymsp);
     // Evaluate till stable
+    int __VclockLoop = 0;
+    QData __Vchange = 1;
     vlSymsp->__Vm_activity = true;
     do {
         VL_DEBUG_IF(VL_DBG_MSGF("+ Clock loop\n"););
         Vcache___024root___eval(&(vlSymsp->TOP));
-    } while (0);
+        if (VL_UNLIKELY(++__VclockLoop > 100)) {
+            // About to fail, so enable debug to see what's not settling.
+            // Note you must run make with OPT=-DVL_DEBUG for debug prints.
+            int __Vsaved_debug = Verilated::debug();
+            Verilated::debug(1);
+            __Vchange = Vcache___024root___change_request(&(vlSymsp->TOP));
+            Verilated::debug(__Vsaved_debug);
+            VL_FATAL_MT("cache.sv", 1, "",
+                "Verilated model didn't converge\n"
+                "- See https://verilator.org/warn/DIDNOTCONVERGE");
+        } else {
+            __Vchange = Vcache___024root___change_request(&(vlSymsp->TOP));
+        }
+    } while (VL_UNLIKELY(__Vchange));
     // Evaluate cleanup
 }
 

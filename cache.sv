@@ -4,25 +4,23 @@ module cache#(
 			 	tag_bits = 26,
 				width = 32
 )(	//input signals
-	input logic clk_i , write_enable_i , byte_op, 
-	input logic [width:0] address_i , write_data_i,
+	input logic clk_i , write_enable_i , //byte_op, 
+	input logic [width-1:0] address_i , write_data_i,
 	//output signals
 	output logic hit_o, // needed or not ? 
 	output logic [width-1:0] read_data_o,
 	//memory interface signals
-	input logic [width-1:0] mem_incoming data_i,
+	input logic [width-1:0] mem_incoming_data_i,
 	output logic [width-1:0] mem_address_o , mem_write_data_o,
-	output logic mem_write_enable_o , mem_byte_op_o
-
+	output logic mem_write_enable_o// ,mem_byte_op_o
 );
 //------------------------------Data_Structures------------------------------
 	// Data and tag
-	logic [data_width-1:0] cache_data [((2**set_bits)-1):0][3:0];
+	logic [width-1:0] cache_data [((2**set_bits)-1):0][3:0];
 	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
 	logic valid [((2**set_bits)-1):0][3:0];
 	logic [1:0] age [((2**set_bits)-1):0][3:0];
-  	//keeps track of most recently used associative set
-	//int unsigned count [16];
+
 //------------------------------Internal_signals------------------------------
 	//Signals to control cache access
 	logic [tag_bits-1:0] tag;
@@ -33,22 +31,21 @@ module cache#(
 	assign tag = address_i[31:6];
 	assign set = address_i[5:2];
 	assign hit_o = hit;
+	assign mem_address_o = address_i;
 //------------------------------Startup_Procedure------------------------------
 	initial begin
 		hit = 1'b0;
         for (int i = 0; i < (2**set_bits); i = i + 1) begin
             for (int j = 0; j < 4; j = j + 1) begin
                 valid[i][j] = 1'b0;
+                age[i][j] = j;
             end
-        end
-        for (int i = 0; i < 16; i = i + 1) begin
-        	count[i] = 0;
         end
 	end
 //------------------------------Internal_Functions------------------------------
     function logic [1:0] get_min (logic [1:0] ages [3:0]);
 		logic [1:0] result;
-		for(int i = 0 ; i < 4 i++) begin
+		for(int i = 0 ; i < 4 ; i++) begin
 			if(ages[i] == 2'b00) result = i;
 		end
         return result;
@@ -95,15 +92,14 @@ module cache#(
 			age[set][2] = LRU_calc(age[set][2]);
 		end
 		else begin
-			mem_read_address_o = address_i;
-			read_data_o = write_data_i;
+			read_data_o = mem_incoming_data_i;
 			hit = 0;
 			readmiss = 1;
-			genvar i;
-			for (i = 0 ; i < 4 ; i++) begin
-				if(i == LRU_pointer) age[set][i] == 2'b11;
-				else age[set][i] = LRU_calc(age[set][i]);
-			end
+			age[set][0] = LRU_calc(age[set][0]);
+			age[set][1] = LRU_calc(age[set][1]);
+			age[set][2] = LRU_calc(age[set][2]);
+			age[set][3] = LRU_calc(age[set][3]);
+			age[set][LRU_pointer] = 2'b11;
 		end
 		LRU_pointer = get_min(age[set]);
 	end
@@ -112,25 +108,23 @@ module cache#(
 		if(write_enable_i && !hit) begin
 			//write to mem
 			//ignore cache write for now atleast :(
-			mem_write_enable_o <= 0;
-			mem_address_o = address_i;
+			mem_write_enable_o <= 1;
 			mem_write_data_o <= write_data_i;
 		end
 		else if(write_enable_i && hit) begin
 			//write to cache and mem...
-			mem_write_enable_o <= 0;
-			mem_address_o = address_i;
+			mem_write_enable_o <= 1;
 			mem_write_data_o <= write_data_i;
 
-			cache_data[set][LRU_pointer] = write_data_i;
-			cache_tag[set][LRU_pointer] = tag;
-			valid[set][LRU_pointer] = 1;
+			cache_data[set][LRU_pointer] <= write_data_i;
+			cache_tag[set][LRU_pointer] <= tag;
+			valid[set][LRU_pointer] <= 1;
 		end
 		else if(readmiss) begin
 			//write to cache...
-			cache_data[set][LRU_pointer] = write_data_i;
-			cache_tag[set][LRU_pointer] = tag;
-			valid[set][LRU_pointer] = 1;
+			cache_data[set][LRU_pointer] <= mem_incoming_data_i;
+			cache_tag[set][LRU_pointer] <= tag;
+			valid[set][LRU_pointer] <= 1;
 		end
 	end
 endmodule

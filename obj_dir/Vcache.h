@@ -28,9 +28,13 @@ class Vcache VL_NOT_FINAL : public VerilatedModel {
     VL_IN8(&clk_i,0,0);
     VL_IN8(&write_enable_i,0,0);
     VL_OUT8(&hit_o,0,0);
+    VL_OUT8(&mem_write_enable_o,0,0);
     VL_IN(&address_i,31,0);
     VL_IN(&write_data_i,31,0);
     VL_OUT(&read_data_o,31,0);
+    VL_IN(&mem_incoming_data_i,31,0);
+    VL_OUT(&mem_address_o,31,0);
+    VL_OUT(&mem_write_data_o,31,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
