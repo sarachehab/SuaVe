@@ -56,84 +56,56 @@ module cache#(
         return result;
     endfunction
 
-	function logic [1:0] LRU_calc (logic [1:0] a);
-		logic [1:0] result;
-		if(a == 2'b00) result = 2'b00;
-		else result = a - 2'b01;
-		return result;
+	function automatic void lru_calc (logic [1:0] ages [3:0] , logic [1:0] index);
+		ages[index] = 2'b11;
+		for(int i = 0 ; i < 4 ; i++) begin
+			if((i[1:0] != index) && (ages[i[1:0]] > ages[index])) begin
+				ages[i[1:0]] = ages[i[1:0]] - 1'b1;
+			end
+		end
 	endfunction
+
 //------------------------------Combinational_Read------------------------------
 	always_latch begin
 		
 		if ((tag == cache_tag[set][0]) && (valid[set][0] == 1)) begin 
 			read_data_o = cache_data[set][0];
-
 			hit = 1;
-		// 	age[set][0] = 2'b11;
-		// 	age[set][1] = LRU_calc(age[set][1]);
-		// 	age[set][2] = LRU_calc(age[set][2]);
-		// 	age[set][3] = LRU_calc(age[set][3]);
+
 		 end
 		else if (tag == cache_tag[set][1] && valid[set][1] == 1)begin
 			read_data_o = cache_data[set][1];
 			hit = 1;
-			// age[set][1] = 2'b11;
-			// age[set][0] = LRU_calc(age[set][0]);
-			// age[set][2] = LRU_calc(age[set][2]);
-			// age[set][3] = LRU_calc(age[set][3]);
+
 		end
 		else if (tag == cache_tag[set][2] && valid[set][2] == 1)begin
 			read_data_o = cache_data[set][2];
 			hit = 1;
-			// age[set][2] = 2'b11;
-			// age[set][0] = LRU_calc(age[set][0]);
-			// age[set][1] = LRU_calc(age[set][1]);
-			// age[set][3] = LRU_calc(age[set][3]);
+
 		end
 		else if (tag == cache_tag[set][3] && valid[set][3] == 1)begin
 			read_data_o = cache_data[set][3];
 			hit = 1;
-		// 	age[set][3] = 2'b11;
-		// 	age[set][0] = LRU_calc(age[set][0]);
-		// 	age[set][1] = LRU_calc(age[set][1]);
-		// 	age[set][2] = LRU_calc(age[set][2]);
+
 		end
 		else begin
 			read_data_o = mem_incoming_data_i;
 			hit = 0;
 			readmiss = 1;
-			// age[set][0] = LRU_calc(age[set][0]);
-			// age[set][1] = LRU_calc(age[set][1]);
-			// age[set][2] = LRU_calc(age[set][2]);
-			// age[set][3] = LRU_calc(age[set][3]);
-			// age[set][LRU_pointer] = 2'b11;
+
 		end
 		
 	end
 //------------------------------Synchronous_write------------------------------
-	always_ff@(posedge clk_i) begin 
-		// age[set][0] <= LRU_calc(age[set][0]);
-		// age[set][1] <= LRU_calc(age[set][1]);
-		// age[set][2] <= LRU_calc(age[set][2]);
-		// age[set][3] <= LRU_calc(age[set][3]);
-		age[set][LRU_pointer] <= 2'b11;
-		for(int i = 0 ; i < 4 ; i++) begin
-			if(i[1:0] != LRU_pointer) age[set][i[1:0]] <=LRU_calc(age[set][i[1:0]]);
-		end
-		LRU_pointer <= get_min(age[set]);
-
-	end
 	always_ff@(negedge clk_i) begin
 
 		$display("%b %b %b %b - %b", age[set][0], age[set][1], age[set][2], age[set][3], LRU_pointer);
-		$display("v:%b %h v:%b %h v:%b %h v:%b %h", valid[set][0] ,  cache_data[set][0]  , valid[set][1] , cache_data[set][1] , valid[set][2] , cache_data[set][2] , valid[set][3] , cache_data[set][3]);
+		$display("v:%b %h v:%b %h v:%b %h v:%b %h\n", valid[set][0] ,  cache_data[set][0]  , valid[set][1] , cache_data[set][1] , valid[set][2] , cache_data[set][2] , valid[set][3] , cache_data[set][3]);
 
 		if(write_enable_i && !valid[set][LRU_pointer]) begin
-			$display("first enter");
 			cache_data[set][LRU_pointer] <= write_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
 			valid[set][LRU_pointer] <= 1;
-
 		end
 		else if(write_enable_i && !hit) begin
 			
@@ -157,10 +129,7 @@ module cache#(
 			//write to cache...
 			cache_data[set][LRU_pointer] <= mem_incoming_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
-
 		end
-
-
 		
 	end
 endmodule
