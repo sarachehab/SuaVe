@@ -13,7 +13,8 @@ module cache#(
 	input logic [width-1:0] mem_incoming_data_i,
 	output logic [width-1:0] mem_address_o , mem_write_data_o,
 	output logic mem_write_enable_o,// ,mem_byte_op_o
-	output logic [1:0] age_0 //for testing purpose
+	output logic [1:0] age_0, //for testing purpose
+	output logic valid_o
 );
 //------------------------------Data_Structures------------------------------
 	// Data and tag
@@ -34,6 +35,7 @@ module cache#(
 	assign hit_o = hit;
 	assign mem_address_o = address_i;
 	assign age_0 = age[0][0]; //for testing purpose
+	assign valid_o = valid[0][0];
 //------------------------------Startup_Procedure------------------------------
 	initial begin
 		hit = 1'b0;
@@ -61,10 +63,10 @@ module cache#(
 	endfunction
 //------------------------------Combinational_Read------------------------------
 	always_latch begin
-		LRU_pointer = get_min(age[set]);
-
-		if (tag == cache_tag[set][0] && valid[set][0] == 1) begin 
+		
+		if ((tag == cache_tag[set][0]) && (valid[set][0] == 1)) begin 
 			read_data_o = cache_data[set][0];
+
 			hit = 1;
 		// 	age[set][0] = 2'b11;
 		// 	age[set][1] = LRU_calc(age[set][1]);
@@ -109,11 +111,34 @@ module cache#(
 	end
 //------------------------------Synchronous_write------------------------------
 	always_ff@(negedge clk_i) begin
-		if(write_enable_i && !hit) begin
+
+		LRU_pointer = get_min(age[set]);
+
+		$display("%b %b %b %b - %b", age[set][0], age[set][1], age[set][2], age[set][3], LRU_pointer);
+		$display("v:%b %h v:%b %h v:%b %h v:%b %h", valid[set][0] ,  cache_data[set][0]  , valid[set][1] , cache_data[set][1] , valid[set][2] , cache_data[set][2] , valid[set][3] , cache_data[set][3]);
+
+		if(write_enable_i && !valid[set][LRU_pointer]) begin
+			$display("first enter");
+			cache_data[set][LRU_pointer] <= write_data_i;
+			cache_tag[set][LRU_pointer] <= tag;
+			valid[set][LRU_pointer] <= 1;
+			age[set][0] <= LRU_calc(age[set][0]);
+			age[set][1] <= LRU_calc(age[set][1]);
+			age[set][2] <= LRU_calc(age[set][2]);
+			age[set][3] <= LRU_calc(age[set][3]);
+			age[set][LRU_pointer] <= 2'b11;
+		end
+		else if(write_enable_i && !hit) begin
+			
 			//write to mem
 			//ignore cache write for now atleast :(
 			mem_write_enable_o <= 1;
 			mem_write_data_o <= write_data_i;
+			age[set][0] <= LRU_calc(age[set][0]);
+			age[set][1] <= LRU_calc(age[set][1]);
+			age[set][2] <= LRU_calc(age[set][2]);
+			age[set][3] <= LRU_calc(age[set][3]);
+			age[set][LRU_pointer] <= 2'b11;
 		end
 		else if(write_enable_i && hit) begin
 			//write to cache and mem...
@@ -123,18 +148,20 @@ module cache#(
 			cache_data[set][LRU_pointer] <= write_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
 			valid[set][LRU_pointer] <= 1;
-		end
-		else if(readmiss) begin
-			//write to cache...
-			cache_data[set][LRU_pointer] <= mem_incoming_data_i;
-			cache_tag[set][LRU_pointer] <= tag;
-			valid[set][LRU_pointer] <= 1;
-		end
 			age[set][0] <= LRU_calc(age[set][0]);
 			age[set][1] <= LRU_calc(age[set][1]);
 			age[set][2] <= LRU_calc(age[set][2]);
 			age[set][3] <= LRU_calc(age[set][3]);
 			age[set][LRU_pointer] <= 2'b11;
+		end
+		else if(readmiss) begin
+			//write to cache...
+			cache_data[set][LRU_pointer] <= mem_incoming_data_i;
+			cache_tag[set][LRU_pointer] <= tag;
+
+		end
+
+
 		
 	end
 endmodule
