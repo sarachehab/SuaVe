@@ -1,8 +1,12 @@
 rm -rf obj_dir
 rm -f cache.vcd
 
-verilator -Wall --cc --trace cache.sv --exe cache_tb.cpp
+clear
 
-make -j -C obj_dir/ -f Vcache.mk Vcache
+verilator -Wall --cc --trace cachev2.sv --exe cache_tb.cpp
 
-obj_dir/Vcache
+make -j -C obj_dir/ -f Vcachev2.mk Vcachev2
+
+echo -e "\nrunning testbench\n"
+obj_dir/Vcachev2
+echo -e "\nending testbench\n"
