@@ -53,16 +53,19 @@ int main(int argc, char **argv, char **env)
 
     if (currentlyReading)
     {
-      cntReading++;
-      if (cntReading % 3 == 2)
+      if (!top->stall)
       {
-        pdfFile << top->a0 << "\n";
+        cntReading++;
+        if (cntReading % 5 == 2)
+        {
+          pdfFile << top->a0 << "\n";
+        }
       }
     }
 
     top->rst = (simcyc < 3);
 
-    if (cntReading > 256 * 3)
+    if (cntReading > 256 * 5)
       break;
 
     // either simulation finished

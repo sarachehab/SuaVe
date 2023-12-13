@@ -34,7 +34,7 @@ if [ $# -eq 2 ]; then
         echo "instruction_memory or data_memory folder does not exist in the parent directory"
         exit 1
     fi
-elif [ $# -eq 1 ] && [ "$1" = "F1" ]; then
+elif [ $# -eq 1 ] && [ "$1" = "f1" ]; then
     if [ -d ../instruction_memory ]; then
         if [ -f ../instruction_memory/F1.hex ]; then
             echo "Copying F1.hex into current directory as instructions.hex"
