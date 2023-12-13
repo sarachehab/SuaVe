@@ -64,6 +64,7 @@ module cacheline #(
                     //read_data_o = cache_data[set][i[1:0]];
                     read_data_o = mem_incoming_data_i;
                     //$display("%h %h" , read_data_o , address_i);
+                    break
                 end
                 else begin
                     hit = 1'b0;

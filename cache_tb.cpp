@@ -106,9 +106,6 @@ int main(int argc, char **argv, char **env) {
 
 
 
-
-
-
         if (Verilated::gotFinish()) break;
     }
   tfp->close();
