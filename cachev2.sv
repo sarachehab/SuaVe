@@ -1,5 +1,5 @@
 module cachev2 (
-	input logic clk_i , write_enable_i , cache_enable_i,
+	input logic clk_i , write_enable_i , cache_enable_i, byte_op_i,
 	input logic [31:0] address_i , write_data_i,
 	//output signals
 	output logic hit_o,
@@ -18,6 +18,7 @@ cacheline line(
     .write_data_i(write_data_i),
     .hit_o(hit_o),
     .read_data_o(read_data_o),
+    .byte_op_i(byte_op_i),
 
     .mem_incoming_data_i(mem_incoming_data),
     .mem_address_o(mem_address),
