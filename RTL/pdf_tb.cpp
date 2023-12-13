@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **env)
   std::ofstream pdfFile;
   // pdfFile.open("gaussian.txt");
   // pdfFile.open("sine.txt");
-  pdfFile.open("gaussian.txt");
+  pdfFile.open("distribution.txt");
   // pdfFile.open("noisy.txt");
 
   if (!pdfFile.is_open())
@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **env)
   Verilated::traceEverOn(true);
   VerilatedVcdC *tfp = new VerilatedVcdC;
   top->trace(tfp, 99);
-  tfp->open("cpu_run_reference.vcd");
+  tfp->open("pdf.vcd");
 
   top->clk = 1;
   top->rst = 1;

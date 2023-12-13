@@ -83,7 +83,7 @@ fi
 rm -rf obj_dir
 rm -f *.vcd
 
-verilator -Wall --cc --trace cpu.sv -Idatapath -Icontrol_unit -Iextend_unit -Iprogram_counter -Iinstruction_memory --exe "$testbench"
+verilator -Wall --cc --trace cpu.sv -Idatapath -Icontrol_unit -Iextend_unit -Iprogram_counter -Iinstruction_memory -Ipipeline_registers -Ihazard_unit --exe "$testbench"
 
 make -j -C obj_dir/ -f Vcpu.mk Vcpu
 

@@ -15,7 +15,7 @@ int main(int argc, char **argv, char **env)
   Verilated::traceEverOn(true);
   VerilatedVcdC *tfp = new VerilatedVcdC;
   top->trace(tfp, 99);
-  tfp->open("cpu_run_F1.vcd");
+  tfp->open("f1.vcd");
 
   if (vbdOpen() != 1)
     return (-1);
