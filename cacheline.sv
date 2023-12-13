@@ -45,17 +45,18 @@ module cacheline #(
         end
     end
 
-    always_ff@(posedge clk_i)begin
+    always_ff@(posedge clk_i) begin
         for(int i = 0 ; i < 4 ; i++) begin
             if(age[set][i[1:0]] == 2'b00)begin 
                 LRU_pointer[set] <= i[1:0];
             end
         end
+        //$display("working on set: %h , and made lru pointer point to %h" , set , LRU_pointer[set]);
     end
 
     always_comb begin
-
         if(cache_enable_i) begin
+            
             for(int i=0; i<4; i++)begin
                 if(cache_tag[set][i]==tag)begin
                     hit = valid[set][i[1:0]];
@@ -106,13 +107,13 @@ module cacheline #(
         if(readmiss) begin
             cache_tag[set][LRU_pointer[set]] <= tag;
             cache_data[set][LRU_pointer[set]] <= mem_incoming_data_i;
-            valid[set][LRU_pointer[set]] <= 1'b1;
+            valid[set][LRU_pointer[set]] <= 1'b1;            
             age[set][LRU_pointer[set]] <= 2'b11;
 
             for(int i = 0 ; i < 4 ; i++) begin
                 if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
+                    $display("success");
                     age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
-                    $display("%h" , age[set][i[1:0]]);
                 end
             end
             $display("%h %h %h %h - %h -- writing data: %h into addres: %h" , age[set][0] , age[set][1] , age[set][2] , age[set][3] , LRU_pointer[set] , mem_incoming_data_i , address_i);
