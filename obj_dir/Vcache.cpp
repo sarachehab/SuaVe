@@ -20,7 +20,6 @@ Vcache::Vcache(VerilatedContext* _vcontextp__, const char* _vcname__)
     , address_i{vlSymsp->TOP.address_i}
     , write_data_i{vlSymsp->TOP.write_data_i}
     , read_data_o{vlSymsp->TOP.read_data_o}
-    , mem_incoming_data_i{vlSymsp->TOP.mem_incoming_data_i}
     , mem_address_o{vlSymsp->TOP.mem_address_o}
     , mem_write_data_o{vlSymsp->TOP.mem_write_data_o}
     , rootp{&(vlSymsp->TOP)}

@@ -10,7 +10,7 @@ module cache#(
 	output logic hit_o, // needed or not ? 
 	output logic [width-1:0] read_data_o,
 	//memory interface signals
-	input logic [width-1:0] mem_incoming_data_i,
+	//input logic [width-1:0] mem_incoming_data_i,
 	output logic [width-1:0] mem_address_o , mem_write_data_o,
 	output logic mem_write_enable_o,// ,mem_byte_op_o
 	output logic [1:0] age_0, //for testing purpose
@@ -36,6 +36,7 @@ module cache#(
 	assign mem_address_o = address_i;
 	assign age_0 = age[0][0]; //for testing purpose
 	assign valid_o = valid[0][0];
+    //assign read_data_o = cache_data[0][1];
 //------------------------------Startup_Procedure------------------------------
 	initial begin
 		hit = 1'b0;
@@ -71,11 +72,10 @@ module cache#(
 		for(int i = 0 ; i < 4 ; i++) begin
 	 		if(age[set][i] == 2'b00)begin 
 			LRU_pointer <= i[1:0];
-			end	
+			end
 	 	end
 
 		if ((tag == cache_tag[set][0]) && (valid[set][0] == 1)) begin 
-			read_data_o <= cache_data[set][0];
 			hit <= 1;
 			age[set][0] <= 2'b11;
 		for(int i = 0 ; i < 4 ; i++) begin
@@ -86,7 +86,7 @@ module cache#(
 
 		end
 		else if (tag == cache_tag[set][1] && valid[set][1] == 1)begin
-			read_data_o <= cache_data[set][1];
+
 			hit <= 1;
 			age[set][1] <= 2'b11;
 		for(int i = 0 ; i < 4 ; i++) begin
@@ -97,7 +97,7 @@ module cache#(
 
 		end
 		else if (tag == cache_tag[set][2] && valid[set][2] == 1)begin
-			read_data_o <= cache_data[set][2];
+
 			hit <= 1;
 			age[set][2] <= 2'b11;
 		for(int i = 0 ; i < 4 ; i++) begin
@@ -108,7 +108,7 @@ module cache#(
 
 		end
 		else if (tag == cache_tag[set][3] && valid[set][3] == 1)begin
-			read_data_o <= cache_data[set][3];
+
 			hit <= 1;
 			age[set][3] <= 2'b11;
 		for(int i = 0 ; i < 4 ; i++) begin
@@ -119,8 +119,7 @@ module cache#(
 		end
 		else begin
 		//read miss
-			//mem_address_o <= address_i; //sending address to memory
-			read_data_o <= mem_incoming_data_i;	
+			//mem_address_o <= address_i; //sending address to memory	
 			hit <= 0;
 			readmiss <= 1;
 		
@@ -132,40 +131,57 @@ module cache#(
 // when do we write
 // if we get a read miss 
 
-		$display("%b %b %b %b - %b", age[set][0], age[set][1], age[set][2], age[set][3], LRU_pointer);
-		$display("v:%b %h v:%b %h v:%b %h v:%b %h\n", valid[set][0] ,  cache_data[set][0]  , valid[set][1] , cache_data[set][1] , valid[set][2] , cache_data[set][2] , valid[set][3] , cache_data[set][3]);
+		// $display("%b %b %b %b - %b", age[set][0], age[set][1], age[set][2], age[set][3], LRU_pointer);
+		// $display("v:%b %h v:%b %h v:%b %h v:%b %h\n", valid[set][0] ,  cache_data[set][0]  , valid[set][1] , cache_data[set][1] , valid[set][2] , cache_data[set][2] , valid[set][3] , cache_data[set][3]);
 
-		if(write_enable_i && !valid[set][LRU_pointer]) begin
-			cache_data[set][LRU_pointer] <= write_data_i;
+		//write function:
+		//load instruction and miss:
+		if(readmiss) begin
+            // $display("this shit dont work");
+            // $display ("%h", tag);
+            // $display("%h", write_data_i);
+
 			cache_tag[set][LRU_pointer] <= tag;
-			valid[set][LRU_pointer] <= 1;
-			$display("hello shit1");
+			cache_data[set][LRU_pointer] <= write_data_i;
+			valid[set][LRU_pointer] <= 1'b1;
+            read_data_o <= cache_data[0][LRU_pointer];
 		end
-		else if(write_enable_i && !hit) begin
-			//when data is not found in cache and youre allowed to write
-			//write to mem
-			//ignore cache write for now atleast :(
-			mem_write_enable_o <= 1;
-			mem_write_data_o <= write_data_i;
-			$display("hello shit2");
-		end
+		//store and hit
 		else if(write_enable_i && hit) begin
-			//write to cache and mem...
-			mem_write_enable_o <= 1;
+
+			mem_write_enable_o <= 1'b1;
 			mem_write_data_o <= write_data_i;
 
+			if(cache_tag[set][0] == tag) begin
+				cache_data[set][0] <= write_data_i;
+				valid[set][0] <= 1'b1;
+                read_data_o <= cache_data[0][0];
+			end
+			else if(cache_tag[set][1] == tag) begin
+				cache_data[set][1] <= write_data_i;
+				valid[set][1] <= 1'b1;        
+                read_data_o <= cache_data[0][1];      
+			end
+			else if(cache_tag[set][2] == tag) begin
+				cache_data[set][2] <= write_data_i;
+				valid[set][2] <= 1'b1;
+                read_data_o <= cache_data[0][2];
+			end
+			else if(cache_tag[set][3] == tag) begin
+				cache_data[set][3] <= write_data_i;
+				valid[set][3] <= 1'b1;
+                read_data_o <= cache_data[0][3];
+			end
+		end
+		//store and miss
+		else if(write_enable_i && !hit) begin
 			cache_data[set][LRU_pointer] <= write_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
-			valid[set][LRU_pointer] <= 1;
-			$display("hello shit3");
+			valid[set][LRU_pointer] <= 1'b1;
 		end
-		else if(readmiss) begin
-			//write to cache...
-			cache_data[set][LRU_pointer] <= write_data_i;
-			cache_tag[set][LRU_pointer] <= tag;
-			$display("hello shit4");
-		end
-		
+
+
+
 	end
 endmodule
 

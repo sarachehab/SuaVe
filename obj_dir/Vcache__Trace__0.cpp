@@ -43,14 +43,13 @@ void Vcache___024root__trace_chg_sub_0(Vcache___024root* vlSelf, VerilatedVcd::B
     bufp->chgIData(oldp+13,(vlSelf->write_data_i),32);
     bufp->chgBit(oldp+14,(vlSelf->hit_o));
     bufp->chgIData(oldp+15,(vlSelf->read_data_o),32);
-    bufp->chgIData(oldp+16,(vlSelf->mem_incoming_data_i),32);
-    bufp->chgIData(oldp+17,(vlSelf->mem_address_o),32);
-    bufp->chgIData(oldp+18,(vlSelf->mem_write_data_o),32);
-    bufp->chgBit(oldp+19,(vlSelf->mem_write_enable_o));
-    bufp->chgCData(oldp+20,(vlSelf->age_0),2);
-    bufp->chgBit(oldp+21,(vlSelf->valid_o));
-    bufp->chgIData(oldp+22,((vlSelf->address_i >> 6U)),26);
-    bufp->chgCData(oldp+23,((0xfU & (vlSelf->address_i 
+    bufp->chgIData(oldp+16,(vlSelf->mem_address_o),32);
+    bufp->chgIData(oldp+17,(vlSelf->mem_write_data_o),32);
+    bufp->chgBit(oldp+18,(vlSelf->mem_write_enable_o));
+    bufp->chgCData(oldp+19,(vlSelf->age_0),2);
+    bufp->chgBit(oldp+20,(vlSelf->valid_o));
+    bufp->chgIData(oldp+21,((vlSelf->address_i >> 6U)),26);
+    bufp->chgCData(oldp+22,((0xfU & (vlSelf->address_i 
                                      >> 2U))),4);
 }
 

@@ -195,7 +195,6 @@ VL_ATTR_COLD void Vcache___024root___ctor_var_reset(Vcache___024root* vlSelf) {
     vlSelf->write_data_i = VL_RAND_RESET_I(32);
     vlSelf->hit_o = VL_RAND_RESET_I(1);
     vlSelf->read_data_o = VL_RAND_RESET_I(32);
-    vlSelf->mem_incoming_data_i = VL_RAND_RESET_I(32);
     vlSelf->mem_address_o = VL_RAND_RESET_I(32);
     vlSelf->mem_write_data_o = VL_RAND_RESET_I(32);
     vlSelf->mem_write_enable_o = VL_RAND_RESET_I(1);

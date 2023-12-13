@@ -34,7 +34,6 @@ class Vcache VL_NOT_FINAL : public VerilatedModel {
     VL_IN(&address_i,31,0);
     VL_IN(&write_data_i,31,0);
     VL_OUT(&read_data_o,31,0);
-    VL_IN(&mem_incoming_data_i,31,0);
     VL_OUT(&mem_address_o,31,0);
     VL_OUT(&mem_write_data_o,31,0);
 

@@ -14,7 +14,7 @@ int get_rand () {
     return rand();
 }
 
-#define MAX_SIM_CYC 100
+#define MAX_SIM_CYC 10
 
 int main(int argc, char **argv, char **env) {
     int simcyc;
@@ -27,7 +27,7 @@ int main(int argc, char **argv, char **env) {
     top->trace(tfp, 99);
     tfp->open("cache.vcd");
 
-    top->clk_i = 1;
+    top->clk_i = 0;
 
     std::vector<int32_t> memory;
 
@@ -46,19 +46,19 @@ int main(int argc, char **argv, char **env) {
             top->eval();
         }
         top->write_enable_i =1;
-        if(simcyc ==0){
+        if(simcyc ==2){
             top->address_i = 0x10;
             top->write_data_i = 0x05;
         }
-        if(simcyc ==1){
+        if(simcyc ==3){
             top->address_i = 0x1000;
             top->write_data_i = 0x60;
         }
-        if(simcyc ==2){
+        if(simcyc ==4){
             top->address_i = 0x100;
             top->write_data_i = 0x65;
         }
-        if(simcyc == 3){
+        if(simcyc == 5){
             top->address_i = 0x1000;
             top->write_data_i = 0x257;
         }
