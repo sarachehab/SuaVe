@@ -38,7 +38,7 @@ int main(int argc, char **argv, char **env) {
 
     int cntReading = 0;
     bool currentlyReading = false;
-    for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc=simcyc+4) {
+    for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++) {
         
         for (tick = 0; tick < 2; tick++) {
             tfp->dump(2 * simcyc + tick);
@@ -47,11 +47,11 @@ int main(int argc, char **argv, char **env) {
         }
         top->write_enable_i =1;
         if(simcyc ==0){
-            top->address_i = 0x0;
+            top->address_i = 0x10;
             top->write_data_i = 0x05;
         }
         if(simcyc ==1){
-            top->address_i = 0x0;
+            top->address_i = 0x1000;
             top->write_data_i = 0x60;
         }
         if(simcyc ==2){

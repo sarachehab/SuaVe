@@ -20,7 +20,7 @@ module cache#(
 	// Data and tag
 	logic [width-1:0] cache_data [((2**set_bits)-1):0][3:0];
 	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
-	logic valid [((2**set_bits)-1):0][3:0];
+	logic valid [((2**set_bits)-1):0][3:0];  //shoudlnt this be 2 bits cuz we 
 	logic [1:0] age [((2**set_bits)-1):0][3:0];
 
 //------------------------------Internal_signals------------------------------
@@ -48,56 +48,89 @@ module cache#(
         end
 	end
 //------------------------------Internal_Functions------------------------------
-    function logic [1:0] get_min (logic [1:0] ages [3:0]);
-		logic [1:0] result;
-		for(int i = 0 ; i < 4 ; i++) begin
-			if(ages[i] == 2'b00) result = i[1:0];
-		end
-        return result;
-    endfunction
+    // function logic [1:0] get_min (logic [1:0] ages [3:0]);
+	// 	logic [1:0] result;
+	// 	for(int i = 0 ; i < 4 ; i++) begin
+	// 		if(ages[i] == 2'b00) result = i[1:0];
+	// 	end
+    //     return result;
+    // endfunction
 
-	function automatic void lru_calc (logic [1:0] ages [3:0] , logic [1:0] index);
-		ages[index] = 2'b11;
-		for(int i = 0 ; i < 4 ; i++) begin
-			if((i[1:0] != index) && (ages[i[1:0]] > ages[index])) begin
-				ages[i[1:0]] = ages[i[1:0]] - 1'b1;
-			end
-		end
-	endfunction
+	// function  logic[1:0] lru_calc (output logic [1:0] ages [3:0] , input logic [1:0] index);
+	// 	ages[index] = 2'b11;
+	// 	for(int i = 0 ; i < 4 ; i++) begin
+	// 		if((i[1:0] != index) && (ages[i[1:0]] > ages[index])) begin
+	// 			ages[i[1:0]] = ages[i[1:0]] - 1'b1;
+	// 		end
+	// 	end
+	// 	return ages;
+	// endfunction
 
 //------------------------------Combinational_Read------------------------------
-	always_latch begin
-		
-		if ((tag == cache_tag[set][0]) && (valid[set][0] == 1)) begin 
-			read_data_o = cache_data[set][0];
-			hit = 1;
+	always_ff@(posedge clk_i) begin
+		for(int i = 0 ; i < 4 ; i++) begin
+	 		if(age[set][i] == 2'b00)begin 
+			LRU_pointer <= i[1:0];
+			end	
+	 	end
 
-		 end
+		if ((tag == cache_tag[set][0]) && (valid[set][0] == 1)) begin 
+			read_data_o <= cache_data[set][0];
+			hit <= 1;
+			age[set][0] <= 2'b11;
+		for(int i = 0 ; i < 4 ; i++) begin
+			if((i[1:0] != 0) && (age[set][i[1:0]] > age[set][0])) begin
+				age[set][i[1:0]] <= (age[set][i[1:0]] - 1'b1);
+				end
+			end
+
+		end
 		else if (tag == cache_tag[set][1] && valid[set][1] == 1)begin
-			read_data_o = cache_data[set][1];
-			hit = 1;
+			read_data_o <= cache_data[set][1];
+			hit <= 1;
+			age[set][1] <= 2'b11;
+		for(int i = 0 ; i < 4 ; i++) begin
+			if((i[1:0] != 1) && (age[set][i[1:0]] > age[set][1])) begin
+				age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+				end
+			end
 
 		end
 		else if (tag == cache_tag[set][2] && valid[set][2] == 1)begin
-			read_data_o = cache_data[set][2];
-			hit = 1;
+			read_data_o <= cache_data[set][2];
+			hit <= 1;
+			age[set][2] <= 2'b11;
+		for(int i = 0 ; i < 4 ; i++) begin
+			if((i[1:0] != 2) && (age[set][i[1:0]] > age[set][2])) begin
+				age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+				end
+			end
 
 		end
 		else if (tag == cache_tag[set][3] && valid[set][3] == 1)begin
-			read_data_o = cache_data[set][3];
-			hit = 1;
-
+			read_data_o <= cache_data[set][3];
+			hit <= 1;
+			age[set][3] <= 2'b11;
+		for(int i = 0 ; i < 4 ; i++) begin
+			if((i[1:0] != 3) && (age[set][i[1:0]] > age[set][3])) begin
+				age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+				end
+			end
 		end
 		else begin
-			read_data_o = mem_incoming_data_i;
-			hit = 0;
-			readmiss = 1;
-
-		end
+		//read miss
+			//mem_address_o <= address_i; //sending address to memory
+			read_data_o <= mem_incoming_data_i;	
+			hit <= 0;
+			readmiss <= 1;
 		
+		end
 	end
 //------------------------------Synchronous_write------------------------------
 	always_ff@(negedge clk_i) begin
+
+// when do we write
+// if we get a read miss 
 
 		$display("%b %b %b %b - %b", age[set][0], age[set][1], age[set][2], age[set][3], LRU_pointer);
 		$display("v:%b %h v:%b %h v:%b %h v:%b %h\n", valid[set][0] ,  cache_data[set][0]  , valid[set][1] , cache_data[set][1] , valid[set][2] , cache_data[set][2] , valid[set][3] , cache_data[set][3]);
@@ -106,14 +139,15 @@ module cache#(
 			cache_data[set][LRU_pointer] <= write_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
 			valid[set][LRU_pointer] <= 1;
+			$display("hello shit1");
 		end
 		else if(write_enable_i && !hit) begin
-			
+			//when data is not found in cache and youre allowed to write
 			//write to mem
 			//ignore cache write for now atleast :(
 			mem_write_enable_o <= 1;
 			mem_write_data_o <= write_data_i;
-
+			$display("hello shit2");
 		end
 		else if(write_enable_i && hit) begin
 			//write to cache and mem...
@@ -123,17 +157,15 @@ module cache#(
 			cache_data[set][LRU_pointer] <= write_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
 			valid[set][LRU_pointer] <= 1;
-
+			$display("hello shit3");
 		end
 		else if(readmiss) begin
 			//write to cache...
-			cache_data[set][LRU_pointer] <= mem_incoming_data_i;
+			cache_data[set][LRU_pointer] <= write_data_i;
 			cache_tag[set][LRU_pointer] <= tag;
+			$display("hello shit4");
 		end
 		
 	end
 endmodule
-
-
-
 
