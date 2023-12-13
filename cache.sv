@@ -28,23 +28,23 @@ module cache#(
 	logic [tag_bits-1:0] tag;
 	logic [3:0] set;
 	logic hit , readmiss;
-	logic [1:0] LRU_pointer;
+	//logic [1:0] LRU_pointer;
 //------------------------------Assign_values------------------------------
 	assign tag = address_i[31:6];
 	assign set = address_i[5:2];
 	assign hit_o = hit;
 	assign mem_address_o = address_i;
-	assign age_0 = age[0][0]; //for testing purpose
+	//assign age_0 = age[0][0]; //for testing purpose
 	assign valid_o = valid[0][0];
     //assign read_data_o = cache_data[0][1];
 //------------------------------Startup_Procedure------------------------------
 	initial begin
 		hit = 1'b0;
-		LRU_pointer = 2'b00;
+		//LRU_pointer = 2'b00;
         for (int i = 0; i < (2**set_bits); i = i + 1) begin
             for (int j = 0; j < 4; j = j + 1) begin
                 valid[i][j] = 1'b0;
-                age[i][j] = j[1:0];
+                //age[i][j] = j[1:0];
             end
         end
 	end
