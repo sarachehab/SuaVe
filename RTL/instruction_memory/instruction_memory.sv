@@ -14,7 +14,7 @@ initial begin
 
     $display("Loading rom.");
     //$readmemh("pdf.hex", rom);
-    $readmemh("F1_lights.mem", rom);
+    $readmemh("instructions.hex", rom);
     $display("Program written to ROM successfully");
 
 end;
