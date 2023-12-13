@@ -52,36 +52,44 @@ module cacheline #(
     always_comb begin
 
         if(cache_enable_i) begin
-            if(tag == cache_tag[0]) begin
-                hit = valid[0];
-                readmiss = 0 | ~ valid[0];
-                read_data_o = cache_data[0];
-            end
-            else if(tag == cache_tag[1]) begin
-                hit = valid[1];
-                readmiss = 0 | ~ valid[1];
-                read_data_o = cache_data[1];
-            end
-            else if(tag == cache_tag[2]) begin
-                hit = valid[2];
-                readmiss = 0 | ~ valid[2];
-                read_data_o = cache_data[2];
-            end
-            else if(tag == cache_tag[3]) begin
-                hit = valid[3];
-                readmiss = 0 | ~ valid[3];
-                read_data_o = cache_data[3];
-            end
-            else begin
 
-                hit = 1'b0;
 
-                if(write_enable_i) readmiss = 0;
-                else readmiss = 1;
-
-                read_data_o = mem_incoming_data_i;
+            for(int i=0; i<4; i++)begin
+                if(cache_tag[i]==tag)begin
+                    hit = valid[i[1:0]];
+                    readmiss =  0 | ~ valid[i[1:0]];
+                    read_data_o = cache_data[i[1:0]];
+                    end
+                else begin
+                    hit = 1'b0;
+                    if(write_enable_i) readmiss = 0;
+                    else readmiss = 1;
+                    read_data_o = mem_incoming_data_i;
+                end    
             end
         end
+            // if(tag == cache_tag[0]) begin
+            //     hit = valid[0];
+            //     readmiss = 0 | ~ valid[0];
+            //     read_data_o = cache_data[0];
+            // end
+            // else if(tag == cache_tag[1]) begin
+            //     hit = valid[1];
+            //     readmiss = 0 | ~ valid[1];
+            //     read_data_o = cache_data[1];
+            // end
+            // else if(tag == cache_tag[2]) begin
+            //     hit = valid[2];
+            //     readmiss = 0 | ~ valid[2];
+            //     read_data_o = cache_data[2];
+            // end
+            // else if(tag == cache_tag[3]) begin
+            //     hit = valid[3];
+            //     readmiss = 0 | ~ valid[3];
+            //     read_data_o = cache_data[3];
+            // end
+            
+        //end
         else begin
             readmiss = 0;
             hit = 0;
@@ -113,52 +121,66 @@ module cacheline #(
         else if(write_enable_i && hit) begin
             mem_write_data_o <= write_data_i;
 
-            if(cache_tag[0] == tag) begin
-                
-                cache_data[0] <= write_data_i;
-                valid[0] <= 1'b1;
-			    age[0] <= 2'b11;
-		        for(int i = 0 ; i < 4 ; i++) begin
-			        if((i[1:0] != 0) && (age[i[1:0]] > age[0])) begin
-				        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-				    end
-			    end
-            end
 
-            if(cache_tag[1] == tag) begin
-                cache_data[1] <= write_data_i;
-                valid[1] <= 1'b1;
-			    age[1] <= 2'b11;
-		        for(int i = 0 ; i < 4 ; i++) begin
-			        if((i[1:0] != 1) && (age[i[1:0]] > age[1])) begin
-				        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-				    end
-			    end
+            for(int i=0; i<4; i++)begin
+                if(cache_tag[i]==tag)begin
+                    cache_data[i[1:0]] <= write_data_i;
+                    valid[i[1:0]] <= 1'b1;
+                    age[i[1:0]] <= 2'b11;
+                    for(int j=0; j< 4; j++)begin
+                        if((j[1:0] != i[1:0]) && (age[j[1:0]] > age[i[1:0]]))begin
+                            age[j[1:0]] <= age[j[1:0]] - 1'b1;
+                        end
+                    end
+                    
+                end
             end
-
-            if(cache_tag[2] == tag) begin
+            // if(cache_tag[0] == tag) begin
                 
-                cache_data[2] <= write_data_i;
-                valid[2] <= 1'b1;
-			    age[2] <= 2'b11;
-		        for(int i = 0 ; i < 4 ; i++) begin
-			        if((i[1:0] != 2) && (age[i[1:0]] > age[02])) begin
-				        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-				    end
-			    end
-            end
+            //     cache_data[0] <= write_data_i;
+            //     valid[0] <= 1'b1;
+			//     age[0] <= 2'b11;
+		    //     for(int i = 0 ; i < 4 ; i++) begin
+			//         if((i[1:0] != 0) && (age[i[1:0]] > age[0])) begin
+			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
+			// 	    end
+			//     end
+            // end
 
-            if(cache_tag[3] == tag) begin
+            // if(cache_tag[1] == tag) begin
+            //     cache_data[1] <= write_data_i;
+            //     valid[1] <= 1'b1;
+			//     age[1] <= 2'b11;
+		    //     for(int i = 0 ; i < 4 ; i++) begin
+			//         if((i[1:0] != 1) && (age[i[1:0]] > age[1])) begin
+			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
+			// 	    end
+			//     end
+            // end
+
+            // if(cache_tag[2] == tag) begin
                 
-                cache_data[3] <= write_data_i;
-                valid[3] <= 1'b1;
-			    age[3] <= 2'b11;
-		        for(int i = 0 ; i < 4 ; i++) begin
-			        if((i[1:0] != 3) && (age[i[1:0]] > age[3])) begin
-				        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-				    end
-			    end
-            end
+            //     cache_data[2] <= write_data_i;
+            //     valid[2] <= 1'b1;
+			//     age[2] <= 2'b11;
+		    //     for(int i = 0 ; i < 4 ; i++) begin
+			//         if((i[1:0] != 2) && (age[i[1:0]] > age[02])) begin
+			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
+			// 	    end
+			//     end
+            // end
+
+            // if(cache_tag[3] == tag) begin
+                
+            //     cache_data[3] <= write_data_i;
+            //     valid[3] <= 1'b1;
+			//     age[3] <= 2'b11;
+		    //     for(int i = 0 ; i < 4 ; i++) begin
+			//         if((i[1:0] != 3) && (age[i[1:0]] > age[3])) begin
+			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
+			// 	    end
+			//     end
+            // end
         end
         else if(write_enable_i && !hit) begin
             age[LRU_pointer] <= 2'b11;
