@@ -25,6 +25,7 @@ module cacheline #(
     logic [1:0] byteoffset;
     logic hit , readmiss;
     logic [3:0] set;
+    logic [1:0] way_hit;
 //-------------------------assign_values--------------------------------
     assign set = address_i[5:2];
     assign tag = address_i[31:6];
@@ -45,10 +46,10 @@ module cacheline #(
         end
     end
 
-    always_ff@(posedge clk_i) begin
+    always_latch begin
         for(int i = 0 ; i < 4 ; i++) begin
             if(age[set][i[1:0]] == 2'b00)begin 
-                LRU_pointer[set] <= i[1:0];
+                LRU_pointer[set] = i[1:0];
             end
         end
         //$display("working on set: %h , and made lru pointer point to %h" , set , LRU_pointer[set]);
@@ -63,13 +64,15 @@ module cacheline #(
                     readmiss =  0 | ~ valid[set][i[1:0]];
                     //read_data_o = cache_data[set][i[1:0]];
                     read_data_o = mem_incoming_data_i;
-                    //$display("%h %h" , read_data_o , address_i);
+                    $display("%h %h", cache_tag[set][i], tag);
+                    way_hit = i[1:0];
                     i=5;
                 end
                 else begin
                     hit = 1'b0;
-                    if(write_enable_i) readmiss = 0;
-                    else readmiss = 1;
+                    if(!write_enable_i && !hit) readmiss = 1;
+                    else readmiss = 0;
+                    way_hit = LRU_pointer[set]; // it is a dont care
                     read_data_o = mem_incoming_data_i;
                 end    
             end
@@ -100,13 +103,24 @@ module cacheline #(
             readmiss = 0;
             hit = 0;
             read_data_o = 32'b0;
+            way_hit = 2'b0;
         end
     end
 //---------------------------------------------------------------------
     always_ff @(negedge clk_i) begin
 
+        if(!write_enable_i && hit)begin
+            age[set][way_hit] <= 2'b11;
+            for(int i = 0 ; i < 4 ; i++) begin
+                if((i[1:0] != way_hit) && (age[set][i[1:0]] > age[set][way_hit])) begin
+                    $display("we got a read hit");
+                    age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+                end
+            end
+        end
         if(readmiss) begin
             cache_tag[set][LRU_pointer[set]] <= tag;
+            $display("set cache tag %h", tag);
             cache_data[set][LRU_pointer[set]] <= mem_incoming_data_i;
             valid[set][LRU_pointer[set]] <= 1'b1;            
             age[set][LRU_pointer[set]] <= 2'b11;
@@ -212,6 +226,10 @@ it doesnt matter if there is a hit or a miss we need some logic to write to the 
 
 
 also need to make read_data_o 32'b0 for non read instructions...
+
+00 01 10 11
+00 11 01 10          
+00 10 11 01        
 */
 
 

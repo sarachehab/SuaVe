@@ -73,10 +73,13 @@ int main(int argc, char **argv, char **env) {
         }
         else if(simcyc == 8) {
             top->write_enable_i = 0;
-            top->address_i = 76;
+            top->address_i = 460;
+        } 
+        else if(simcyc == 9) {
+            top->write_enable_i = 0;
+            top->address_i = 0b101001100;
         }
-
-        // //testing store op in multiple conditions:
+        //testing store op in multiple conditions:
         // else if(simcyc == 5) {
         //     top->write_enable_i = 1;
         //     top->address_i = 16;
