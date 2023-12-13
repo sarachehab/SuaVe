@@ -78,8 +78,13 @@ int main(int argc, char **argv, char **env) {
         }
         else if(simcyc == 8) {
             top->write_enable_i = 1;
-            top->address_i = 24;
+            top->address_i = 16;
             top->write_data_i = 0x8d1f094a;
+        }
+        else if(simcyc == 9) {
+            top->write_enable_i = 1;
+            top->address_i = 32;
+            top->write_data_i = 0x8d13214a;
         }
 
 
