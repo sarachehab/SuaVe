@@ -1,5 +1,6 @@
 module cacheline #(
     parameter   width = 32,
+                set_bits = 4,
 			 	tag_bits = 30
 )(
 	input logic clk_i , write_enable_i, cache_enable_i,
@@ -13,16 +14,18 @@ module cacheline #(
 	output logic mem_write_enable_o , mem_byte_op_o
 );
 //--------------------------data_structure---------------------------
-	logic [width-1:0] cache_data [3:0];
-	logic [tag_bits-1:0] cache_tag [3:0];
-	logic valid [3:0]; 
-    logic [1:0] LRU_pointer;
-    logic [1:0] age[3:0];
 
+	logic [width-1:0] cache_data [((2**set_bits)-1):0][3:0];
+	logic [tag_bits-1:0] cache_tag [((2**set_bits)-1):0][3:0];
+	logic valid [((2**set_bits)-1):0][3:0];
+	logic [1:0] age [((2**set_bits)-1):0][3:0];
+    logic [1:0] LRU_pointer[((2**set_bits)-1):0];
 //------------------------internal_signals----------------------------
     logic [tag_bits-1 :0] tag;
     logic hit , readmiss;
+    logic [3:0] set;
     //assign_values
+    assign set = address_i[5:2];
     assign tag = address_i[31:2];
     assign hit_o = hit;
     assign mem_address_o = address_i;
@@ -34,17 +37,19 @@ module cacheline #(
     initial begin
         hit = 1'b0;
         readmiss = 1'b0;
-        LRU_pointer = 2'b00;
         for(int i = 0 ; i < 4 ; i++) begin
-            valid[i[1:0]] = 1'b0;
-            age[i[1:0]]=i[1:0];
+            for(int j = 0; j<16; j++)begin
+                valid[j][i[1:0]] = 1'b0;
+                LRU_pointer[j] = 2'b00;
+                age[j[3:0]][i[1:0]]=i[1:0];
+            end
         end
     end
 
     always_ff@(posedge clk_i)begin
         for(int i = 0 ; i < 4 ; i++) begin
-            if(age[i] == 2'b00)begin 
-                LRU_pointer <= i[1:0];
+            if(age[set][i] == 2'b00)begin 
+                LRU_pointer[set] <= i[1:0];
             end
         end
     end
@@ -55,10 +60,10 @@ module cacheline #(
 
 
             for(int i=0; i<4; i++)begin
-                if(cache_tag[i]==tag)begin
-                    hit = valid[i[1:0]];
-                    readmiss =  0 | ~ valid[i[1:0]];
-                    read_data_o = cache_data[i[1:0]];
+                if(cache_tag[set][i]==tag)begin
+                    hit = valid[set][i[1:0]];
+                    readmiss =  0 | ~ valid[set][i[1:0]];
+                    read_data_o = cache_data[set][i[1:0]];
                     end
                 else begin
                     hit = 1'b0;
@@ -108,13 +113,13 @@ module cacheline #(
 
         if(readmiss) begin
             //$display("%h" , mem_incoming_data_i);
-            cache_tag[LRU_pointer] <= tag;
-            cache_data[LRU_pointer] <= mem_incoming_data_i;
-            valid[LRU_pointer] <= 1'b1;
-            age[LRU_pointer] <= 2'b11;
+            cache_tag[set][LRU_pointer[set]] <= tag;
+            cache_data[set][LRU_pointer[set]] <= mem_incoming_data_i;
+            valid[set][LRU_pointer[set]] <= 1'b1;
+            age[set][LRU_pointer[set]] <= 2'b11;
             for(int i = 0 ; i < 4 ; i++) begin
-			        if((i[1:0] != LRU_pointer) && (age[i[1:0]] > age[LRU_pointer])) begin
-				        age[i[1:0]] <= age[i[1:0]] - 1'b1;
+			        if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
+				        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
 				    end
 			    end
         end
@@ -123,21 +128,21 @@ module cacheline #(
 
 
             for(int i=0; i<4; i++)begin
-                if(cache_tag[i]==tag)begin
-                    cache_data[i[1:0]] <= write_data_i;
-                    valid[i[1:0]] <= 1'b1;
-                    age[i[1:0]] <= 2'b11;
+                if(cache_tag[set][i]==tag)begin
+                    cache_data[set][i[1:0]] <= write_data_i;
+                    valid[set][i[1:0]] <= 1'b1;
+                    age[set][i[1:0]] <= 2'b11;
                     for(int j=0; j< 4; j++)begin
-                        if((j[1:0] != i[1:0]) && (age[j[1:0]] > age[i[1:0]]))begin
-                            age[j[1:0]] <= age[j[1:0]] - 1'b1;
+                        if((j[1:0] != i[1:0]) && (age[set][j[1:0]] > age[set][i[1:0]]))begin
+                            age[set][j[1:0]] <= age[set][j[1:0]] - 1'b1;
                         end
                     end
                     
                 end
             end
-            // if(cache_tag[0] == tag) begin
+            // if(cache_tag[set][0] == tag) begin
                 
-            //     cache_data[0] <= write_data_i;
+            //     cache_data[set][0] <= write_data_i;
             //     valid[0] <= 1'b1;
 			//     age[0] <= 2'b11;
 		    //     for(int i = 0 ; i < 4 ; i++) begin
@@ -147,8 +152,8 @@ module cacheline #(
 			//     end
             // end
 
-            // if(cache_tag[1] == tag) begin
-            //     cache_data[1] <= write_data_i;
+            // if(cache_tag[set][1] == tag) begin
+            //     cache_data[set][1] <= write_data_i;
             //     valid[1] <= 1'b1;
 			//     age[1] <= 2'b11;
 		    //     for(int i = 0 ; i < 4 ; i++) begin
@@ -158,9 +163,9 @@ module cacheline #(
 			//     end
             // end
 
-            // if(cache_tag[2] == tag) begin
+            // if(cache_tag[set][2] == tag) begin
                 
-            //     cache_data[2] <= write_data_i;
+            //     cache_data[set][2] <= write_data_i;
             //     valid[2] <= 1'b1;
 			//     age[2] <= 2'b11;
 		    //     for(int i = 0 ; i < 4 ; i++) begin
@@ -170,9 +175,9 @@ module cacheline #(
 			//     end
             // end
 
-            // if(cache_tag[3] == tag) begin
+            // if(cache_tag[set][3] == tag) begin
                 
-            //     cache_data[3] <= write_data_i;
+            //     cache_data[set][3] <= write_data_i;
             //     valid[3] <= 1'b1;
 			//     age[3] <= 2'b11;
 		    //     for(int i = 0 ; i < 4 ; i++) begin
@@ -183,17 +188,17 @@ module cacheline #(
             // end
         end
         else if(write_enable_i && !hit) begin
-            age[LRU_pointer] <= 2'b11;
+            age[set][LRU_pointer[set]] <= 2'b11;
             for(int i = 0 ; i < 4 ; i++) begin
-			    if((i[1:0] != LRU_pointer) && (age[i[1:0]] > age[LRU_pointer])) begin
-			        age[i[1:0]] <= age[i[1:0]] - 1'b1;
+			    if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
+			        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
 			    end
 			end
             //$display("%h" , write_data_i);
             mem_write_data_o <= write_data_i;
-            cache_tag[LRU_pointer] <= tag;
-            cache_data[LRU_pointer] <= write_data_i;
-            valid[LRU_pointer] <= 1'b1;
+            cache_tag[set][LRU_pointer[set]] <= tag;
+            cache_data[set][LRU_pointer[set]] <= write_data_i;
+            valid[set][LRU_pointer[set]] <= 1'b1;
 
         end
     end
