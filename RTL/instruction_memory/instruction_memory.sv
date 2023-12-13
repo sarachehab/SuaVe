@@ -13,7 +13,7 @@ logic [BYTE_SIZE-1:0] rom [LAST_INSTR_ADDR:FIRST_INSTR_ADDR];
 initial begin
 
     $display("Loading rom.");
-    $readmemh("pdf.hex", rom);
+    $readmemh("instructions.hex", rom);
     $display("Program written to ROM successfully");
 
 end;
