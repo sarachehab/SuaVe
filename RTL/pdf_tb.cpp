@@ -53,13 +53,10 @@ int main(int argc, char **argv, char **env)
 
     if (currentlyReading)
     {
-      if (!top->stall)
+      cntReading++;
+      if (cntReading % 5 == 2)
       {
-        cntReading++;
-        if (cntReading % 5 == 2)
-        {
-          pdfFile << top->a0 << "\n";
-        }
+        pdfFile << top->a0 << "\n";
       }
     }
 
