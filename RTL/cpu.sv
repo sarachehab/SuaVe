@@ -40,7 +40,7 @@ logic                           jump_d, branch_d, jalr_d, mem_write_d, alu_src_d
 
 decode_register #(DATA_WIDTH) pipeline_decode_register (
     .clk(clk),
-    .rst_i(flush_d), 
+    .rst_i(flush_d|rst), 
     .en_i(~stall_d),
     .instr_f_i(instr_f), 
     .pc_f_i(pc_f), 
@@ -96,7 +96,7 @@ logic                           reg_write_e, mem_write_e, jump_e, branch_e, jalr
 
 execute_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_execute_register (
     .clk(clk),
-    .rst_i(flush_e),
+    .rst_i(flush_e|rst),
     .rd1_d_i(rd1_d),
     .rd2_d_i(rd2_d),
     .ext_imm_d_i(imm_ext_d),
@@ -160,6 +160,7 @@ logic                           reg_write_m, mem_write_m, byte_op_m;
 
 memory_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_memory_register (
     .clk(clk),
+    .rst_i(rst),
     .alu_result_e_i(alu_result_e),
     .write_data_e_i(write_data_e),
     .pc_plus4_e_i(pc_plus4_e),
@@ -199,6 +200,7 @@ logic                           reg_write_w;
 
 write_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_write_register (
     .clk(clk),
+    .rst_i(rst),
     .alu_result_m_i(alu_result_m),
     .pc_plus4_m_i(pc_plus4_m),
     .read_data_m_i(read_data_m),
