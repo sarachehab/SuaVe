@@ -1,7 +1,8 @@
 module cacheline #(
     parameter   width = 32,
                 set_bits = 4,
-			 	tag_bits = 26
+			 	tag_bits = 26,
+                BYTE_WIDTH = 8
 )(
 	input logic clk_i , write_enable_i, cache_enable_i, byte_op_i,
 	input logic [width-1:0] address_i , write_data_i,
@@ -52,19 +53,28 @@ module cacheline #(
                 LRU_pointer[set] = i[1:0];
             end
         end
-        //$display("working on set: %h , and made lru pointer point to %h" , set , LRU_pointer[set]);
     end
 
     always_comb begin
         if(cache_enable_i) begin
             
             for(int i=0; i<4; i++)begin
-                if(cache_tag[set][i]==tag)begin
-                    hit = valid[set][i[1:0]];
+                if((cache_tag[set][i[1:0]]==tag) && (valid[set][i[1:0]]))begin
+                    hit = 1'b1;
                     readmiss =  0 | ~ valid[set][i[1:0]];
-                    //read_data_o = cache_data[set][i[1:0]];
-                    read_data_o = mem_incoming_data_i;
-                    $display("%h %h", cache_tag[set][i], tag);
+
+                    if(byte_op_i)begin
+                        case(byteoffset)
+                            2'b00 : read_data_o = {{3*BYTE_WIDTH{1'b0}} , mem_incoming_data_i[7:0]};
+                            2'b01 : read_data_o = {{3*BYTE_WIDTH{1'b0}} , mem_incoming_data_i[15:8]};
+                            2'b10 : read_data_o = {{3*BYTE_WIDTH{1'b0}} , mem_incoming_data_i[23:16]};
+                            2'b11 : read_data_o = {{3*BYTE_WIDTH{1'b0}} , mem_incoming_data_i[31:24]};
+                        endcase
+                    end
+                    else begin
+                        read_data_o = mem_incoming_data_i;
+                    end
+                    //$display("%h %h", cache_tag[set][i], tag);
                     way_hit = i[1:0];
                     i=5;
                 end
@@ -73,32 +83,20 @@ module cacheline #(
                     if(!write_enable_i && !hit) readmiss = 1;
                     else readmiss = 0;
                     way_hit = LRU_pointer[set]; // it is a dont care
-                    read_data_o = mem_incoming_data_i;
-                end    
+                    if(byte_op_i)begin
+                        case(byteoffset)
+                            2'b00 : read_data_o = {{3*BYTE_WIDTH{1'b0}} , mem_incoming_data_i[7:0]};
+                            2'b01 : read_data_o = {{3*BYTE_WIDTH{1'b0}} , mem_incoming_data_i[15:8]};
+                            2'b10 : read_data_o = {{3*BYTE_WIDTH{1'b0}}, mem_incoming_data_i[23:16]};
+                            2'b11 : read_data_o = {{3*BYTE_WIDTH{1'b0}}, mem_incoming_data_i[31:24]};
+                        endcase
+                    end
+                    else begin
+                        read_data_o = mem_incoming_data_i;
+                    end
+                end   
             end
         end
-            // if(tag == cache_tag[0]) begin
-            //     hit = valid[0];
-            //     readmiss = 0 | ~ valid[0];
-            //     read_data_o = cache_data[0];
-            // end
-            // else if(tag == cache_tag[1]) begin
-            //     hit = valid[1];
-            //     readmiss = 0 | ~ valid[1];
-            //     read_data_o = cache_data[1];
-            // end
-            // else if(tag == cache_tag[2]) begin
-            //     hit = valid[2];
-            //     readmiss = 0 | ~ valid[2];
-            //     read_data_o = cache_data[2];
-            // end
-            // else if(tag == cache_tag[3]) begin
-            //     hit = valid[3];
-            //     readmiss = 0 | ~ valid[3];
-            //     read_data_o = cache_data[3];
-            // end
-            
-        //end
         else begin
             readmiss = 0;
             hit = 0;
@@ -119,6 +117,7 @@ module cacheline #(
             end
         end
         if(readmiss) begin
+            mem_byte_op_o <= 1'b0;
             cache_tag[set][LRU_pointer[set]] <= tag;
             $display("set cache tag %h", tag);
             cache_data[set][LRU_pointer[set]] <= mem_incoming_data_i;
@@ -131,14 +130,24 @@ module cacheline #(
                     age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
                 end
             end
-            $display("%h %h %h %h - %h -- writing data: %h into addres: %h" , age[set][0] , age[set][1] , age[set][2] , age[set][3] , LRU_pointer[set] , mem_incoming_data_i , address_i);
         end
         else if(write_enable_i && hit) begin
+            mem_byte_op_o <= byte_op_i;
             mem_write_data_o <= write_data_i;
 
             for(int i=0; i<4; i++)begin
                 if(cache_tag[set][i]==tag)begin
-                    cache_data[set][i[1:0]] <= write_data_i;
+                    if(byte_op_i) begin
+                        case(byteoffset)
+                            2'b00 : cache_data[set][i[1:0]][7:0] <= write_data_i[7:0];
+                            2'b01 : cache_data[set][i[1:0]][15:8] <= write_data_i[7:0];
+                            2'b10 : cache_data[set][i[1:0]][23:16] <= write_data_i[7:0];
+                            2'b11 : cache_data[set][i[1:0]][31:24] <= write_data_i[7:0];
+                        endcase
+                    end
+                    else begin
+                        cache_data[set][i[1:0]] <= write_data_i;
+                    end
                     valid[set][i[1:0]] <= 1'b1;
                     age[set][i[1:0]] <= 2'b11;
                     for(int j=0; j< 4; j++)begin
@@ -149,52 +158,7 @@ module cacheline #(
                     
                 end
             end
-            // if(cache_tag[set][0] == tag) begin
-                
-            //     cache_data[set][0] <= write_data_i;
-            //     valid[0] <= 1'b1;
-			//     age[0] <= 2'b11;
-		    //     for(int i = 0 ; i < 4 ; i++) begin
-			//         if((i[1:0] != 0) && (age[i[1:0]] > age[0])) begin
-			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-			// 	    end
-			//     end
-            // end
 
-            // if(cache_tag[set][1] == tag) begin
-            //     cache_data[set][1] <= write_data_i;
-            //     valid[1] <= 1'b1;
-			//     age[1] <= 2'b11;
-		    //     for(int i = 0 ; i < 4 ; i++) begin
-			//         if((i[1:0] != 1) && (age[i[1:0]] > age[1])) begin
-			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-			// 	    end
-			//     end
-            // end
-
-            // if(cache_tag[set][2] == tag) begin
-                
-            //     cache_data[set][2] <= write_data_i;
-            //     valid[2] <= 1'b1;
-			//     age[2] <= 2'b11;
-		    //     for(int i = 0 ; i < 4 ; i++) begin
-			//         if((i[1:0] != 2) && (age[i[1:0]] > age[02])) begin
-			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-			// 	    end
-			//     end
-            // end
-
-            // if(cache_tag[set][3] == tag) begin
-                
-            //     cache_data[set][3] <= write_data_i;
-            //     valid[3] <= 1'b1;
-			//     age[3] <= 2'b11;
-		    //     for(int i = 0 ; i < 4 ; i++) begin
-			//         if((i[1:0] != 3) && (age[i[1:0]] > age[3])) begin
-			// 	        age[i[1:0]] <= age[i[1:0]] - 1'b1;
-			// 	    end
-			//     end
-            // end
         end
         else if(write_enable_i && !hit) begin
             age[set][LRU_pointer[set]] <= 2'b11;
@@ -203,9 +167,21 @@ module cacheline #(
 			        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
 			    end
 			end
+            mem_byte_op_o <= byte_op_i;
             mem_write_data_o <= write_data_i;
+            if(byte_op_i) begin
+                case(byteoffset)
+                    2'b00 : cache_data[set][LRU_pointer[set]][7:0] <= write_data_i[7:0];
+                    2'b01 : cache_data[set][LRU_pointer[set]][15:8] <= write_data_i[7:0];
+                    2'b10 : cache_data[set][LRU_pointer[set]][23:16] <= write_data_i[7:0];
+                    2'b11 : cache_data[set][LRU_pointer[set]][31:24] <= write_data_i[7:0];
+                endcase
+            end
+            else begin
+                cache_data[set][LRU_pointer[set]] <= write_data_i;
+            end
             cache_tag[set][LRU_pointer[set]] <= tag;
-            cache_data[set][LRU_pointer[set]] <= write_data_i;
+
             valid[set][LRU_pointer[set]] <= 1'b1;
 
         end
@@ -221,8 +197,8 @@ if load instruction with byteop and there is a hit we just use the logic from be
 
 if store instruction mem_byte_op_o = byte_op_i...
 it doesnt matter if there is a hit or a miss we need some logic to write to the correct bits in our cache_data...
-
-
+31    24 23    16 15     8 7      0
+11001001 11100111 11011111 11010101
 
 
 also need to make read_data_o 32'b0 for non read instructions...

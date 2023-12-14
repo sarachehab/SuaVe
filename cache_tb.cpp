@@ -42,6 +42,7 @@ int main(int argc, char **argv, char **env) {
             top->eval();
         }
         //testing load operations under multiple conditions
+        top->byte_op_i = 1;
         if(simcyc == 1) {
             top->cache_enable_i = 1;
             top->write_enable_i = 0;
@@ -63,50 +64,49 @@ int main(int argc, char **argv, char **env) {
             top->write_enable_i = 0;
             top->address_i = 204;
         }
-        else if(simcyc == 6) {
-            top->write_enable_i = 0;
-            top->address_i = 140;
-        }
-        else if(simcyc == 7) {
-            top->write_enable_i = 0;
-            top->address_i = 204;
-        }
-        else if(simcyc == 8) {
-            top->write_enable_i = 0;
-            top->address_i = 460;
-        } 
-        else if(simcyc == 9) {
-            top->write_enable_i = 0;
-            top->address_i = 0b101001100;
-        }
-        //testing store op in multiple conditions:
-        // else if(simcyc == 5) {
-        //     top->write_enable_i = 1;
-        //     top->address_i = 16;
-        //     top->write_data_i = 0x34af57df;
-        // }
         // else if(simcyc == 6) {
-        //     top->write_enable_i = 1;
-        //     top->address_i = 16;
-        //     top->write_data_i = 0x56efa290;
+        //     top->write_enable_i = 0;
+        //     top->address_i = 140;
         // }
         // else if(simcyc == 7) {
-        //     top->write_enable_i = 1;
-        //     top->address_i = 20;
-        //     top->write_data_i = 0x90fe4510;
+        //     top->write_enable_i = 0;
+        //     top->address_i = 204;
         // }
         // else if(simcyc == 8) {
-        //     top->write_enable_i = 1;
-        //     top->address_i = 16;
-        //     top->write_data_i = 0x8d1f094a;
-        // }
+        //     top->write_enable_i = 0;
+        //     top->address_i = 460;
+        // } 
         // else if(simcyc == 9) {
-        //     top->write_enable_i = 1;
-        //     top->address_i = 32;
-        //     top->write_data_i = 0x8d13214a;
+        //     top->write_enable_i = 0;
+        //     top->address_i = 0b101001100;
         // }
+        //testing store op in multiple conditions:
+        else if(simcyc == 5) {
+            top->write_enable_i = 1;
+            top->address_i = 16;
+            top->write_data_i = 0x34af57df;
+        }
+        else if(simcyc == 6) {
+            top->write_enable_i = 1;
+            top->address_i = 16;
+            top->write_data_i = 0x56efa290;
+        }
+        else if(simcyc == 7) {
+            top->write_enable_i = 1;
+            top->address_i = 20;
+            top->write_data_i = 0x90fe4510;
+        }
+        else if(simcyc == 8) {
+            top->write_enable_i = 1;
+            top->address_i = 16;
+            top->write_data_i = 0x8d1f094a;
+        }
+        else if(simcyc == 9) {
+            top->write_enable_i = 1;
+            top->address_i = 32;
+            top->write_data_i = 0x8d13214a;
+        }
         else top->cache_enable_i = 0;
-
 
 
         if (Verilated::gotFinish()) break;
@@ -114,3 +114,4 @@ int main(int argc, char **argv, char **env) {
   tfp->close();
   exit(0);
 }
+
