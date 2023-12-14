@@ -6,7 +6,7 @@ module datapath # (
     input   logic   clk_i,
 
     input   logic   [REG_ADDR_LENGTH-1:0]   reg_addr1_i, reg_addr2_i, reg_addr3_i,
-    input   logic                           reg_we_i, trigger_i,
+    input   logic                           reg_we_i, trigger_i, cache_enable_i,
     input   logic   [1:0]                   result_src_i,
     input   logic   [DATA_WIDTH-1:0]        imm_ext_i, pc_next_i,
     input   logic                           data_mem_we_i, data_mem_byte_op_i,
@@ -52,14 +52,22 @@ module datapath # (
         .alu_result_o(alu_out_o)
     );
 
-    data_memory #(DATA_WIDTH, BYTE_WIDTH) datapath_data_memory (
+    // data_memory #(DATA_WIDTH, BYTE_WIDTH) datapath_data_memory (
+    //     .clk_i(clk_i),
+    //     .we_i(data_mem_we_i),
+    //     .byte_op_i(data_mem_byte_op_i),
+    //     .wd_i(reg_rd2),
+    //     .addr_i(alu_out_o),
+    //     .rd_o(data_mem_rd)
+    // );
+    cachev2 cache (
         .clk_i(clk_i),
-        .we_i(data_mem_we_i),
+        .write_enable_i(data_mem_we_i),
         .byte_op_i(data_mem_byte_op_i),
-        .wd_i(reg_rd2),
-        .addr_i(alu_out_o),
-        .rd_o(data_mem_rd)
-    );
-
+        .write_data_i(reg_rd2),
+        .address_i(alu_out_o),
+        .read_data_o(data_mem_rd),
+        .cache_enable_i(cache_enable_i)
+    )
 endmodule
 

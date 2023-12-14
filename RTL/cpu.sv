@@ -6,7 +6,7 @@ module cpu #(
 );
 
 
-    logic   JB_instr, JALR_instr, mem_write, alu_src, reg_write, byte_address, zero;
+    logic   JB_instr, JALR_instr, mem_write, alu_src, reg_write, byte_address, zero , cache_enable;
     logic [DATA_WIDTH-1:0] instr, pc_var, pc_plus_4, imm_ext, alu_out; 
     logic [1:0] result_src; 
     logic [2:0] imm_src;
@@ -25,7 +25,8 @@ controlUnit_top controlUnit_top(
     .imm_src_o(imm_src),
     .reg_write_o(reg_write),
     .alu_control_o(alu_control),
-    .byte_address_o(byte_address)
+    .byte_address_o(byte_address),
+    .cache_enable_o(cache_enable)
     
 );
 
@@ -45,7 +46,8 @@ datapath datapath(
     .alu_src_i(alu_src),
     .eq_o(zero),
     .a0_o(a0_o),
-    .alu_out_o(alu_out)
+    .alu_out_o(alu_out),
+    .cache_enable_i(cache_enable)
 );
 
 extend_unit extend_unit(
