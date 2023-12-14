@@ -4,6 +4,7 @@ module data_memory # (
     input   logic                       clk,
     input   logic                       memory_instruction_i, write_enable_i, byte_op_i,
     input   logic   [DATA_WIDTH-1:0]    address_i, write_data_i,
+    output  logic   [1:0]               hit_miss_indicator_o,
     output  logic   [DATA_WIDTH-1:0]    rd_o
 
 );
@@ -50,7 +51,8 @@ cache cache_memory (
     .write_enable_i(write_enable_i),
     .address_i(address_i),
     .write_data_i(write),
-    .read_data_o(read)
+    .read_data_o(read),
+    .hit_miss_indicator_o(hit_miss_indicator_o)
 );
 
 endmodule

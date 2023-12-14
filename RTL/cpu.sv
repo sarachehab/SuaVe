@@ -4,6 +4,7 @@ module cpu #(
 )(
     input   logic                   clk,
     input   logic                   rst, trigger,
+    output  logic [1:0]             hit_miss_indicator,
     output  logic [DATA_WIDTH-1:0]  a0
 );
 
@@ -193,7 +194,8 @@ data_memory cache_data_memory(
     .byte_op_i(byte_op_m),
     .address_i(alu_result_m), 
     .write_data_i(write_data_m),
-    .rd_o(read_data_m)
+    .rd_o(read_data_m),
+    .hit_miss_indicator_o(hit_miss_indicator)
 );
 
 // WRITE STAGE

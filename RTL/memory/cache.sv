@@ -5,6 +5,7 @@ module cache # (
     input   logic                       clk,
     input   logic                       memory_instruction_i, write_enable_i,
     input   logic   [DATA_WIDTH-1:0]    address_i, write_data_i,
+    output  logic   [1:0]               hit_miss_indicator_o,
     output  logic   [DATA_WIDTH-1:0]    read_data_o
 );
 
@@ -29,10 +30,15 @@ module cache # (
         if (memory_instruction_i) begin
             if (cache_mem[current_set].verification && cache_mem[current_set].tag == current_tag) begin
                 read_data_o = cache_mem[current_set].saved_data;
+                hit_miss_indicator_o = 2'b01;
             end
             else begin
                 read_data_o = memory_read;
+                hit_miss_indicator_o = 2'b10;
             end
+        end
+        else begin
+            hit_miss_indicator_o = 2'b00; 
         end
     end
 
