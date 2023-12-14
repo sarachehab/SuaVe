@@ -34,6 +34,14 @@ One should first move into the `RTL` directory before typing in Terminal the com
 cd RTL
 ```
 
+The Formula Lights program has both a `RESET` and `TRIGGER`:
+- `RESET` can be controlled by toggling Vbuddy's push-button
+- `TRIGGER` is controlled via the rotary encoder: any value greater than 50 makes `Trigger` `HIGH`
+
+To restart the counting sequence, one would have to toggle the push-button, then set the rotary encoder to some value greater than 50.
+
+> Our trigger is wired directly to register s1. Please be mindful of this if testing with your own program.
+
 
 ## Proof of Successs
 
@@ -44,13 +52,30 @@ cd RTL
 | Triangle	| ![Gaussian Obtained](images/obtained_graphs/triangle.png)	| ![Triangle Expected](images/expected_graphs/PDF_Triangle.png)	|
 | Noisy		| ![Gaussian Obtained](images/obtained_graphs/noisy.png)	| ![Noisy Expected](images/expected_graphs/PDF_Noisy.png)		|
 
-[Formula Lighst Working](https://youtu.be/zJto4plLvCE)
-[PDF Gaussian](https://youtu.be/Mq9BEwbvduk)
-[PDF Noisy](https://youtu.be/FlwG2JfLp6k)
-[PDF Sine](https://youtu.be/67-TDc_EGnA)
-[PDF Triangle](https://youtu.be/VC7Lewtsuus)
+
+Single Cycle CPU:
+- [Formula Lighst](https://youtu.be/zJto4plLvCE)
+- [PDF Gaussian](https://youtu.be/Mq9BEwbvduk)
+- [PDF Noisy](https://youtu.be/FlwG2JfLp6k)
+- [PDF Sine](https://youtu.be/67-TDc_EGnA)
+- [PDF Triangle](https://youtu.be/VC7Lewtsuus)
 
 
+
+Pipelined CPU:
+- [Formula Lighst]
+- [PDF Gaussian](https://youtu.be/r62WZPJNDN0)
+- [PDF Noisy](https://youtu.be/OM9mQih1nxs)
+- [PDF Sine](https://youtu.be/j93-G7-LUJU)
+- [PDF Triangle](https://youtu.be/5SQwBv_uGIY)
+
+
+Cache
+- [Formula Lighst]
+- [PDF Gaussian]
+- [PDF Noisy]
+- [PDF Sine]
+- [PDF Triangle]
 
 
 
@@ -110,6 +135,7 @@ cd RTL
 | `S`   |`SW`, `SB`|
 | `U`   |`LUI`|
 | `J`   |`JAL`|
+
 
 ## Final Structure
 
