@@ -7,24 +7,36 @@ Draft version for who is doing which part of README
 <br>
 | README | Alu | InstructMem | RegFile | Extend | PC | DataMem | ControlU | CPU | DataHazard | Pipeline | Cache |
 |--------|-----|-------------|---------|--------|----|---------|----------|-----|------------|----------|-------|
-| Sara   |     |             |         |        | ✔  |         |          | ✔   | ✔          |          |       |
-| Lu     | ✔   |             | ✔       |        |    | ✔       |          |     |            | ✔        |       |
-| Neil   |     |             |         | ✔      |    |         | ✔        |     |            |          | ✔     |
-| Utsav  |     | ✔           |         |        |    |         | ✔        |     |            |          | ✔     |
+| Sara   |     |             |  ✔      |        | ✔  |         |          | ✔  |            | ✔        |       |
+| Lu     | ✔   |             |         |        |    | ✔       |          | ✔  | ✔         | ✔        |       |
+| Neil   |     |             |         | ✔      |    |         | ✔        |     |           |          | ✔     |
+| Utsav  |     | ✔           |         |        |    |         | ✔        |     |           |          | ✔     |
 <br>
 
 Can everyone check the below table so it is correct?
 <br>
-|                | Sara             | Lu               | Neil        | Utsav   |
-|----------------|------------------|------------------|-------------|---------|
-| Alu            | tb               | sv & modified tb | modified sv |         |
-| InstructionMem | tb               | modified sv      |             | sv      |
-| RegisterFile   | tb               | modified tb & sv |             |         |
-| Extend         | tb & modified sv |                  | sv          |         |
-| PC             | sv & tb          | sv               |             |         |
-| DataMemory     | sv & tb          | sv & tb          |             |         |
-| ControlUnit    |                  |                  | sv & tb     | sv & tb |
-| DataPath       |                  | sv               |             | tb      |
-| CPU            |                  | tb               | sv          |         |
-| Pipeline       | sv               | tb               |             |         |
-| Cache          |                  |                  |             |         |
+|                | Sara Chehab | Lu Ju | Neil Radhu | Utsav Goel |
+|----------------|-------------|-------|------------|------------|
+| Alu            | ✖           | ✔ ✖  |            |            |
+| InstructionMem | ✖           |       |            | ✔         |
+| RegisterFile   | ✖           | ✔    |            |            |
+| Extend         | ✔ ✖         |      | ✔          |            |
+| PC             | ✔ ✖         |      |            |            |
+| DataMem        | ✖           | ✔ ✖  |            |            |
+| ControlUnit    |              |      | ✔ ✖       | ✔ ✖       |
+| DataPath       |              |  ✔   |            | ✖         |
+| CPU            | ✖           | ✖    | ✔ ✖        | ✖         |
+| Pipeline       | ✔           | ✖    |            |            |
+| Cache          |              |      | ✔ ✖       | ✔ ✖       |
+
+so right now Lu&Sara are agreeing on: Lu is doing
+- data hazard (eg stalls, forwarding, and flush)
+- pipelining testing (over all testing and everything)
+- dataMem
+- pdf testing for main single cycle cpu
+- alu 
+
+What ig what Sara is doing
+- pipelining schemetic (eg the choice of the stages and the cycle implementation)
+- F1 testing and implementation 
+- PC
