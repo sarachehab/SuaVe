@@ -13,7 +13,8 @@ module control_unit(
     output logic [2:0]          imm_src_o,
     output logic                reg_write_o,
     output logic [3:0]          alu_control_o,
-    output logic                byte_address_o
+    output logic                byte_address_o,
+    output logic                memory_o
 );
     //internal signals
     logic [1:0] alu_op;
@@ -28,7 +29,8 @@ main_decoder mainDecoder(
     .alu_src_o(alu_src_o),
     .imm_src_o(imm_src_o),
     .reg_write_o(reg_write_o),
-    .alu_op_o(alu_op)
+    .alu_op_o(alu_op),
+    .memory_o(memory_o)
 );
 
 alu_decoder aluDecoder(

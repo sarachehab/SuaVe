@@ -36,7 +36,7 @@ logic   [REG_ADDR_LENGTH-1:0]   rs1_d, rs2_d, rd_d;
 logic   [3:0]                   alu_control_d;
 logic   [2:0]                   imm_src_d;
 logic   [1:0]                   result_src_d;
-logic                           jump_d, branch_d, jalr_d, mem_write_d, alu_src_d, reg_write_d, byte_op_d;
+logic                           jump_d, branch_d, jalr_d, mem_write_d, alu_src_d, reg_write_d, byte_op_d, memory_d;
 
 decode_register #(DATA_WIDTH) pipeline_decode_register (
     .clk(clk),
@@ -63,7 +63,8 @@ control_unit pipeline_control_unit (
     .imm_src_o(imm_src_d),
     .reg_write_o(reg_write_d),
     .alu_control_o(alu_control_d),
-    .byte_address_o(byte_op_d)
+    .byte_address_o(byte_op_d),
+    .memory_o(memory_d)
 );
 
 register_file #(REG_ADDR_LENGTH, DATA_WIDTH) pipeline_register_file (
@@ -92,7 +93,7 @@ logic   [DATA_WIDTH-1:0]        rd1_e, rd2_e, imm_ext_e, pc_e, pc_plus4_e, alu_r
 logic   [REG_ADDR_LENGTH-1:0]   rs1_e, rs2_e, rd_e;
 logic   [3:0]                   alu_control_e;
 logic   [1:0]                   result_src_e;
-logic                           reg_write_e, mem_write_e, jump_e, branch_e, jalr_e, alu_src_e, byte_op_e, zero_e;
+logic                           reg_write_e, mem_write_e, jump_e, branch_e, jalr_e, alu_src_e, byte_op_e, zero_e, memory_e;
 
 execute_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_execute_register (
     .clk(clk),
@@ -114,6 +115,7 @@ execute_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_execute_register (
     .branch_d_i(branch_d),
     .alu_src_d_i(alu_src_d), 
     .byte_op_d_i(byte_op_d),
+    .memory_d_i(memory_d),
     .rd1_e_o(rd1_e),
     .rd2_e_o(rd2_e), 
     .ext_imm_e_o(imm_ext_e),
@@ -130,7 +132,8 @@ execute_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_execute_register (
     .branch_e_o(branch_e),
     .jalr_e_o(jalr_e),
     .alu_src_e_o(alu_src_e), 
-    .byte_op_e_o(byte_op_e)
+    .byte_op_e_o(byte_op_e),
+    .memory_e_o(memory_e)
 );
 
 execute_stage #(DATA_WIDTH) pipeline_execute_stage (
@@ -156,7 +159,7 @@ execute_stage #(DATA_WIDTH) pipeline_execute_stage (
 logic   [DATA_WIDTH-1:0]        alu_result_m, result_m, write_data_m, pc_plus4_m, imm_ext_m, read_data_m;
 logic   [REG_ADDR_LENGTH-1:0]   rd_m;
 logic   [1:0]                   result_src_m;
-logic                           reg_write_m, mem_write_m, byte_op_m;
+logic                           reg_write_m, mem_write_m, byte_op_m , memory_m;
 
 memory_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_memory_register (
     .clk(clk),
@@ -170,6 +173,7 @@ memory_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_memory_register (
     .reg_write_e_i(reg_write_e),
     .mem_write_e_i(mem_write_e),
     .byte_op_e_i(byte_op_e),
+    .memory_e_i(memory_e),
     .alu_result_m_o(alu_result_m),
     .write_data_m_o(write_data_m),
     .pc_plus4_m_o(pc_plus4_m),
@@ -178,18 +182,19 @@ memory_register #(DATA_WIDTH, REG_ADDR_LENGTH) pipeline_memory_register (
     .result_src_m_o(result_src_m),
     .reg_write_m_o(reg_write_m),
     .mem_write_m_o(mem_write_m),
-    .byte_op_m_o(byte_op_m)
+    .byte_op_m_o(byte_op_m),
+    .memory_m_o(memory_m)
 );
 
-data_memory pipeline_data_memory (
+data_memory cache_data_memory(
     .clk(clk),
-    .we_i(mem_write_m),
+    .memory_instruction_i(memory_m), 
+    .write_enable_i(mem_write_m),
     .byte_op_i(byte_op_m),
-    .addr_i(alu_result_m),
-    .wd_i(write_data_m),
+    .address_i(alu_result_m), 
+    .write_data_i(write_data_m),
     .rd_o(read_data_m)
 );
-
 
 // WRITE STAGE
 

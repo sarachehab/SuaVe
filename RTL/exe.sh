@@ -83,12 +83,12 @@ fi
 rm -rf obj_dir
 rm -f *.vcd
 
-verilator -Wall --cc --trace cpu.sv -Idatapath -Icontrol_unit -Iextend_unit -Iprogram_counter -Iinstruction_memory -Ipipeline_registers -Ihazard_unit --exe "$testbench"
+verilator -Wall --cc --trace cpu.sv -Idatapath -Icontrol_unit -Iextend_unit -Iprogram_counter -Iinstruction_memory -Ipipeline_registers -Ihazard_unit -Imemory --exe "$testbench"
 
 make -j -C obj_dir/ -f Vcpu.mk Vcpu
 
 obj_dir/Vcpu
 
 if [ "$testbench" = "pdf_tb.cpp" ]; then
-    python plot_distribution.py "$distribution"
+    python3 plot_distribution.py "$distribution"
 fi

@@ -10,7 +10,8 @@ module main_decoder (
     output logic                        alu_src_o,
     output logic    [2:0]               imm_src_o,
     output logic                        reg_write_o,
-    output logic    [1:0]               alu_op_o
+    output logic    [1:0]               alu_op_o,
+    output logic                        memory_o
 );
 
 always_comb begin
@@ -28,6 +29,7 @@ always_comb begin
             alu_op_o = 2'b00;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b1;
         end
 
         //memory write instruction: sw
@@ -41,6 +43,7 @@ always_comb begin
             alu_op_o = 2'b00;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b1;
         end
 
         //register operation:
@@ -54,6 +57,7 @@ always_comb begin
             alu_op_o = 2'b10;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b0;
         end
 
         //branch_o operation: beq
@@ -67,6 +71,7 @@ always_comb begin
             alu_op_o = 2'b01;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b0;
         end
 
         //immediate operation:
@@ -80,6 +85,7 @@ always_comb begin
             alu_op_o = 2'b10;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b0;
         end
 
         // Jump instruction JAL
@@ -93,6 +99,7 @@ always_comb begin
             alu_op_o = 2'b00;//dont-care value
             jump_o = 1'b1;
             jalr_o = 1'b0;
+            memory_o = 1'b0;
         end
         //Jump instruction JALR
         7'b1100111 : begin
@@ -105,6 +112,7 @@ always_comb begin
             alu_op_o = 2'b10;
             jump_o = 1'b0;
             jalr_o = 1'b1;
+            memory_o = 1'b0;
         end
         //upper type : lui
         7'b0110111 : begin
@@ -117,6 +125,7 @@ always_comb begin
             alu_op_o = 2'b11;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b0;
         end
 
         // reset all variables
@@ -130,6 +139,7 @@ always_comb begin
             alu_op_o = 2'b10;
             jump_o = 1'b0;
             jalr_o = 1'b0;
+            memory_o = 1'b0;
         end
     endcase
 end;
