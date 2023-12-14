@@ -15,11 +15,11 @@ int main(int argc, char **argv, char **env)
   Verilated::traceEverOn(true);
   VerilatedVcdC *tfp = new VerilatedVcdC;
   top->trace(tfp, 99);
-  tfp->open("f1.vcd");
+  tfp->open("Pipeline F1.vcd");
 
   if (vbdOpen() != 1)
     return (-1);
-  vbdHeader("Running F1");
+  vbdHeader("Pipeline F1");
   vbdSetMode(1); // Flag mode set to one-shot
 
   top->clk = 1;
@@ -38,6 +38,11 @@ int main(int argc, char **argv, char **env)
     top->rst = (simcyc > 3) ? vbdFlag() : 1;
 
     vbdBar(top->a0 & 0xFF);
+
+    if (top->a0 == 0xFF)
+    {
+      std::cout << simcyc << std::endl;
+    }
 
     vbdCycle(simcyc);
 
