@@ -90,5 +90,5 @@ make -j -C obj_dir/ -f Vcpu.mk Vcpu
 obj_dir/Vcpu
 
 if [ "$testbench" = "pdf_tb.cpp" ]; then
-    python plot_distribution.py "$distribution"
+    python3 plot_distribution.py "$distribution"
 fi

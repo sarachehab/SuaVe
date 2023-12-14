@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 
-#define MAX_SIM_CYC 20000000
+#define MAX_SIM_CYC 2000
 // clk 247390 is when it starts a0_o reading for gaussian
 
 int main(int argc, char **argv, char **env)

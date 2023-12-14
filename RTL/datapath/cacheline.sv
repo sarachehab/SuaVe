@@ -105,83 +105,87 @@ module cacheline #(
 //---------------------------------------------------------------------
     always_ff @(negedge clk_i) begin
 
-        if(!write_enable_i && hit)begin
-            age[set][way_hit] <= 2'b11;
-            for(int i = 0 ; i < 4 ; i++) begin
-                if((i[1:0] != way_hit) && (age[set][i[1:0]] > age[set][way_hit])) begin
-                    $display("we got a read hit");
-                    age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+        if(cache_enable_i) begin
+            if(!write_enable_i && hit)begin
+                age[set][way_hit] <= 2'b11;
+                for(int i = 0 ; i < 4 ; i++) begin
+                    if((i[1:0] != way_hit) && (age[set][i[1:0]] > age[set][way_hit])) begin
+                        //$display("we got a read hit");
+                        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+                    end
                 end
             end
-        end
-        if(readmiss) begin
-            mem_byte_op_o <= 1'b0;
-            cache_tag[set][LRU_pointer[set]] <= tag;
-            $display("set cache tag %h", tag);
-            cache_data[set][LRU_pointer[set]] <= mem_incoming_data_i;
-            valid[set][LRU_pointer[set]] <= 1'b1;            
-            age[set][LRU_pointer[set]] <= 2'b11;
+            if(readmiss) begin
+                mem_byte_op_o <= 1'b0;
+                cache_tag[set][LRU_pointer[set]] <= tag;
+                //$display("set cache tag %h", tag);
+                cache_data[set][LRU_pointer[set]] <= mem_incoming_data_i;
+                valid[set][LRU_pointer[set]] <= 1'b1;            
+                age[set][LRU_pointer[set]] <= 2'b11;
 
-            for(int i = 0 ; i < 4 ; i++) begin
-                if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
-                    $display("success");
-                    age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+                for(int i = 0 ; i < 4 ; i++) begin
+                    if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
+                        //$display("success");
+                        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+                    end
                 end
             end
-        end
-        else if(write_enable_i && hit) begin
-            mem_byte_op_o <= byte_op_i;
-            mem_write_data_o <= write_data_i;
+            else if(write_enable_i && hit) begin
+                mem_byte_op_o <= byte_op_i;
+                mem_write_data_o <= write_data_i;
+                $display("write data: %h" , write_data_i);
+                $display("%h %h %h %h\t%h\t%h" , cache_data[set][3] , cache_data[set][2] , cache_data[set][1] , cache_data[set][0] , set , address_i);
+                for(int i=0; i<4; i++)begin
 
-            for(int i=0; i<4; i++)begin
-                if(cache_tag[set][i]==tag)begin
-                    if(byte_op_i) begin
-                        case(byteoffset)
-                            2'b00 : cache_data[set][i[1:0]][7:0] <= write_data_i[7:0];
-                            2'b01 : cache_data[set][i[1:0]][15:8] <= write_data_i[7:0];
-                            2'b10 : cache_data[set][i[1:0]][23:16] <= write_data_i[7:0];
-                            2'b11 : cache_data[set][i[1:0]][31:24] <= write_data_i[7:0];
-                        endcase
-                    end
-                    else begin
-                        cache_data[set][i[1:0]] <= write_data_i;
-                    end
-                    valid[set][i[1:0]] <= 1'b1;
-                    age[set][i[1:0]] <= 2'b11;
-                    for(int j=0; j< 4; j++)begin
-                        if((j[1:0] != i[1:0]) && (age[set][j[1:0]] > age[set][i[1:0]]))begin
-                            age[set][j[1:0]] <= age[set][j[1:0]] - 1'b1;
+                    if(cache_tag[set][i]==tag)begin
+                        if(byte_op_i) begin
+                            case(byteoffset)
+                                2'b00 : cache_data[set][i[1:0]][7:0] <= write_data_i[7:0];
+                                2'b01 : cache_data[set][i[1:0]][15:8] <= write_data_i[7:0];
+                                2'b10 : cache_data[set][i[1:0]][23:16] <= write_data_i[7:0];
+                                2'b11 : cache_data[set][i[1:0]][31:24] <= write_data_i[7:0];
+                            endcase
                         end
+                        else begin
+                            cache_data[set][i[1:0]] <= write_data_i;
+                        end
+                        valid[set][i[1:0]] <= 1'b1;
+                        age[set][i[1:0]] <= 2'b11;
+                        for(int j=0; j< 4; j++)begin
+                            if((j[1:0] != i[1:0]) && (age[set][j[1:0]] > age[set][i[1:0]]))begin
+                                age[set][j[1:0]] <= age[set][j[1:0]] - 1'b1;
+                            end
+                        end
+                        
                     end
-                    
                 end
-            end
 
-        end
-        else if(write_enable_i && !hit) begin
-            age[set][LRU_pointer[set]] <= 2'b11;
-            for(int i = 0 ; i < 4 ; i++) begin
-			    if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
-			        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
-			    end
-			end
-            mem_byte_op_o <= byte_op_i;
-            mem_write_data_o <= write_data_i;
-            if(byte_op_i) begin
-                case(byteoffset)
-                    2'b00 : cache_data[set][LRU_pointer[set]][7:0] <= write_data_i[7:0];
-                    2'b01 : cache_data[set][LRU_pointer[set]][15:8] <= write_data_i[7:0];
-                    2'b10 : cache_data[set][LRU_pointer[set]][23:16] <= write_data_i[7:0];
-                    2'b11 : cache_data[set][LRU_pointer[set]][31:24] <= write_data_i[7:0];
-                endcase
             end
-            else begin
-                cache_data[set][LRU_pointer[set]] <= write_data_i;
+            else if(write_enable_i && !hit) begin
+                age[set][LRU_pointer[set]] <= 2'b11;
+                for(int i = 0 ; i < 4 ; i++) begin
+                    if((i[1:0] != LRU_pointer[set]) && (age[set][i[1:0]] > age[set][LRU_pointer[set]])) begin
+                        age[set][i[1:0]] <= age[set][i[1:0]] - 1'b1;
+                    end
+                end
+                mem_byte_op_o <= byte_op_i;
+                mem_write_data_o <= write_data_i;
+                if(byte_op_i) begin
+                    case(byteoffset)
+                        2'b00 : cache_data[set][LRU_pointer[set]][7:0] <= write_data_i[7:0];
+                        2'b01 : cache_data[set][LRU_pointer[set]][15:8] <= write_data_i[7:0];
+                        2'b10 : cache_data[set][LRU_pointer[set]][23:16] <= write_data_i[7:0];
+                        2'b11 : cache_data[set][LRU_pointer[set]][31:24] <= write_data_i[7:0];
+                    endcase
+                end
+                else begin
+                    cache_data[set][LRU_pointer[set]] <= write_data_i;
+                end
+                cache_tag[set][LRU_pointer[set]] <= tag;
+
+                valid[set][LRU_pointer[set]] <= 1'b1;
+
             end
-            cache_tag[set][LRU_pointer[set]] <= tag;
-
-            valid[set][LRU_pointer[set]] <= 1'b1;
-
         end
     end
 endmodule
