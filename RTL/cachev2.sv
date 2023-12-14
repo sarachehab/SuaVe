@@ -15,7 +15,6 @@ cacheline line(
     .cache_enable_i(cache_enable_i),
     .address_i(address_i),
     .write_data_i(write_data_i),
-    .hit_o(hit_o),
     .read_data_o(read_data_o),
     .byte_op_i(byte_op_i),
 

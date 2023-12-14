@@ -68,6 +68,6 @@ module datapath # (
         .address_i(alu_out_o),
         .read_data_o(data_mem_rd),
         .cache_enable_i(cache_enable_i)
-    )
+    );
 endmodule
 
