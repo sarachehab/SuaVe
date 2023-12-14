@@ -1,484 +1,301 @@
-#include <iostream>
-#include <stdlib.h>
-#include <memory>
-#include <vector>
-#include <verilated.h>
-#include <verilated_vcd_c.h>
 #include "Vdatapath.h"
+#include "verilated.h"
+#include "verilated_vcd_c.h"
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
-#define MAX_SIM_CYC 20
-int simcyc = 0;
-
-std::vector<int> simulated_register_file(32, 0);
-std::vector<int> simulated_data_memory(32, 0);
-
-enum Instructions
-{
-    LBU,
-    LW,
-    ADDI,
-    SLLI,
-    SLTI,
-    XORI,
-    SRLI,
-    SRAI,
-    ORI,
-    ANDI,
-    SB,
-    SW,
-    ADD,
-    SUB,
-    SLL,
-    SLT,
-    SLTU,
-    XOR,
-    SRL,
-    SRA,
-    OR,
-    AND,
-    LUI,
-    JALR,
-    JAL
-};
-
-class DatapathInTx
-{
-public:
-    uint32_t reg_addr1_i, reg_addr2_i, reg_addr3_i;
-    uint reg_we_i, result_src_i;
-    uint32_t imm_ext_i, pc_next_i;
-    uint alu_control_i, alu_src_i, alu_eq_o;
-    uint data_mem_we_i, data_mem_byte_op_i;
-};
-
-class DatapathOutTx
-{
-public:
-    uint32_t a0_o;
-    uint eq_o;
-};
-
-class DatapathScb
-{
-public:
-    // input interface monitor port
-    void writeIn(DatapathInTx *tx)
-    {
-        in_q.push_back(tx);
-    }
-
-    // output interface monitor port
-    void writeOut(DatapathOutTx *tx)
-    {
-        // check queue
-        if (in_q.empty())
-        {
-            std::cout << "Fatal Error in DatapathScb: Empty DatapathInTx queue" << std::endl;
-            exit(1);
-        }
-
-        // grab transaction item from front of queue
-        DatapathInTx *in;
-        in = in_q.front();
-        in_q.pop_front();
-
-        // switch (in->result_src_i)
-        // {
-        // case 0: // I and R instructions
-        //     /* code */
-        //     break;
-        // case 1: // load instruction
-        //     if (in->data_mem_byte_op_i)
-        //     {
-        //     }
-        //     else
-        //     {
-        //     }
-        //     if (tx->a0_o != simulated_register_file[9])
-        //     {
-        //         std::cout << 'DataPathSCB Error: Wrong a0 value' << std::endl;
-        //         std::cout << 'Expected: ' << simulated_register_file[9] << std::endl;
-        //         std::cout << "Simulation Cycle: " << simcyc << std::endl;
-        //     }
-        //     break;
-        // case 2: // JAL instruction
-        //     simulated_register_file[in->reg_addr3_i] = in->pc_next_i;
-        //     break;
-        // case 3: // U instruction
-        //     break;
-        // }
-    }
-
-private:
-    std::deque<DatapathInTx *> in_q;
-};
-
-class DatapathInDrv
-{
-public:
-    DatapathInDrv(Vdatapath *dut)
-    {
-        this->dut = dut;
-    }
-
-    void drive(DatapathInTx *tx)
-    {
-        if (tx != NULL)
-        {
-            dut->reg_addr1_i = tx->reg_addr1_i;
-            dut->reg_addr2_i = tx->reg_addr2_i;
-            dut->reg_addr3_i = tx->reg_addr3_i;
-            dut->reg_we_i = tx->reg_we_i;
-            dut->result_src_i = tx->result_src_i;
-            dut->imm_ext_i = tx->imm_ext_i;
-            dut->alu_control_i = tx->alu_control_i;
-            dut->alu_src_i = tx->alu_src_i;
-            dut->data_mem_we_i = tx->data_mem_we_i;
-            dut->data_mem_byte_op_i = tx->data_mem_byte_op_i;
-            dut->pc_next_i = tx->pc_next_i;
-
-            delete tx;
-        }
-    }
-
-private:
-    Vdatapath *dut;
-};
-
-class DatapathInMon
-{
-public:
-    DatapathInMon(Vdatapath *dut, DatapathScb *scb)
-    {
-        this->dut = dut;
-        this->scb = scb;
-    }
-
-    void monitor()
-    {
-        // create a new transaction item and populate it with data observerd at the interface pin
-        DatapathInTx *tx = new DatapathInTx();
-        tx->reg_addr1_i = dut->reg_addr1_i;
-        tx->reg_addr2_i = dut->reg_addr2_i;
-        tx->reg_addr3_i = dut->reg_addr3_i;
-        tx->reg_we_i = dut->reg_we_i;
-        tx->result_src_i = dut->result_src_i;
-        tx->imm_ext_i = dut->imm_ext_i;
-        tx->alu_control_i = dut->alu_control_i;
-        tx->alu_src_i = dut->alu_src_i;
-        tx->data_mem_we_i = dut->data_mem_we_i;
-        tx->data_mem_byte_op_i = dut->data_mem_byte_op_i;
-        tx->pc_next_i = dut->pc_next_i;
-
-        // pass transaction item to score board
-        scb->writeIn(tx);
-    }
-
-private:
-    Vdatapath *dut;
-    DatapathScb *scb;
-};
-
-class DatapathOutMon
-{
-public:
-    DatapathOutMon(Vdatapath *dut, DatapathScb *scb)
-    {
-        this->dut = dut;
-        this->scb = scb;
-    }
-
-    void monitor()
-    {
-        if (simcyc > 0)
-        { // create new transaction item and populate it with result observed
-            DatapathOutTx *tx = new DatapathOutTx();
-            tx->eq_o = dut->eq_o;
-            tx->a0_o = dut->a0_o;
-
-            // pass transaction item to score board
-            scb->writeOut(tx);
-        }
-    }
-
-private:
-    Vdatapath *dut;
-    DatapathScb *scb;
-};
-
-DatapathInTx *rndDatapathInTx()
-{
-    DatapathInTx *tx = new DatapathInTx();
-    tx->reg_addr1_i = rand() % 32;
-    tx->reg_addr2_i = rand() % 32;
-    tx->reg_addr3_i = rand() % 32;
-    tx->imm_ext_i = rand() % 256;
-    tx->pc_next_i = rand() % 256;
-
-    Instructions instr = static_cast<Instructions>(rand() % 24);
-
-    switch (instr)
-    {
-    case LBU:
-        tx->reg_addr1_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 1;
-        tx->result_src_i = 1;
-        break;
-    case LW:
-        tx->reg_addr1_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 1;
-        break;
-    case ADDI:
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SLLI:
-        tx->alu_control_i = 1;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        break;
-    case SLTI:
-        tx->alu_control_i = 2;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        break;
-    case XORI:
-        tx->alu_control_i = 4;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SRLI:
-        tx->alu_control_i = 5;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        break;
-    case SRAI:
-        tx->alu_control_i = 13;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        break;
-    case SB:
-        tx->reg_addr1_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 0;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 1;
-        tx->data_mem_byte_op_i = 1;
-        tx->result_src_i = 0;
-        break;
-    case SW:
-        tx->reg_addr1_i = 0;
-        tx->imm_ext_i = rand() % 32;
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 0;
-        tx->alu_src_i = 1;
-        tx->data_mem_we_i = 1;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case ADD:
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SUB:
-        tx->alu_control_i = 8;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SLL:
-        tx->alu_control_i = 1;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SLT:
-        tx->alu_control_i = 2;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case XOR:
-        tx->alu_control_i = 4;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SRL:
-        tx->alu_control_i = 5;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case SRA:
-        tx->alu_control_i = 13;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case OR:
-        tx->alu_control_i = 6;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case AND:
-        tx->alu_control_i = 7;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 0;
-        break;
-    case LUI:
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 3;
-        tx->imm_ext_i = (tx->imm_ext_i << 20);
-        break;
-    case JALR:
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 2;
-        tx->imm_ext_i = (tx->imm_ext_i << 20);
-        break;
-    case JAL:
-        tx->reg_addr3_i = 1;
-        tx->alu_control_i = 0;
-        tx->reg_we_i = 1;
-        tx->alu_src_i = 0;
-        tx->data_mem_we_i = 0;
-        tx->data_mem_byte_op_i = 0;
-        tx->result_src_i = 2;
-        tx->imm_ext_i = (tx->imm_ext_i << 20);
-        break;
-    default:;
-    }
-    std::cout << "Simulation Cycle: " << simcyc << std::endl;
-    std::cout << "Instruction: " << instr << std::endl;
-    std::cout << std::endl;
-    return tx;
+void seed_random () {
+    srand(static_cast<unsigned>(time(nullptr)));
+}
+int get_rand () {
+    return (rand() % 200) + 1;
 }
 
-int main(int argc, char **argv, char **env)
-{
+//adding values to registers to run tests. 
+void test_load_values (Vdatapath* top , int i , int cmp) {
+    top->data_mem_we_i = 0;
+    top->data_mem_byte_op_i = 0;
+    top->pc_next_i = 0;
+    top->reg_we_i = 1;
+    top->result_src_i = 0;
+    top->alu_control_i = 0;//set to add mode which is what is used to "MOV" into register
+    top->alu_src_i = 1;//set to immediate mode therefore reg_addr2_i is dont care:
+    top->reg_addr2_i = 0;
+
+
+    if(i-cmp == 1) {
+        std::cout << "testing if register 0 works" << std::endl;
+        //test if writing to register zero works as expected.
+        top->reg_addr3_i = 0;
+        top->reg_addr1_i = 0;//temporary register 0;
+        top->imm_ext_i = get_rand();
+    }
+
+    else if((i-cmp) == 2) {
+        std::cout << "testing if register can hold values" << std::endl;
+        top->reg_addr3_i = 5;
+        top->reg_addr1_i = 0;//temporary register 0;
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 3) {
+        std::cout << "testing if register can change value" << std::endl;
+        top->reg_addr3_i = 5;
+        top->reg_addr1_i = 0;//temporary register 0;
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 4) {
+        std::cout << "adding values to registers for future tests" << std::endl;
+        top->reg_addr3_i = 6;
+        top->reg_addr1_i = 0;//temporary register 0;
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 5) {
+        top->reg_addr3_i = 7;
+        top->reg_addr1_i = 0;//temporary register 0;
+        top->imm_ext_i = get_rand();
+    }
+}
+
+//testing if alu controls are working and correct outputs are being written to a0: 
+void test_alu (Vdatapath* top , int i , int cmp) {
+    //basic settings:
+    top->data_mem_we_i = 0;
+    top->data_mem_byte_op_i = 0;
+    top->pc_next_i = 0;
+    top->reg_we_i = 1;
+    top->result_src_i = 0;
+    
+    if(i-cmp == 1) {
+        std::cout  << "testing add instruction with imm" << std::endl;
+        top->alu_control_i = 0;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 5;
+        top->reg_addr2_i = 0;//(dont care)
+        top->reg_addr3_i = 10;
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 2) {
+        std::cout  << "testing add instruction with another reg" << std::endl;
+        top->alu_control_i = 0;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 7;
+        top->reg_addr3_i = 10;
+        top->imm_ext_i = get_rand();//dont care
+    }
+    else if(i-cmp == 3) {
+        std::cout  << "testing logical shift left with imm" << std::endl;
+        top->alu_control_i = 0b0001;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 5;
+        top->reg_addr2_i = 7;//(dont care)
+        top->reg_addr3_i = 10;
+        top->imm_ext_i = 2; //should shift value and we should see it quadruple
+    }
+    else if(i-cmp == 4) {
+        //first move suitable value into register to carry out a shift
+        top->alu_control_i = 0b0000;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 0;
+        top->reg_addr2_i = 7;//dont care
+        top->reg_addr3_i = 5;
+        top->imm_ext_i = 2;
+    }
+    else if(i-cmp == 5){
+        top->alu_control_i = 0b0001;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 7;
+        top->reg_addr2_i = 5;
+        top->reg_addr3_i = 10;//expect to sift by 2 which is *4 operation
+        top->imm_ext_i = 6;//dont care
+    }
+    else if(i-cmp == 6){
+        std::cout << "testing set less than with imm" << std::endl;
+        top->alu_control_i = 0b0010;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 7;
+        top->reg_addr2_i = 5;//dont care
+        top->reg_addr3_i = 10;//should contain binary value 1 or 0
+        top->imm_ext_i = 150;
+    }
+    else if(i-cmp == 7){
+        std::cout << "testing set less than with imm" << std::endl;
+        top->alu_control_i = 0b0010;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 7;
+        top->reg_addr2_i = 5;
+        top->reg_addr3_i = 10;//should contain binary value 1 or 0
+        top->imm_ext_i = 150;//dont care
+    }
+    else if(i-cmp == 8){
+        std::cout << "testing xor with imm" << std::endl;
+        top->alu_control_i = 0b0100;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 5;//dont care
+        top->reg_addr3_i = 10;//should hold rg[6] ^ 100
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 9){
+        std::cout << "testing xor with another reg" << std::endl;
+        top->alu_control_i = 0b0100;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 5;
+        top->reg_addr3_i = 10;//should hold rg[6] ^ reg[5]
+        top->imm_ext_i = 100;//dont care
+    }
+    else if(i-cmp == 10){
+        std::cout << "testing logical shift right with imm" << std::endl;
+        top->alu_control_i = 0b0101;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 7;
+        top->reg_addr2_i = 5;//dont care
+        top->reg_addr3_i = 10;//should hold rg[7] >> 2
+        top->imm_ext_i = 2; //result should be divided by 4
+    }
+    else if(i-cmp == 11){
+        std::cout << "testing logical shift right with another reg" << std::endl;
+        top->alu_control_i = 0b0101;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 5;
+        top->reg_addr3_i = 10;//should hold rg[7] >> reg[5](2)
+        top->imm_ext_i = 100;//dont care
+    }
+    else if(i-cmp == 12){
+        std::cout << "testing or with imm" << std::endl;
+        top->alu_control_i = 0b0110;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 5;//dont care
+        top->reg_addr3_i = 10;//should hold rg[6] or imm
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 13){
+        std::cout << "testing or with another reg" << std::endl;
+        top->alu_control_i = 0b0110;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 7;
+        top->reg_addr2_i = 5;
+        top->reg_addr3_i = 10;//should hold rg[7] or reg[5]
+        top->imm_ext_i = get_rand(); // dont care
+    }
+    else if(i-cmp == 14){
+        std::cout << "testing and with imm" << std::endl;
+        top->alu_control_i = 0b0111;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 5;//dont care
+        top->reg_addr3_i = 10;//should hold rg[6] and imm
+        top->imm_ext_i = get_rand();
+    }
+    else if(i-cmp == 15){
+        std::cout << "testing and with another reg" << std::endl;
+        top->alu_control_i = 0b0111;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 7;
+        top->reg_addr3_i = 10;//should hold rg[6] and reg[5]
+        top->imm_ext_i = get_rand();//dont care
+    }
+    else if(i-cmp == 16){
+        std::cout << "testing sub (only reg to reg)" << std::endl;
+        top->alu_control_i = 0b1000;
+        top->alu_src_i = 0;
+        top->reg_addr1_i = 6;
+        top->reg_addr2_i = 7;
+        top->reg_addr3_i = 10;//should hold rg[6] - reg[5]
+        top->imm_ext_i = get_rand();//dont care
+    }
+    else if(i-cmp == 17){
+        std::cout << "testing arithmetic shift right with imm" << std::endl;
+        //first we must load appropriate values to test this
+        top->alu_control_i = 0b000;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 0;
+        top->reg_addr2_i = 7;//dont care
+        top->reg_addr3_i = 5; // set r5 to -100
+        top->imm_ext_i = -1 * get_rand();
+    }
+    else if(i-cmp == 18){
+        //not working.
+        top->alu_control_i = 0b1101;
+        top->alu_src_i = 1;
+        top->reg_addr1_i = 5;
+        top->reg_addr2_i = 7;//dont care
+        top->reg_addr3_i = 10;//should hold rg[5](-100) >> 2 which is divide by 4
+        top->imm_ext_i = 2;
+    }
+
+}
+
+/*
+reg adresses can range from 0-31
+results source can range from 0-3
+immext and pcnext are 32 bit numbers
+alucontrol does specific things depending on number in range 0-7
+
+we are reading the outputs from register a0 so we would need to set reg_addr_3_i = 10;
+
+to drive values into the register file we will make use of the imm_ext_i input ? random number? 
+__________________________________________________________________
+>first load values into register file...
+that is a good test as it is 
+
+>then we need to check with the register file data that the alu_controls are working
+and that the correct data is being written to the expected register. 
+
+>then test if register values can be moved into data memory
+and if these values can then be moved into the register file
+
+>with that we have also tested the output control mux but we need to run a final test on if
+we are able to write data to the register file from the pc_next_i input. 
+
+with that we should have covered all our basis?
+
+*/
+
+int main ( int argc , char ** argv , char **env) {
+    seed_random();
+    int i;
     int clk;
 
-    // initilize seed
-    srand(time(NULL));
-
-    Verilated::commandArgs(argc, argv);
-
-    // init top verilog instance
-    Vdatapath *dut = new Vdatapath;
-
-    // init trace dump
+    Verilated::commandArgs(argc , argv);
+    Vdatapath* top = new Vdatapath; //instantitate the counter modules as Vcounter
     Verilated::traceEverOn(true);
-    VerilatedVcdC *tfp = new VerilatedVcdC;
-    dut->trace(tfp, 99);
-    tfp->open("datapath.vcd");
+    VerilatedVcdC* tfp = new VerilatedVcdC;
+    top->trace (tfp , 99);
+    tfp->open ("dpv2.vcd");
+    std::cout << "----------running tests----------" << std::endl;
 
-    // init transaction item
-    DatapathInTx *tx;
+    //run simulation for many clock cycles
+    for (i = 0 ; i < 50 ; i++){
+        //dump varaibles into VCD file and toggle clock
 
-    // create driver, scoreboard, input monitor, output monitor
-    DatapathInDrv *drv = new DatapathInDrv(dut);
-    DatapathScb *scb = new DatapathScb();
-    DatapathInMon *inMon = new DatapathInMon(dut, scb);
-    DatapathOutMon *outMon = new DatapathOutMon(dut, scb);
+        for(clk= 0 ; clk < 2 ; clk++) {
+            tfp->dump (2*i+clk); //unit in ps
+            top->clk_i = !top->clk_i;
+            top->eval();
+        }
+        int init_test_load_values = 3;
+        int init_test_alu = 10;
 
-    dut->clk_i = 1;
-
-    for (simcyc = 0; simcyc < MAX_SIM_CYC; simcyc++)
-    {
-        for (clk = 0; clk < 2; clk++)
-        {
-            tfp->dump(clk + 2 * simcyc);
-            dut->clk_i = !dut->clk_i;
-            if (clk == 1)
-            {
-                // generate a randomised transaction item
-                tx = rndDatapathInTx();
-                drv->drive(tx);
-                // monitor the input interface
-                inMon->monitor();
-                outMon->monitor();
-            }
-            dut->eval();
+        if(i > init_test_load_values && i < init_test_alu) {
+            test_load_values(top , i , init_test_load_values);
+        }
+        
+        if(i > init_test_alu) {
+            test_alu(top , i , init_test_alu);
         }
 
-        if ((Verilated::gotFinish()))
-        {
-            break;
-        }
+        if(Verilated::gotFinish()) exit(0);
     }
-
     tfp->close();
-
-    delete dut;
-    delete outMon;
-    delete inMon;
-    delete scb;
-    delete drv;
-
-    exit(EXIT_SUCCESS);
+    exit(0);
 }
+
+
+
+

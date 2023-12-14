@@ -2,7 +2,7 @@
 
 ## Overview
 
-We were tasked to 
+We were asked to design a RISC-V CPU based on its ISA for our Instruction Architecture and Compilers course (IAC). It was an incredibly rewarding experience with great learning opportunities.
 
 We were able to deliver in the span of three weeks:
 - A Single Cycle CPU
@@ -94,10 +94,10 @@ cd RTL
 | Instruction Width         | 32-bit            |
 | Data Memory Size          | 2^17 bit          |
 | Data Width                | 8-bit             |
-| Data Cache Size           | bits              |
+| Data Cache Size           | 256 bits          |
 | Data Cache Sets           | 8                 |
 | Data Cache Ways           | 1                 |
-| Data Cache Block Size     | 4 * 32-bit        |
+| Data Cache Block Size     | 4 * 8-bit         |
 
 
 ## Implemented Instructions

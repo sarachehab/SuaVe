@@ -7,7 +7,7 @@ rm -f datapath.vcd
 clear
 
 #run Verilator to translate Verilog into C++, including C++ testbench
-verilator -Wall --cc --trace datapath.sv --exe datapath_tb_v2.cpp
+verilator -Wall --cc --trace datapath.sv --exe datapath_tb.cpp
 verilator -Wall --cc --trace data_memory.sv
 verilator -Wall --cc --trace register_file.sv
 verilator -Wall --cc --trace alu.sv
