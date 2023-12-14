@@ -17,7 +17,7 @@ assign addr = byte_op_i ? addr_i : (addr_i & 32'hFFFFFFFC);
 
 initial begin
     // $readmemh("gaussian.mem", data_ram, START_ADDRESS);
-    $readmemh("noisy.mem", data_ram, START_ADDRESS);
+    $readmemh("data_memory.mem", data_ram, START_ADDRESS);
     // $readmemh("sine.mem", data_ram, START_ADDRESS);
     // $readmemh("noisy.mem", data_ram, START_ADDRESS);
     for (int i = 0; i < START_ADDRESS; i++) begin
