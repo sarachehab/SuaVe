@@ -28,6 +28,7 @@ class Vcache VL_NOT_FINAL : public VerilatedModel {
     VL_IN8(&clk_i,0,0);
     VL_IN8(&write_enable_i,0,0);
     VL_IN8(&cache_enable_i,0,0);
+    VL_IN8(&byte_op_i,0,0);
     VL_IN(&address_i,31,0);
     VL_IN(&write_data_i,31,0);
     VL_OUT(&read_data_o,31,0);

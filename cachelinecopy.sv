@@ -1,4 +1,3 @@
-
 module cacheline #(
     parameter   width = 32,
 			 	tag_bits = 30
@@ -36,8 +35,6 @@ module cacheline #(
         hit = 1'b0;
         for(int i = 0 ; i<4 ; i++) begin
             valid[i[1:0]] = 1'b0;
-            cache_data[i[1:0]] = 32'b0;
-            cache_tag [i[1:0]] = 30'b0;
         end
     end
 
@@ -55,58 +52,43 @@ module cacheline #(
             end
             //load word
             if(!write_enable_i) begin
-                //mem_write_enable_o <= 1'b0;
+                mem_write_enable_o = 1'b0;
                 if(hit) begin
                     read_data_o = cache_data[wayhit];
                 end
                 else begin
                     $display("readmiss");
-                    //mem_address_o <= address_i;
+                    mem_address_o = address_i;
+                    cache_tag[counter] = tag;
+                    cache_data[counter] = mem_incoming_data_i;
+                    valid[counter] = 1'b1;
                     read_data_o = mem_incoming_data_i;
                 end
             end
             //store word
             else begin
-                //mem_address_o <= address_i;
-                //mem_write_enable_o <= 1'b1;
+                mem_address_o = address_i;
+                mem_write_enable_o = 1'b1;
                 if(hit) begin
-
+                    cache_tag[wayhit] = tag;
+                    cache_data[wayhit] = write_data_i;
+                    valid[wayhit] = 1'b1;
                     mem_write_data_o = write_data_i;
                 end
                 else begin
-                    // cache_tag[counter] = tag;
-                    // cache_data[counter] = write_data_i;
-                    // valid[counter] = 1'b1;
+                    cache_tag[counter] = tag;
+                    cache_data[counter] = write_data_i;
+                    valid[counter] = 1'b1;
                     mem_write_data_o = write_data_i;
                 end
             end
         end
     end
 
-    always_ff@(negedge clk_i)begin
-        if (cache_enable_i==1'b1)begin
-            if((write_enable_i==1'b1) || (hit==1'b0)) begin
-                counter <= counter + 1'b1;
-            end
-            if((write_enable_i == 1'b0) && (hit==1'b0))begin //load word and not in cache
-                cache_tag[counter] <= tag;
-                cache_data[counter] <= mem_incoming_data_i;
-                valid[counter] <= 1'b1;
-            end
-            else if((write_enable_i==1'b1) &&(hit==1'b1)) begin
-                cache_tag[wayhit] <= tag;
-                cache_data[wayhit] <= write_data_i;
-                valid[wayhit] <= 1'b1;
-            end
-            else if((write_enable_i==1'b1)&& (hit==1'b0))begin
-                cache_tag[counter] <= tag;
-                cache_data[counter] <= write_data_i;
-                valid[counter] <= 1'b1;
-            end
+    always_ff@(posedge clk_i)begin
+        if((write_enable_i || !hit) && cache_enable_i) begin
+            counter <= counter + 1'b1;
         end
-        //also add cache data 
-        //cache tag
-        //valid
     end
 endmodule
 
@@ -141,6 +123,10 @@ else begin
     cache_data[set][LRU_pointer[set]] <= write_data_i;
 end
 */
+
+
+
+
 
 
 

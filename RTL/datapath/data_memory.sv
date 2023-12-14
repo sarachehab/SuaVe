@@ -1,7 +1,7 @@
 module data_memory # (
     parameter DATA_WIDTH    = 32,
               BYTE_WIDTH    = 8, 
-              START_ADDRESS = 32'h10000,
+              START_ADDRESS = 32'h00000,
               END_ADDRESS   = 32'h1FFFF
 )(
     input  logic                        clk_i, we_i, byte_op_i,
@@ -17,7 +17,7 @@ assign addr = byte_op_i ? addr_i : (addr_i & 32'hFFFFFFFC);
 
 initial begin
     // $readmemh("gaussian.mem", data_ram, START_ADDRESS);
-    $readmemh("data_memory.mem", data_ram, START_ADDRESS);
+    $readmemh("gaussian.mem", data_ram, START_ADDRESS);
     // $readmemh("sine.mem", data_ram, START_ADDRESS);
     // $readmemh("noisy.mem", data_ram, START_ADDRESS);
     for (int i = 0; i < START_ADDRESS; i++) begin

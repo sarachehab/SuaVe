@@ -14,6 +14,7 @@ Vcache::Vcache(VerilatedContext* _vcontextp__, const char* _vcname__)
     , clk_i{vlSymsp->TOP.clk_i}
     , write_enable_i{vlSymsp->TOP.write_enable_i}
     , cache_enable_i{vlSymsp->TOP.cache_enable_i}
+    , byte_op_i{vlSymsp->TOP.byte_op_i}
     , address_i{vlSymsp->TOP.address_i}
     , write_data_i{vlSymsp->TOP.write_data_i}
     , read_data_o{vlSymsp->TOP.read_data_o}

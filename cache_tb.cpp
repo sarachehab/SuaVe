@@ -27,22 +27,32 @@ int main(int argc, char **argv, char **env) {
             top->eval();
         }
 
-        top->cache_enable_i = 0b0;
 
-        if(simcyc == 3) {
+        if(simcyc == 3) { //store word instruction
+            top->byte_op_i = 0;
             top->cache_enable_i = 1;
             top->write_enable_i = 0b1;
-            top->address_i = 0b100000;
+            top->address_i = 32;
             top->write_data_i = 59;
 
         }
-        if(simcyc == 4) {
-            top->write_enable_i = 0b1;
-            top->address_i = 0b1100000;
+        if(simcyc == 4) { //load word instruction
+            top-> cache_enable_i =1;
+            top->write_enable_i = 0;
+            top->address_i = 96;
             top->write_data_i = 56;
         }
-        else top->cache_enable_i = 0b0;
 
+        if(simcyc==5){//load byte
+            top->cache_enable_i = 0b1;
+            top->byte_op_i =1;
+            top->write_data_i = 123;
+            top->address_i = 33;
+
+        } 
+        else{
+            top->cache_enable_i = 0;
+        }
         if (Verilated::gotFinish()) break;
     }
   tfp->close();

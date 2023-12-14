@@ -16,7 +16,8 @@ class Vcache___024root final : public VerilatedModule {
     VL_IN8(clk_i,0,0);
     VL_IN8(write_enable_i,0,0);
     VL_IN8(cache_enable_i,0,0);
-    CData/*0:0*/ cache__DOT__mem_write_enable;
+    VL_IN8(byte_op_i,0,0);
+    CData/*0:0*/ cache__DOT__mem_byte_op;
     CData/*1:0*/ cache__DOT__line__DOT__counter;
     CData/*0:0*/ cache__DOT__line__DOT__hit;
     CData/*1:0*/ cache__DOT__line__DOT__wayhit;
@@ -25,19 +26,17 @@ class Vcache___024root final : public VerilatedModule {
     VL_IN(write_data_i,31,0);
     VL_OUT(read_data_o,31,0);
     IData/*31:0*/ cache__DOT__mem_incoming_data;
-    IData/*31:0*/ cache__DOT__mem_address;
     IData/*31:0*/ cache__DOT__mem_write_data;
     IData/*31:0*/ cache__DOT__line__DOT__unnamedblk1__DOT__i;
     IData/*31:0*/ cache__DOT__line__DOT__unnamedblk2__DOT__i;
+    IData/*31:0*/ cache__DOT__memory__DOT__addr;
     IData/*31:0*/ cache__DOT__memory__DOT__unnamedblk1__DOT__i;
-    IData/*31:0*/ __Vchglast__TOP__cache__DOT__mem_address;
+    IData/*31:0*/ __Vchglast__TOP__cache__DOT__mem_incoming_data;
     VlUnpacked<IData/*31:0*/, 4> cache__DOT__line__DOT__cache_data;
     VlUnpacked<IData/*29:0*/, 4> cache__DOT__line__DOT__cache_tag;
     VlUnpacked<CData/*0:0*/, 4> cache__DOT__line__DOT__valid;
     VlUnpacked<CData/*7:0*/, 131072> cache__DOT__memory__DOT__data_ram;
-    VlUnpacked<IData/*29:0*/, 4> __Vchglast__TOP__cache__DOT__line__DOT__cache_tag;
-    VlUnpacked<CData/*0:0*/, 4> __Vchglast__TOP__cache__DOT__line__DOT__valid;
-    VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
+    VlUnpacked<CData/*0:0*/, 3> __Vm_traceActivity;
 
     // INTERNAL VARIABLES
     Vcache__Syms* const vlSymsp;
