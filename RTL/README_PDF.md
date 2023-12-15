@@ -48,10 +48,10 @@ bfc0006c:	00008067          	jalr	zero,0(ra)
 
 However, as shown below in the diagram, if bne instruction is taken, there is a flush of 2 cycles (the jalr instruction's execute stage flush following by an empty decode stage flush, equivalent of a delay of 2 cycles), hence there are total of 3 + 2 = 5 cycles between the two consecutive updates of the a0. 
 
-![Alt text](images/5cyclespdf.jpg)
+![Alt text](../images/imagesLu/5cyclespdf.jpg)
 
 This is then further confirmed in viewing the stimulation from the vcd file. Taking the reading at `a0 = mem[0x3D]` as an example:
 
-![Alt text](images/5cyclesSim.png)
+![Alt text](../images/imagesLu/5cyclesSim.png)
 
 As shown by the two markers, it confirms that there are 10 ps = 5 cycles between the two consecutive updates of the a0. 
