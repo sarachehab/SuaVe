@@ -2,7 +2,7 @@
 
 More details to the F1 testing and the pdf testing results see the following markdown files:
 - [F1 testing markdown](link)
-- [pdf testing markdown](link)
+- [pdf testing markdown](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_PDF.md)
 - [shell script markdown](https://github.com/luju1108/Team14/blob/6bdb7d9b94ac3fe67cde19d325a89a3b5d6d1de3/project/shellscript/README.md)
 
 The two top testbench c++ programs are written in a similar way to the previous labs in the following format:
