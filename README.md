@@ -101,7 +101,7 @@ Cache
 
 ## Task Division
 
-|               |                               | Sara Chehab (sarachehab)  | Utsav Goe (utsav254)  | Lu Ju (luju1108)  | Neil Radhul (Nr722)   |
+|               |                               | Sara Chehab (sarachehab)  | Utsav Goel (utsav254)  | Lu Ju (luju1108)  | Neil Radhul (Nr722)   |
 | ------------  | ----------------------------- | ------------------------- | --------------------- | ----------------- | --------------------- |
 | General       | [Top Testbenches](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_TB.md)               |                           |                       | X                 |                       |
 |               | [Subfile Testbenches](https://github.com/luju1108/Team14/blob/28aca030e19683a80f4b11a7acd2ce07016c9c47/project/README.md)           | X                         | X                     | C                 | C                     |
@@ -133,10 +133,10 @@ Cache
 |               | Testing                       |                           | X                     |                   | X                     |
 
 ## Personal Statements
-[Lu Ju]
-[Sara Chehab]
-[Utsav Goe]
-[Neil Radhul]
+[Lu Ju](https://github.com/luju1108/Team14/blob/6462402a37c0c3c388f4c21d1a5a78ac21a5525d/individual_statements/LuJu.md)
+[Sara Chehab](https://github.com/luju1108/Team14/blob/6462402a37c0c3c388f4c21d1a5a78ac21a5525d/individual_statements/SaraChehab.md)
+[Utsav Goel](https://github.com/luju1108/Team14/blob/6462402a37c0c3c388f4c21d1a5a78ac21a5525d/individual_statements/UtsavGoel.md)
+[Neil Radhul](https://github.com/luju1108/Team14/blob/6462402a37c0c3c388f4c21d1a5a78ac21a5525d/individual_statements/NeilRadhu.md)
 
 ## Final Structure at main
 
