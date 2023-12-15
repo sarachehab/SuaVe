@@ -46,6 +46,7 @@ These changes give rise to the following schematic:
 
 Here, the `ControlUnit` should set the register file's write enable `WE = 1`.
 
+
 ### Implementing `JALR` instructions
 
 `JALR` instructions are another type of unconditional jumps like`JAL`, except they set `PCNext = JTA = rs1 + ImmExt`.
