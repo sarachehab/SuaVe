@@ -15,50 +15,122 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
     CData/*4:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1;
     IData/*31:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1;
     CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1;
-    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3;
-    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v4;
-    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v4;
+    CData/*0:0*/ __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit;
+    CData/*3:0*/ __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+    CData/*3:0*/ __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v0;
+    IData/*29:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v0;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v0;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9;
+    CData/*4:0*/ __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10;
+    IData/*31:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1;
+    IData/*29:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1;
+    CData/*3:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v2;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1;
+    CData/*0:0*/ __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v2;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v2;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v3;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v3;
+    IData/*16:0*/ __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v4;
+    CData/*7:0*/ __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v4;
     // Body
-    __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 = 0U;
-    __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1 = 0U;
+    __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter 
+        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1 = 0U;
+    __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit 
+        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+    __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit 
+        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit;
     __Vdlyvset__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10 = 0U;
+    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0 = 0U;
     if (vlSelf->cpu__DOT__mem_write) {
-        if (vlSelf->cpu__DOT__byte_address) {
-            __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 
-                = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
-            __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 = 1U;
-            __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0 
-                = (0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr);
-        } else if ((1U & (~ (IData)(vlSelf->cpu__DOT__byte_address)))) {
-            __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 
-                = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
-            __Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 = 1U;
-            __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1 
-                = (0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr);
-            __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2 
-                = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
+        if (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_byte_op) {
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0 
+                = (0xffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_write_data);
+            __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0 = 1U;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0 
+                = (0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr);
+        } else if ((1U & (~ (IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_byte_op)))) {
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1 
+                = (0xffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_write_data);
+            __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1 = 1U;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1 
+                = (0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr);
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v2 
+                = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_write_data 
                             >> 8U));
-            __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2 
-                = (0x1ffffU & ((IData)(1U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
-            __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3 
-                = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v2 
+                = (0x1ffffU & ((IData)(1U) + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr));
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v3 
+                = (0xffU & (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_write_data 
                             >> 0x10U));
-            __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3 
-                = (0x1ffffU & ((IData)(2U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
-            __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v4 
-                = (vlSelf->cpu__DOT__datapath__DOT__reg_rd2 
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v3 
+                = (0x1ffffU & ((IData)(2U) + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr));
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v4 
+                = (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_write_data 
                    >> 0x18U);
-            __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v4 
-                = (0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr));
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v4 
+                = (0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr));
         }
     }
     __Vdlyvval__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v0 
@@ -74,55 +146,260 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__0(Vcpu___024root* vlSelf) {
                     ? vlSelf->cpu__DOT__imm_ext : ((IData)(4U) 
                                                    + vlSelf->cpu__DOT__program_counter__DOT__pc_next))
                 : ((1U & (IData)(vlSelf->cpu__DOT__result_src))
-                    ? ((IData)(vlSelf->cpu__DOT__byte_address)
-                        ? ((IData)(vlSelf->cpu__DOT__byte_address)
-                            ? vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
-                           [(0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]
-                            : 0U) : ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
-                                      [(0x1ffffU & 
-                                        ((IData)(3U) 
-                                         + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
-                                      << 0x18U) | (
-                                                   (vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
-                                                    [
-                                                    (0x1ffffU 
-                                                     & ((IData)(2U) 
-                                                        + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
-                                                    << 0x10U) 
-                                                   | ((vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
-                                                       [
-                                                       (0x1ffffU 
-                                                        & ((IData)(1U) 
-                                                           + vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr))] 
-                                                       << 8U) 
-                                                      | vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram
-                                                      [
-                                                      (0x1ffffU 
-                                                       & vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr)]))))
+                    ? vlSelf->cpu__DOT__datapath__DOT__data_mem_rd
                     : vlSelf->cpu__DOT__alu_out));
         __Vdlyvset__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 = 1U;
         __Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1 
             = (0x1fU & (vlSelf->cpu__DOT__instr >> 7U));
     }
-    if (__Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0) {
-        vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0] 
-            = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v0;
+    if (vlSelf->cpu__DOT__cache_enable) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i = 0U;
+        {
+            while (VL_GTS_III(32, 0x10U, vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i)) {
+                if ((vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag
+                     [(0xfU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i)] 
+                     == (vlSelf->cpu__DOT__alu_out 
+                         >> 2U))) {
+                    __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit 
+                        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid
+                        [(0xfU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i)];
+                    __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit 
+                        = (0xfU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i);
+                    goto __Vlabel1;
+                } else {
+                    __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit = 0U;
+                }
+                vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i 
+                    = ((IData)(1U) + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__unnamedblk2__DOT__i);
+            }
+            __Vlabel1: ;
+        }
+        if ((1U & ((IData)(vlSelf->cpu__DOT__mem_write) 
+                   | (~ (IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit))))) {
+            __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter 
+                = (0xfU & ((IData)(1U) + (IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter)));
+        }
+        if ((1U & ((~ (IData)(vlSelf->cpu__DOT__mem_write)) 
+                   & (~ (IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit))))) {
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data;
+            __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0 = 1U;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v0 
+                = (vlSelf->cpu__DOT__alu_out >> 2U);
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v0 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v0 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+        } else if (((IData)(vlSelf->cpu__DOT__mem_write) 
+                    & (IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit))) {
+            if (vlSelf->cpu__DOT__byte_address) {
+                if ((2U & vlSelf->cpu__DOT__alu_out)) {
+                    if ((1U & vlSelf->cpu__DOT__alu_out)) {
+                        __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1 
+                            = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                        __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1 = 1U;
+                        __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1 = 0x18U;
+                        __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1 
+                            = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+                    } else {
+                        __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2 
+                            = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                        __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2 = 1U;
+                        __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2 = 0x10U;
+                        __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2 
+                            = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+                    }
+                } else if ((1U & vlSelf->cpu__DOT__alu_out)) {
+                    __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3 
+                        = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3 = 1U;
+                    __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3 = 8U;
+                    __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3 
+                        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+                } else {
+                    __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4 
+                        = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4 = 1U;
+                    __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4 = 0U;
+                    __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4 
+                        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+                }
+            } else {
+                __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5 
+                    = vlSelf->cpu__DOT__datapath__DOT__reg_rd2;
+                __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5 = 1U;
+                __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5 
+                    = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+            }
+            __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1 = 1U;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+        } else if (((IData)(vlSelf->cpu__DOT__mem_write) 
+                    & (~ (IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit)))) {
+            if (vlSelf->cpu__DOT__byte_address) {
+                if ((2U & vlSelf->cpu__DOT__alu_out)) {
+                    if ((1U & vlSelf->cpu__DOT__alu_out)) {
+                        __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6 
+                            = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                        __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6 = 1U;
+                        __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6 = 0x18U;
+                        __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6 
+                            = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+                    } else {
+                        __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7 
+                            = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                        __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7 = 1U;
+                        __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7 = 0x10U;
+                        __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7 
+                            = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+                    }
+                } else if ((1U & vlSelf->cpu__DOT__alu_out)) {
+                    __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8 
+                        = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8 = 1U;
+                    __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8 = 8U;
+                    __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8 
+                        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+                } else {
+                    __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9 
+                        = (0xffU & vlSelf->cpu__DOT__datapath__DOT__reg_rd2);
+                    __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9 = 1U;
+                    __Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9 = 0U;
+                    __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9 
+                        = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+                }
+            } else {
+                __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10 
+                    = vlSelf->cpu__DOT__datapath__DOT__reg_rd2;
+                __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10 = 1U;
+                __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10 
+                    = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+            }
+            __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1 
+                = (vlSelf->cpu__DOT__alu_out >> 2U);
+            __Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1 = 1U;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+            __Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v2 
+                = vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+        }
+    } else {
+        __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit = 0U;
     }
-    if (__Vdlyvset__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1) {
-        vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1] 
-            = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v1;
-        vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2] 
-            = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v2;
-        vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3] 
-            = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v3;
-        vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v4] 
-            = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_data_memory__DOT__data_ram__v4;
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v0;
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v1;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v2] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v2;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v3] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v3;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v4] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram__v4;
     }
     vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf[0x13U] 
         = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v0;
     if (__Vdlyvset__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1) {
         vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf[__Vdlyvdim0__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1] 
             = __Vdlyvval__cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf__v1;
+    }
+    vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter 
+        = __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__counter;
+    vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit 
+        = __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit;
+    vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit 
+        = __Vdly__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit;
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v0] = 1U;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v0] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v0;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v0;
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v1] = 1U;
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__valid__v2] = 1U;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_tag__v1;
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v1))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v2))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v3))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v4))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v5;
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v6))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v7))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v8))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9] 
+            = (((~ ((IData)(0xffU) << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9))) 
+                & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                [__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9]) 
+               | (0xffffffffULL & ((IData)(__Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9) 
+                                   << (IData)(__Vdlyvlsb__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v9))));
+    }
+    if (__Vdlyvset__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data[__Vdlyvdim0__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10] 
+            = __Vdlyvval__cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data__v10;
     }
     vlSelf->a0_o = vlSelf->cpu__DOT__datapath__DOT__datapath_register_file__DOT__rf
         [0xaU];
@@ -137,6 +414,7 @@ extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h974edfa5_0;
 extern const VlUnpacked<CData/*1:0*/, 128> Vcpu__ConstPool__TABLE_h25645c8f_0;
 extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_hf32ca493_0;
 extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_h105add6f_0;
+extern const VlUnpacked<CData/*0:0*/, 128> Vcpu__ConstPool__TABLE_hd9ece95d_0;
 extern const VlUnpacked<CData/*3:0*/, 64> Vcpu__ConstPool__TABLE_h2c28dff1_0;
 extern const VlUnpacked<CData/*0:0*/, 64> Vcpu__ConstPool__TABLE_hfa800c22_0;
 
@@ -211,15 +489,8 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__1(Vcpu___024root* vlSelf) {
         [__Vtableidx1];
     vlSelf->cpu__DOT__JALR_instr = Vcpu__ConstPool__TABLE_h105add6f_0
         [__Vtableidx1];
-    __Vtableidx2 = (((IData)((0x40000020U == (0x40000020U 
-                                              & vlSelf->cpu__DOT__instr))) 
-                     << 5U) | ((0x1cU & (vlSelf->cpu__DOT__instr 
-                                         >> 0xaU)) 
-                               | (IData)(vlSelf->cpu__DOT__controlUnit_top__DOT__alu_op)));
-    vlSelf->cpu__DOT__alu_control = Vcpu__ConstPool__TABLE_h2c28dff1_0
-        [__Vtableidx2];
-    vlSelf->cpu__DOT__byte_address = Vcpu__ConstPool__TABLE_hfa800c22_0
-        [__Vtableidx2];
+    vlSelf->cpu__DOT__cache_enable = Vcpu__ConstPool__TABLE_hd9ece95d_0
+        [__Vtableidx1];
     vlSelf->cpu__DOT__imm_ext = ((4U & (IData)(vlSelf->cpu__DOT__imm_src))
                                   ? ((2U & (IData)(vlSelf->cpu__DOT__imm_src))
                                       ? 0U : ((1U & (IData)(vlSelf->cpu__DOT__imm_src))
@@ -270,6 +541,20 @@ VL_INLINE_OPT void Vcpu___024root___sequent__TOP__1(Vcpu___024root* vlSelf) {
                                               << 0xcU) 
                                              | (vlSelf->cpu__DOT__instr 
                                                 >> 0x14U)))));
+    __Vtableidx2 = (((IData)((0x40000020U == (0x40000020U 
+                                              & vlSelf->cpu__DOT__instr))) 
+                     << 5U) | ((0x1cU & (vlSelf->cpu__DOT__instr 
+                                         >> 0xaU)) 
+                               | (IData)(vlSelf->cpu__DOT__controlUnit_top__DOT__alu_op)));
+    vlSelf->cpu__DOT__alu_control = Vcpu__ConstPool__TABLE_h2c28dff1_0
+        [__Vtableidx2];
+    vlSelf->cpu__DOT__byte_address = Vcpu__ConstPool__TABLE_hfa800c22_0
+        [__Vtableidx2];
+    if (vlSelf->cpu__DOT__cache_enable) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_byte_op 
+            = ((IData)(vlSelf->cpu__DOT__mem_write) 
+               & (IData)(vlSelf->cpu__DOT__byte_address));
+    }
 }
 
 VL_INLINE_OPT void Vcpu___024root___multiclk__TOP__0(Vcpu___024root* vlSelf) {
@@ -329,9 +614,71 @@ VL_INLINE_OPT void Vcpu___024root___multiclk__TOP__0(Vcpu___024root* vlSelf) {
                                                   & vlSelf->cpu__DOT__datapath__DOT____Vcellinp__datapath_alu__src2_i))
                                               : (vlSelf->cpu__DOT__datapath__DOT__reg_rd1 
                                                  + vlSelf->cpu__DOT__datapath__DOT____Vcellinp__datapath_alu__src2_i)))));
-    vlSelf->cpu__DOT__datapath__DOT__datapath_data_memory__DOT__addr 
-        = ((IData)(vlSelf->cpu__DOT__byte_address) ? vlSelf->cpu__DOT__alu_out
-            : (0xfffffffcU & vlSelf->cpu__DOT__alu_out));
+    if (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_byte_op) {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr 
+            = vlSelf->cpu__DOT__alu_out;
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data 
+            = ((IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_byte_op)
+                ? vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram
+               [(0x1ffffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr)]
+                : 0U);
+    } else {
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr 
+            = (0xfffffffcU & vlSelf->cpu__DOT__alu_out);
+        vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data 
+            = ((vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram
+                [(0x1ffffU & ((IData)(3U) + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr))] 
+                << 0x18U) | ((vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram
+                              [(0x1ffffU & ((IData)(2U) 
+                                            + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr))] 
+                              << 0x10U) | ((vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram
+                                            [(0x1ffffU 
+                                              & ((IData)(1U) 
+                                                 + vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr))] 
+                                            << 8U) 
+                                           | vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__data_ram
+                                           [(0x1ffffU 
+                                             & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__memory__DOT__addr)])));
+    }
+    if (vlSelf->cpu__DOT__cache_enable) {
+        if (vlSelf->cpu__DOT__mem_write) {
+            vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_write_data 
+                = vlSelf->cpu__DOT__datapath__DOT__reg_rd2;
+        }
+        if ((1U & (~ (IData)(vlSelf->cpu__DOT__mem_write)))) {
+            vlSelf->cpu__DOT__datapath__DOT__data_mem_rd 
+                = ((IData)(vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__hit)
+                    ? ((IData)(vlSelf->cpu__DOT__byte_address)
+                        ? ((2U & vlSelf->cpu__DOT__alu_out)
+                            ? ((1U & vlSelf->cpu__DOT__alu_out)
+                                ? (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                                   [vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit] 
+                                   >> 0x18U) : (0xffU 
+                                                & (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                                                   [vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit] 
+                                                   >> 0x10U)))
+                            : ((1U & vlSelf->cpu__DOT__alu_out)
+                                ? (0xffU & (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                                            [vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit] 
+                                            >> 8U))
+                                : (0xffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                                   [vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit])))
+                        : vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__cache_data
+                       [vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__line__DOT__wayhit])
+                    : ((IData)(vlSelf->cpu__DOT__byte_address)
+                        ? ((2U & vlSelf->cpu__DOT__alu_out)
+                            ? ((1U & vlSelf->cpu__DOT__alu_out)
+                                ? (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data 
+                                   >> 0x18U) : (0xffU 
+                                                & (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data 
+                                                   >> 0x10U)))
+                            : ((1U & vlSelf->cpu__DOT__alu_out)
+                                ? (0xffU & (vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data 
+                                            >> 8U))
+                                : (0xffU & vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data)))
+                        : vlSelf->cpu__DOT__datapath__DOT__cached_memory__DOT__mem_incoming_data));
+        }
+    }
 }
 
 void Vcpu___024root___eval(Vcpu___024root* vlSelf) {
