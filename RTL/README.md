@@ -1,7 +1,7 @@
 # Pipelined CPU
 
 Also see:
-- [pdf testing](https://github.com/luju1108/Team14/blob/1ac6203f9dc9e9ce10d48f2375bfcd4949d704cc/RTL/README_PDF.md)
+- [pdf testing](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/README_PDF.mdd)
 - [F1 testing](link)
 
 Pipelining uses parallelism to speed a CPU up by shortening the maximum delay between input/output of flip-flops, also known as the critical path. Indeed,  minimisation of the critical path results in a maximisation of the clock frequency, and thus results in a faster design.
