@@ -39,7 +39,7 @@ The Formula Lights program has both a `RESET` and `TRIGGER`:
 
 To restart the counting sequence, one would have to toggle the push-button, then set the rotary encoder to some value greater than 50.
 
-> Our trigger is wired directly to register s1. Please be mindful of this if testing with your own program.
+> Our trigger is wired directly to register S3. Please be mindful of this if testing with your own program.
 
 
 ## Proof of Successs
