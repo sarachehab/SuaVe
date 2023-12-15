@@ -1,3 +1,5 @@
+## Control Unit
+
 ![[control_unit2.png]](../../images/control_unit/control_unit2.png)
 The components of the control unit are mentioned and tested individually but the top file combines both and sees if they work together.
 so let us analyze that.
