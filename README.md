@@ -108,7 +108,7 @@ Cache
 |               | [Shell Script](https://github.com/luju1108/Team14/blob/e65a53d7a445a3cb1e7aad7f46a14a1d61f4cc61/project/shellscript/README.md)                  | X                         |                       |                   |                       |
 |               | [F1 Assembly](https://github.com/luju1108/Team14/blob/2a4b3dcd5017c353cd38f80eed93257bd0df520e/RTL/README_F1.md)                   | X                         | X                     |                   |                       |
 | Single Cycle  | [Program Counter](https://github.com/luju1108/Team14/blob/619bc370df1e0f67b9346f580a0427788a3eefdc/project/pc/README.md)               | X                         |                       |                   |                       |
-|               | Main Decoder                  | X                         | X                     |                   |                       |
+|               | [Main Decoder](https://github.com/luju1108/Team14/blob/932f2b59b5991a43ee315cc2252fe5ef0e29b232/project/controlUnit/main_decoder/README.md)                  | X                         | X                     |                   |                       |
 |               | [Alu Decoder](https://github.com/luju1108/Team14/blob/aa07c74d3221423a55203b9158bd58d9a7771146/project/controlUnit/alu_decoder/README.md)                   |                           |                       |                   | X                     |
 |               | [Control Unit](https://github.com/luju1108/Team14/blob/aa07c74d3221423a55203b9158bd58d9a7771146/project/controlUnit/README.md)                  |                           |                       | X                 | X                     |
 |               | [Register File](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/project/dataPath/registerFile/README.md)                 |                           |                       | X                 |                       |
@@ -123,18 +123,18 @@ Cache
 |               | [Refactoring](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/control_unit/README.md)                   | X                         |                       |                   |                       |
 |               | [Top File](https://github.com/luju1108/Team14/blob/75df15b7cf9c71874d93c646478f9ac34ed26d3c/RTL/README.md)                      | X                         |                       |                   |                       |
 |               | Testing [pdf](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/README_PDF.md) [F1](https://youtu.be/59yWMzJzut0)                      | X                         |                       | X                 |                       |
-| Cache         | Direct Mapped Cache           | C                         | X                     |                   | X                     |
+| Cache         | [Direct Mapped Cache](https://github.com/luju1108/Team14/blob/8b3ccd96ebb34cd7653d7cf32361917fc3c27a69/RTL/README.md)           | C                         | X                     |                   | X                     |
 |               | RAM Refactor                  |                           | X                     |                   | X                     |
 |               | Data Memory                   |                           | X                     |                   | X                     |
-|               | Control Unit Refactor         |                           | X                     |                   | X                     |
-|               | Pipelining Refactor           | X                         |                       |                   |                       |
+|               | [Control Unit Refactor](https://github.com/luju1108/Team14/blob/8b3ccd96ebb34cd7653d7cf32361917fc3c27a69/RTL/control_unit/README.md)         |                           | X                     |                   | X                     |
+|               | [Pipelining Refactor](https://github.com/luju1108/Team14/blob/8b3ccd96ebb34cd7653d7cf32361917fc3c27a69/RTL/control_unit/README.md)           | X                         |                       |                   |                       |
 |               | Testing                       | X                         | X                     | X                 | X                     |
-|               | Fully Associative Cache       |                           | X                     |                   | X                     |
+|               | [Fully Associative Cache]()       |                           | X                     |                   | X                     |
 |               | Testing                       |                           | X                     |                   | X                     |
 
 
 
-## Final Structure
+## Final Structure at main
 
 ```
 . 
