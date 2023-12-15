@@ -17,7 +17,7 @@ int main(int argc, char **argv, char **env)
   Verilated::traceEverOn(true);
   VerilatedVcdC *tfp = new VerilatedVcdC;
   top->trace(tfp, 99);
-  tfp->open("cpu_pipeline_tb.vcd");
+  tfp->open("hazard_unit_tb.vcd");
 
   top->clk = 1;
   top->rst = 1;
