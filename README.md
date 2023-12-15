@@ -19,8 +19,7 @@ Logic was also derived to implement a 4-way associative cache. System-Verilog dr
 `exe.sh` takes either zero, one or two arguments. These arguments precise the testbench used for the testing, whether it is the Formula Lights or Reference program:
 
 | Command                           | Outcome                                       |
-| --------------------------------- | --------------------------------------------- |
-| `source ./exe.sh`                 | Run previous program                          |    
+| --------------------------------- | --------------------------------------------- |   
 | `source ./exe.sh f1`              | Run Formula Lights Program                    |
 | `source ./exe.sh pdf`             | Run PDF program with previous memory content  |
 | `source ./exe.sh pdf gaussian`    | Run PDF program for gaussian.mem              |
@@ -54,7 +53,7 @@ To restart the counting sequence, one would have to toggle the push-button, then
 
 
 Single Cycle CPU:
-- [Formula Lighst](https://youtu.be/zJto4plLvCE)
+- [Formula Lights](https://youtu.be/zJto4plLvCE)
 - [PDF Gaussian](https://youtu.be/Mq9BEwbvduk)
 - [PDF Noisy](https://youtu.be/FlwG2JfLp6k)
 - [PDF Sine](https://youtu.be/67-TDc_EGnA)
@@ -63,7 +62,7 @@ Single Cycle CPU:
 
 
 Pipelined CPU:
-- [Formula Lighst]
+- [Formula Lights](https://youtu.be/59yWMzJzut0)
 - [PDF Gaussian](https://youtu.be/r62WZPJNDN0)
 - [PDF Noisy](https://youtu.be/OM9mQih1nxs)
 - [PDF Sine](https://youtu.be/j93-G7-LUJU)
@@ -71,12 +70,33 @@ Pipelined CPU:
 
 
 Cache
-- [Formula Lighst]
-- [PDF Gaussian]
-- [PDF Noisy]
-- [PDF Sine]
-- [PDF Triangle]
+- [Formula Lighst](https://youtu.be/0z1GHnXMrG4)
 
+
+## Specifications
+
+| Property                  | Value             |
+| ------------------------- | ------------------|
+| Instruction Memory Size   | 2^12 bits         |
+| Instruction Width         | 32-bit            |
+| Data Memory Size          | 2^17 bit          |
+| Data Width                | 8-bit             |
+| Data Cache Size           | 256 bits          |
+| Data Cache Sets           | 8                 |
+| Data Cache Ways           | 1                 |
+| Data Cache Block Size     | 4 * 8-bit         |
+
+
+## Implemented Instructions
+
+| Type  | Implemented Instructions  |
+| ----- | ------------------------- |
+| `R`   |`ADD`, `SUB`, `SLL`, `SLT`, `SLTU`, `XOR`, `SRL`, `SRA`, `OR`, `AND`|
+| `I`   |`ADDI`, `SLLI`, `SLTI`, `XORI`, `SRLI`, `SRAI`, `ORI`, `ANDI`, `LBU`, `LW`|
+| `B`   |`BNE`|
+| `S`   |`SW`, `SB`|
+| `U`   |`LUI`|
+| `J`   |`JAL`|
 
 
 ## Task Division
@@ -110,31 +130,6 @@ Cache
 |               | Pipelining Refactor           | X                         |                       |                   |                       |
 |               | Testing                       | X                         | X                     | X                 | X                     |
 
-
-## Specifications
-
-| Property                  | Value             |
-| ------------------------- | ------------------|
-| Instruction Memory Size   | 2^12 bits         |
-| Instruction Width         | 32-bit            |
-| Data Memory Size          | 2^17 bit          |
-| Data Width                | 8-bit             |
-| Data Cache Size           | 256 bits          |
-| Data Cache Sets           | 8                 |
-| Data Cache Ways           | 1                 |
-| Data Cache Block Size     | 4 * 8-bit         |
-
-
-## Implemented Instructions
-
-| Type  | Implemented Instructions  |
-| ----- | ------------------------- |
-| `R`   |`ADD`, `SUB`, `SLL`, `SLT`, `SLTU`, `XOR`, `SRL`, `SRA`, `OR`, `AND`|
-| `I`   |`ADDI`, `SLLI`, `SLTI`, `XORI`, `SRLI`, `SRAI`, `ORI`, `ANDI`, `LBU`, `LW`|
-| `B`   |`BNE`|
-| `S`   |`SW`, `SB`|
-| `U`   |`LUI`|
-| `J`   |`JAL`|
 
 
 ## Final Structure
