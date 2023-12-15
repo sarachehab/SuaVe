@@ -11,7 +11,7 @@ We were able to deliver in the span of three weeks:
 - A Single Cycle CPU with fully-associative cache
 
 Logic was also derived to implement a 4-way associative cache. System-Verilog draft of the code was submitted along this repository, but remains uncomplete.
-
+One could also check the `Project` directory to verify the individual `.sv` files and their respective testbenches.
 
 ## Quick Start
 
@@ -151,6 +151,14 @@ Cache
 │ ├── F1.hex 
 │ ├── pdf.hex 
 │ └── pdf.s
+├── project/ 
+│ 	├── pc/ 
+│ 	│ ├── doit.sh
+│ 	│ ├── pc.sv
+│ 	├── pc_tb.cpp 
+│ 	├── instruction_memory/
+│ 	│ ├── doit.sh
+│ 	└── ...
 └── RTL/ 
 	├── control_unit/ 
 	│ ├── main_decoder.sv 
