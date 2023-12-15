@@ -98,6 +98,7 @@
 
 - Started working on Single Cycle CPU without a top-view schematic in mind first; It was a very confusing experience which resulted in multiple modifications to Control Signals within the `ControlUnit`. I insisted to draw the schematic first and foremost for pipelining, which saved us a lot of work in the long run: we had a CPU up and running in the span of a day ;)
 - Skimmed through the project brief without focusing on the details, which made it particularly annoying because of foolish oversights; I quickly mitigated that mistake by going over the brief in great details a few days after the project start-date
+- Was not documented enough on version control before project start, which contributed to the loss of version history in main
 - Underestimated the time it would take to write UVM testbenches; I was very keen on writing one for the overall CPU, but unfortunately lacked the time to do so
 
 ## What I would have done differently
