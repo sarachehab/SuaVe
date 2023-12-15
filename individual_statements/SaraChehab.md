@@ -1,5 +1,6 @@
 # <center> **Sara Chehab - CID 02300594** </center>
 
+
 ## What I Contributed to
 
 ### Repository Management
@@ -21,8 +22,8 @@
 
 ### Single Cycle CPU
 
-- Designed and implemented PC counter, [here](https://github.com/luju1108/Team14/commit/f3f137159de6537860ed9a852e0b76e60e89bcd3) and [here](https://github.com/luju1108/Team14/commit/89f63b20e0d27781ad93f71df7c15dcbe215f1ce)
-- Worked with Utsav to design Instruction Memory [here](https://github.com/luju1108/Team14/commit/599e622101655169a20c30915e777efd770a5532) and [here](https://github.com/luju1108/Team14/commit/c55b7ff9c58d30017bfca594a0dd2c2d97f5b822)
+- Designed and implemented `Program Counter`, [here](https://github.com/luju1108/Team14/commit/f3f137159de6537860ed9a852e0b76e60e89bcd3) and [here](https://github.com/luju1108/Team14/commit/89f63b20e0d27781ad93f71df7c15dcbe215f1ce)
+- Worked with Utsav to design `Instruction Memory` [here](https://github.com/luju1108/Team14/commit/599e622101655169a20c30915e777efd770a5532) and [here](https://github.com/luju1108/Team14/commit/c55b7ff9c58d30017bfca594a0dd2c2d97f5b822)
 - Collaborated with Lu to design `Data Memory`, [here](https://github.com/luju1108/Team14/commit/a56040d180a438e9c2bd13e6ae680be0bae52c7d) and [here](https://github.com/luju1108/Team14/commit/3d769218c8c835e295146415ec68ec44e9788878)
 - Modified clocked components so that synchronous Write are made on the falling clock edge [here](https://github.com/luju1108/Team14/commit/c1a5b2059ee9b1fb2dfa7b64fdbc6af3f6bbd2bd)
 - Suggested adding a fourth bit to `ALUControl` to Neil and Utsav [here](https://github.com/luju1108/Team14/commit/9654801d4c0e0b06e07727db4f326acc4104bc67)
