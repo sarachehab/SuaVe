@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env)
 
   if (vbdOpen() != 1)
     return (-1);
-  vbdHeader("Running F1");
+  vbdHeader("Direct F1");
   vbdSetMode(1); // Flag mode set to one-shot
 
   top->clk = 1;
