@@ -42,7 +42,7 @@ An additional bit was also appended to `ResultSrc` through the `ControlUnit` to 
 
 These changes give rise to the following schematic:
 
-![Single Cycle CPU with JAL](../images/single_cycle/singlecycle_cpu_JAL.jpg)
+![Single Cycle CPU with JAL](../images/single_cycle/singlecycle_cpu_jal.jpg)
 
 Here, the `ControlUnit` should set the register file's write enable `WE = 1`.
 
@@ -54,7 +54,7 @@ Here, the `ControlUnit` should set the register file's write enable `WE = 1`.
 
 Adding one last multiplexer to `ProgramCounter`, with Select bit `JALR` - only `HIGH` for `JALR` instructions:
 
-![Single Cycle CPU with JALR](../images/single_cycle/singlecycle_cpu_JALR.jpg)
+![Single Cycle CPU with JALR](../images/single_cycle/singlecycle_cpu_jalr.jpg)
 
 Also, the `ControlUnit` should set the register file's write enable `WE = 1`.
 
