@@ -39,11 +39,6 @@ int main(int argc, char **argv, char **env)
 
     vbdBar(top->a0 & 0xFF);
 
-    if (top->a0 == 0xFF)
-    {
-      std::cout << simcyc << std::endl;
-    }
-
     vbdCycle(simcyc);
 
     // either simulation finished, or 'q' is pressed
