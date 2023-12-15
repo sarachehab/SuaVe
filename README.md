@@ -11,7 +11,7 @@ We were able to deliver in the span of three weeks:
 - A Single Cycle CPU with fully-associative cache
 
 Logic was also derived to implement a 4-way associative cache. System-Verilog draft of the code was submitted along this repository, but remains uncomplete.
-
+One could also check the `Project` directory to verify the individual `.sv` files and their respective testbenches.
 
 ## Quick Start
 
@@ -22,7 +22,6 @@ Logic was also derived to implement a 4-way associative cache. System-Verilog dr
 | Command                           | Outcome                                       |
 | --------------------------------- | --------------------------------------------- |   
 | `source ./exe.sh f1`              | Run Formula Lights Program                    |
-| `source ./exe.sh pdf`             | Run PDF program with previous memory content  |
 | `source ./exe.sh pdf gaussian`    | Run PDF program for gaussian.mem              |
 | `source ./exe.sh pdf triangle`    | Run PDF program for triangle.mem              |
 | `source ./exe.sh pdf sine`        | Run PDF program for sine.mem                  |
@@ -104,26 +103,26 @@ Cache
 
 |               |                               | Sara Chehab (sarachehab)  | Utsav Goe (utsav254)  | Lu Ju (luju1108)  | Neil Radhul (Nr722)   |
 | ------------  | ----------------------------- | ------------------------- | --------------------- | ----------------- | --------------------- |
-| General       | Top Testbenches               |                           |                       | X                 |                       |
-|               | Subfile Testbenches           | X                         | X                     | C                 | C                     |
-|               | Shell Script                  | X                         |                       |                   |                       |
+| General       | [Top Testbenches](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_TB.md)               |                           |                       | X                 |                       |
+|               | [Subfile Testbenches](https://github.com/luju1108/Team14/blob/28aca030e19683a80f4b11a7acd2ce07016c9c47/project/README.md)           | X                         | X                     | C                 | C                     |
+|               | [Shell Script](https://github.com/luju1108/Team14/blob/e65a53d7a445a3cb1e7aad7f46a14a1d61f4cc61/project/shellscript/README.md)                  | X                         |                       |                   |                       |
 |               | F1 Assembly                   | X                         | X                     |                   |                       |
-| Single Cycle  | Program Counter               | X                         |                       |                   |                       |
+| Single Cycle  | [Program Counter](https://github.com/luju1108/Team14/blob/619bc370df1e0f67b9346f580a0427788a3eefdc/project/pc/README.md)               | X                         |                       |                   |                       |
 |               | Main Decoder                  | X                         | X                     |                   |                       |
-|               | Alu Decoder                   |                           |                       |                   | X                     |
-|               | Control Unit                  |                           |                       | X                 | X                     |
-|               | Register File                 |                           |                       | X                 |                       |
-|               | ALU                           | C                         |                       | X                 |                       | 
-|               | Data Memory                   | C                         |                       |                   | X                     |
-|               | Datapath                      |                           | C                     | X                 |                       |
-|               | Sign Extend                   |                           |                       |                   | X                     |
-|               | Top File                      | X                         |                       |                   | X                     |
-|               | Testing                       | X                         | X                     | X                 | X                     |
+|               | [Alu Decoder](https://github.com/luju1108/Team14/blob/aa07c74d3221423a55203b9158bd58d9a7771146/project/controlUnit/alu_decoder/README.md)                   |                           |                       |                   | X                     |
+|               | [Control Unit](https://github.com/luju1108/Team14/blob/aa07c74d3221423a55203b9158bd58d9a7771146/project/controlUnit/README.md)                  |                           |                       | X                 | X                     |
+|               | [Register File](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/project/dataPath/registerFile/README.md)                 |                           |                       | X                 |                       |
+|               | [ALU](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/project/dataPath/alu/README.md)                           | C                         |                       | X                 |                       | 
+|               | [Data Memory](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/project/dataPath/dataMem/README.md)                   | C                         |                       |                   | X                     |
+|               | [Datapath](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/project/dataPath/README.md)                      |                           | C                     | X                 |                       |
+|               | [Sign Extend](https://github.com/luju1108/Team14/blob/aa07c74d3221423a55203b9158bd58d9a7771146/project/extend/README.md)                   |                           |                       |                   | X                     |
+|               | [Top File](https://github.com/luju1108/Team14/blob/c659b93b228f9a502ee8ece71c8fc4fde6763aae/RTL/README.md)                      | X                         |                       |                   | X                     |
+|               | Testing [pdf](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_PDF.md)                       | X                         | X                     | X                 | X                     |
 | Pipeline      | Pipeline Register             | X                         |                       |                   |                       |
-|               | Hazard unit                   |                           |                       | X                 |                       |
-|               | Refactoring                   | X                         |                       |                   |                       |
-|               | Top File                      | X                         |                       |                   |                       |
-|               | Testing                       | X                         |                       | X                 |                       |
+|               | [Hazard unit](https://github.com/luju1108/Team14/blob/1ac6203f9dc9e9ce10d48f2375bfcd4949d704cc/RTL/hazard_unit/README.md)                   |                           |                       | X                 |                       |
+|               | [Refactoring](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/control_unit/README.md)                   | X                         |                       |                   |                       |
+|               | [Top File](https://github.com/luju1108/Team14/blob/75df15b7cf9c71874d93c646478f9ac34ed26d3c/RTL/README.md)                      | X                         |                       |                   |                       |
+|               | Testing [pdf](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/README_PDF.md)                       | X                         |                       | X                 |                       |
 | Cache         | Direct Mapped Cache           | C                         | X                     |                   | X                     |
 |               | RAM Refactor                  |                           | X                     |                   | X                     |
 |               | Data Memory                   |                           | X                     |                   | X                     |
@@ -151,6 +150,14 @@ Cache
 │ ├── F1.hex 
 │ ├── pdf.hex 
 │ └── pdf.s
+├── project/ 
+│ 	├── pc/ 
+│ 	│ ├── doit.sh
+│ 	│ ├── pc.sv
+│ 	├── pc_tb.cpp 
+│ 	├── instruction_memory/
+│ 	│ ├── doit.sh
+│ 	└── ...
 └── RTL/ 
 	├── control_unit/ 
 	│ ├── main_decoder.sv 

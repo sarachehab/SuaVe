@@ -1,4 +1,4 @@
-# Control Unit
+## Control Unit
 
 ![[control_unit2.png]](../../images/control_unit/control_unit2.png)
 
