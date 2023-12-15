@@ -64,7 +64,7 @@ Also, the `ControlUnit` should set the register file's write enable `WE = 1`.
 - Modifying the `SignExtend` and `ControlUnit` by setting `ImmSrc = 3'b100` specifically for `UpperImmediate` instructions
 - Adding a fourth input pin to the Result multiplexer, and setting `ResultSrc = 2'b11` specific to `UpperImmediate` instruction
 
-![Single Cycle CPU with stages](../images/single_cycle/singlecycle_cpu_withstages.png)
+![Single Cycle CPU with stages](../images/single_cycle/singlecycle_cpu_withstages.jpg)
 
 The `ControlUnit` should set the register file's write enable `WE = 1`.
 
@@ -73,4 +73,4 @@ The `ControlUnit` should set the register file's write enable `WE = 1`.
 
 The schematic below offers a comprehensive description of our design:
 
-![single cycle CPU](../images/single_cycle/singlecycle_cpu_schematic.png)
+![single cycle CPU](../images/single_cycle/singlecycle_cpu_schematic.jpg)
