@@ -64,7 +64,7 @@
     - learnt about the benefit of byte adress read/write to memory in closer details with examples
         - realising that I am the type of person who needs examples to understand new content (ie visual learner)
         - better understanding of myself and my ways of learning - I learn better from hands-on practise
-        
+
 <br>
 
 - when I run into errors that I cannot solve, I am becoming less hesitate to ask for help as we progress in this project, realising how efficient it is to ask and get it solved straight away rather than spending a long time trying to sort it out myself
@@ -80,6 +80,8 @@
     ![Alt text](../images/imagesLu/mistake.jpg)
     Then I was wrong, upon realisation of that it was just a half cycle cpu instead of a single cycle cpu instead. With a discussion with Sara, I learnt from her and re-implemented as a 5 staged pipelined cpu with intermediate stage registers. 
         - Again it is very important to think before taking in action and discuss with others about your ideas. 
+- we copied and pasted files from the branch into the main branch without rebasing nor a merge, this should not be done as it meant that commit history may be lost
+    - the main branch is not safe in this way
 
 ### What I would do differently 
 - can possibly use my mistaken pipelining version as an idea and integrate it into the cpu such that it is a half cycle cpu instead of a single cycle cpu, such that instructions are fetched every half cycle
@@ -87,3 +89,7 @@
     - however, we will need to think closely on the potential hazard from this implementation and how to eliminate it
 - plan and draw out the over all schemetic first, discuss all details (eg the inputs) with team members and then write the actual code
     - this makes communication more efficient (important for between the control unit decode team and the alu team, as the operands that are use across the files are closely linked together, so by this way we do not need to keep edit the decode file and the alu file back and forth for implementation of the different types of instructions)
+- name the branch more clearly and delete unnecessary branch (delete branch when it has been merged to main)
+    - in this project we kept the branches because rebase was having some issues when we were doing it, and we did some copy and paste of the files from the branch into the main when we were not that familiar with git, which we were loosing the commit history
+    - hence to keep the commit history for this project, we have decided to keep the branches
+- do regular rebasing of the branches from main so that we do not have to face a lot of conflicts when we decide to merge the branches later on

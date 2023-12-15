@@ -2,7 +2,7 @@
 # SINGLE CYCLE RISC-V CPU
 
 Also see:
-- [F1 testing](link)
+- [F1 assembly](https://github.com/luju1108/Team14/blob/2a4b3dcd5017c353cd38f80eed93257bd0df520e/RTL/README_F1.md)
 - [pdf testing](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_PDF.md)
 - [testbench](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_TB.md)
 
