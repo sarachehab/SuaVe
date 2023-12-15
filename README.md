@@ -93,7 +93,7 @@ Cache
 | Type  | Implemented Instructions  |
 | ----- | ------------------------- |
 | `R`   |`ADD`, `SUB`, `SLL`, `SLT`, `SLTU`, `XOR`, `SRL`, `SRA`, `OR`, `AND`|
-| `I`   |`ADDI`, `SLLI`, `SLTI`, `XORI`, `SRLI`, `SRAI`, `ORI`, `ANDI`, `LBU`, `LW`|
+| `I`   |`ADDI`, `SLLI`, `SLTI`, `XORI`, `SRLI`, `SRAI`, `ORI`, `ANDI`, `LBU`, `LW`, `JALR`|
 | `B`   |`BNE`|
 | `S`   |`SW`, `SB`|
 | `U`   |`LUI`|
