@@ -41,8 +41,64 @@ module cacheline #(
         end
     end
 
-    always_ff@(negedge clk_i) begin
+    always_comb begin
         if(cache_enable_i) begin
+            
+            //load word
+            if(!write_enable_i) begin
+                mem_byte_op_o = 0;
+                //mem_write_enable_o <= 1'b0;
+                if(hit) begin
+                    if(byte_op_i)begin
+                        case(byteoffset)
+                        2'b00 : read_data_o = { {24'b0},mem_incoming_data_i[7:0]};
+                        2'b01 : read_data_o = { {24'b0},mem_incoming_data_i[15:8]};
+                        2'b10 : read_data_o = { {24'b0},mem_incoming_data_i[23:16]};
+                        2'b11 : read_data_o = { {24'b0},mem_incoming_data_i[31:24]};
+                        endcase
+                    end
+                    else begin
+                        read_data_o = cache_data[wayhit];   
+                    end
+                end
+                else begin
+                    //counter = counter + 1'b1;
+                    if(byte_op_i)begin
+                        case(byteoffset)
+                        2'b00 : read_data_o = { {24'b0},mem_incoming_data_i[7:0]};
+                        2'b01 : read_data_o = { {24'b0},mem_incoming_data_i[15:8]};
+                        2'b10 : read_data_o = { {24'b0},mem_incoming_data_i[23:16]};
+                        2'b11 : read_data_o = { {24'b0},mem_incoming_data_i[31:24]};
+                        endcase
+                    end
+                    else begin
+                    //mem_address_o <= address_i;
+                        read_data_o = mem_incoming_data_i;
+                    end
+                end
+            end
+            //store word
+            else begin
+                //counter = counter + 1'b1;
+                mem_byte_op_o = byte_op_i;
+                //mem_address_o <= address_i;
+                //mem_write_enable_o <= 1'b1;
+                if(hit) begin
+
+                    mem_write_data_o = write_data_i;
+                end
+                else begin
+                    // cache_tag[counter] = tag;
+                    // cache_data[counter] = write_data_i;
+                    // valid[counter] = 1'b1;
+                    mem_write_data_o = write_data_i;
+                end
+            end
+        end
+    end
+
+    always_ff@(negedge clk_i) begin
+        if (cache_enable_i==1'b1)begin
             //check for tag match
             for(int i = 0 ; i < 4 ; i++) begin
                 if(cache_tag[i[1:0]] == tag) begin
@@ -53,105 +109,49 @@ module cacheline #(
                 else
                     hit <= 1'b0;
             end
-            //load word
-            if(!write_enable_i) begin
-                mem_byte_op_o <= 0;
-                //mem_write_enable_o <<= 1'b0;
-                if(hit) begin
-                    if(byte_op_i)begin
-                        case(byteoffset)
-                        2'b00 : read_data_o <= { {24'b0},mem_incoming_data_i[7:0]};
-                        2'b01 : read_data_o <= { {24'b0},mem_incoming_data_i[15:8]};
-                        2'b10 : read_data_o <= { {24'b0},mem_incoming_data_i[23:16]};
-                        2'b11 : read_data_o <= { {24'b0},mem_incoming_data_i[31:24]};
-                        endcase
-                    end
-                    else begin
-                        read_data_o <= cache_data[wayhit];   
-                    end
-                end
-                else begin
-                    counter <= counter + 1'b1;
-                    if(byte_op_i)begin
-                        case(byteoffset)
-                        2'b00 : read_data_o <= { {24'b0},mem_incoming_data_i[7:0]};
-                        2'b01 : read_data_o <= { {24'b0},mem_incoming_data_i[15:8]};
-                        2'b10 : read_data_o <= { {24'b0},mem_incoming_data_i[23:16]};
-                        2'b11 : read_data_o <= { {24'b0},mem_incoming_data_i[31:24]};
-                        endcase
-                    end
-                    else begin
-                    //mem_address_o <<= address_i;
-                        read_data_o <= cache_data[counter];
-                    end
-                end
-            end
-            //store word
-            else begin
-                counter <= counter + 1'b1;
-                mem_byte_op_o <= byte_op_i;
-                //mem_address_o <<= address_i;
-                //mem_write_enable_o <<= 1'b1;
-                if(hit) begin
-
-                    mem_write_data_o <= write_data_i;
-                end
-                else begin
-                    // cache_tag[counter] <= tag;
-                    // cache_data[counter] <= write_data_i;
-                    // valid[counter] <= 1'b1;
-                    mem_write_data_o <= write_data_i;
-                end
-            end
-        end
-    end
-
-    always_comb begin
-        if (cache_enable_i==1'b1)begin
-
             
-            // if((write_enable_i==1'b1) || (hit==1'b0)) begin
-            //     counter = counter + 1'b1;
-            // end
+            if((write_enable_i==1'b1) || (hit==1'b0)) begin
+                counter <= counter + 1'b1;
+            end
             if((write_enable_i == 1'b0) && (hit==1'b0))begin //load word and not in cache
-                cache_data[counter] = mem_incoming_data_i;
-                cache_tag[counter] = tag;
-                //cache_data[counter] = mem_incoming_data_i;
-                valid[counter] = 1'b1;
+                cache_data[counter] <= mem_incoming_data_i;
+                cache_tag[counter] <= tag;
+                //cache_data[counter] <= mem_incoming_data_i;
+                valid[counter] <= 1'b1;
             end
             else if((write_enable_i==1'b1) &&(hit==1'b1)) begin
                 if(byte_op_i) begin
                     case(byteoffset)
-                        2'b00 : cache_data[wayhit][7:0] = write_data_i[7:0];
-                        2'b01 : cache_data[wayhit][15:8] = write_data_i[7:0];
-                        2'b10 : cache_data[wayhit][23:16] = write_data_i[7:0];
-                        2'b11 : cache_data[wayhit][31:24] = write_data_i[7:0];
+                        2'b00 : cache_data[wayhit][7:0] <= write_data_i[7:0];
+                        2'b01 : cache_data[wayhit][15:8] <= write_data_i[7:0];
+                        2'b10 : cache_data[wayhit][23:16] <= write_data_i[7:0];
+                        2'b11 : cache_data[wayhit][31:24] <= write_data_i[7:0];
                     endcase
                 end
                 else begin
                     
-                    cache_data[wayhit] = write_data_i;
+                    cache_data[wayhit] <= write_data_i;
                 end
-                //cache_tag[wayhit] = tag;
-                //cache_data[wayhit] = write_data_i;
-                valid[wayhit] = 1'b1;
+                //cache_tag[wayhit] <= tag;
+                //cache_data[wayhit] <= write_data_i;
+                valid[wayhit] <= 1'b1;
             end
             else if((write_enable_i==1'b1)&& (hit==1'b0))begin
                 if(byte_op_i) begin
                     case(byteoffset)
-                        2'b00 : cache_data[counter][7:0] = write_data_i[7:0];
-                        2'b01 : cache_data[counter][15:8] = write_data_i[7:0];
-                        2'b10 : cache_data[counter][23:16] = write_data_i[7:0];
-                        2'b11 : cache_data[counter][31:24] = write_data_i[7:0];
+                        2'b00 : cache_data[counter][7:0] <= write_data_i[7:0];
+                        2'b01 : cache_data[counter][15:8] <= write_data_i[7:0];
+                        2'b10 : cache_data[counter][23:16] <= write_data_i[7:0];
+                        2'b11 : cache_data[counter][31:24] <= write_data_i[7:0];
                     endcase
                 end
                 else begin
-                    cache_data[counter] = write_data_i;
+                    cache_data[counter] <= write_data_i;
                 end
                 
-                cache_tag[counter] = tag;
-                //cache_data[counter] = write_data_i;
-                valid[counter] = 1'b1;
+                cache_tag[counter] <= tag;
+                //cache_data[counter] <= write_data_i;
+                valid[counter] <= 1'b1;
             end
         end
         //also add cache data 
