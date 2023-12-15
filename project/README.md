@@ -159,11 +159,11 @@ UVM was used to test `PC`, `SignExtend`, `RegisterFile`, `ALU`, `DataMemory`, `I
 
 UVM did not entirely eliminate the necessity to analyse, it significantly reduced the time spent debugging by only flagging errors when the actual output deviated from expectations. An example below with the `MainDecoder` component:
 
-![UVM output for MainDecoder](../images/UVM/track_error_uvm.jpg)
+![UVM output for MainDecoder](../images/UVM/track_error_UVM.jpg)
 
 This turned out to be a simple oversight in the `MainDecoder` SystemVerilog file:
 
-![Main Decoder Debugging](../images/UVM/error_main_decoder_uvm.jpg)
+![Main Decoder Debugging](../images/UVM/error_main_decoder_UVM.jpg)
 
 
 
