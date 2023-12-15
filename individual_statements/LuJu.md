@@ -1,4 +1,5 @@
 ## Personal Statement: Lu Ju - CID 02198501 
+> github acc name: luju1108, note that root is also me 
 
 ### What I Contributed to
 > links are to the example commits I have done, the related files are not necessary the final version
