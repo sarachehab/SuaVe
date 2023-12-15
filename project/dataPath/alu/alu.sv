@@ -1,11 +1,11 @@
 module alu #(
-    parameter DATA_WIDTH = 32
+    parameter   DATA_WIDTH = 32
 )(
-    input  logic [DATA_WIDTH-1:0] src1_i, src2_i,
-    input  logic [3:0]            alu_control_i, // alu_control_i[3]   is funct7[5]
-                                                 // alu_control_i[2:0] is funct3[2:0]
-    output logic                  eq_o,
-    output logic [DATA_WIDTH-1:0] alu_result_o
+    input   logic   [DATA_WIDTH-1:0]    src1_i, src2_i,
+    input   logic   [3:0]               alu_control_i, // alu_control_i[3]   is funct7[5]
+                                                       // alu_control_i[2:0] is funct3[2:0]
+    output  logic                       eq_o,
+    output  logic   [DATA_WIDTH-1:0]    alu_result_o
 );
 
     always_comb begin 
@@ -46,3 +46,4 @@ module alu #(
     end
 
 endmodule
+

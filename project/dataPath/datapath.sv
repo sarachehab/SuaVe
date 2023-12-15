@@ -6,28 +6,27 @@ module datapath # (
     input   logic   clk_i,
 
     input   logic   [REG_ADDR_LENGTH-1:0]   reg_addr1_i, reg_addr2_i, reg_addr3_i,
-    input   logic                           reg_we_i,
+    input   logic                           reg_we_i, trigger_i,
     input   logic   [1:0]                   result_src_i,
     input   logic   [DATA_WIDTH-1:0]        imm_ext_i, pc_next_i,
     input   logic                           data_mem_we_i, data_mem_byte_op_i,
     input   logic   [3:0]                   alu_control_i, 
     input   logic                           alu_src_i,
     output  logic                           eq_o,
-    output  logic    [DATA_WIDTH-1:0]       a0_o
+    output  logic    [DATA_WIDTH-1:0]       a0_o, alu_out_o
 
 );
 
-    logic   [DATA_WIDTH-1:0]    reg_rd1;
-    logic   [DATA_WIDTH-1:0]    reg_rd2;
-    logic   [DATA_WIDTH-1:0]    alu_result;
+    logic   [DATA_WIDTH-1:0]    reg_rd1, reg_rd2;
     logic   [DATA_WIDTH-1:0]    data_mem_rd;
     logic   [DATA_WIDTH-1:0]    reg_wd;
 
     always_comb begin
         case (result_src_i)
-            2'b00: reg_wd = alu_result;     // R and I type instructions
-            2'b01: reg_wd = data_mem_rd;    // load instruction
-            2'b11: reg_wd = pc_next_i;      // JAL instruction
+            2'b00: reg_wd = alu_out_o;     // R and I type instructions
+            2'b01: reg_wd = data_mem_rd;
+            2'b10: reg_wd = pc_next_i;      // load instruction
+            2'b11: reg_wd = imm_ext_i;      // JAL instruction
             default: reg_wd = {DATA_WIDTH{1'b0}};   // including store instruction
         endcase
     end
@@ -39,6 +38,7 @@ module datapath # (
         .addr3_i(reg_addr3_i),
         .addr3_we_i(reg_we_i),
         .addr3_wd_i(reg_wd),
+        .trigger_i(trigger_i),
         .rd1_o(reg_rd1),
         .rd2_o(reg_rd2),
         .a0_o(a0_o)
@@ -49,7 +49,7 @@ module datapath # (
         .src2_i(alu_src_i ? imm_ext_i : reg_rd2),
         .alu_control_i(alu_control_i),
         .eq_o(eq_o),
-        .alu_result_o(alu_result)
+        .alu_result_o(alu_out_o)
     );
 
     data_memory #(DATA_WIDTH, BYTE_WIDTH) datapath_data_memory (
@@ -57,7 +57,7 @@ module datapath # (
         .we_i(data_mem_we_i),
         .byte_op_i(data_mem_byte_op_i),
         .wd_i(reg_rd2),
-        .addr_i(alu_result),
+        .addr_i(alu_out_o),
         .rd_o(data_mem_rd)
     );
 

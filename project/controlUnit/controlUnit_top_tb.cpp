@@ -12,7 +12,7 @@ std::vector <std::string> instructions = {
     "addi", "andi", "ori", "slti","slli","srli", "sltiu" , "xori",
     "lui",
     "lw", "sw", "lbu", "sb",
-    "beq",
+    "bne",
     "jal" , "jalr"
     };
 int32_t getopcode (std::string instr) {
@@ -32,7 +32,7 @@ int32_t getopcode (std::string instr) {
     else if(instr == "sw" || instr == "sb") {
         return 0b0100011;
     }
-    else if(instr == "beq") {
+    else if(instr == "bne") {
         return 0b1100011;
     }
     else if(instr == "jal") {
@@ -45,7 +45,7 @@ int32_t getopcode (std::string instr) {
 
 int getfunct3 (std::string instr) {
 
-    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lbu" || instr == "sb" || instr == "beq" || instr == "jalr") {
+    if(instr == "add" || instr == "sub" || instr == "addi" || instr == "lbu" || instr == "sb" || instr == "bne" || instr == "jalr") {
         return 0x0;
     }
 
@@ -112,7 +112,7 @@ int main(int argc, char **argv, char **env) {
         if(simcyc < instructions.size()) {
             std::bitset<sizeof(short int) * 8> binaryRepresentation(getopcode(instructions[simcyc]));
 
-            std::cout << instructions[simcyc] << ": " << binaryRepresentation << std::endl;
+            //std::cout << instructions[simcyc] << ": " << binaryRepresentation << std::endl;
             top->zero_i = 0;
             top->op_i = getopcode(instructions[simcyc]);
             top->funct3_i = getfunct3(instructions[simcyc]);
@@ -140,6 +140,6 @@ int main(int argc, char **argv, char **env) {
 
     lw          |0000011|010    |x
     sw          |0100011|010    |x
-    beq         |1100011|000    |x
+    bne         |1100011|001    |x
     jal         |1101111|xxx    |x
     */
