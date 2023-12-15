@@ -1,12 +1,16 @@
+# Extend Unit
 
-the sign extend is fairly straigtforward for our RISCKV31i as we need to extend the immediate of the based on the instruction type. 
+The `Sign Extend` is fairly straigtforward for our RISCV as we need to extend the immediate of the based on the instruction type. 
 
-the instructions are divided based on the following 
+The instructions are divided based on the following:
+
 ![[sign_ext1.png]](../../images/extend/sign_ext1.png)
 
-note that as R type instructions dont have an immediate we do not need to sign extend any immediate for it.
- based on the instructions we extend the most signficant but of all instruction types expect Upper in which we set the instruction immediate as the most significant bits and concatenate it with 0's at the end.
-the following is how the different instruction types are extended based on the type of instruction (determined by the input instr_i given to the sign extend module from the controlunit)
+
+> R type instructions do not have an immediate field, so no extension needed there
+
+
+The following is how the different instruction types are extended based on the type of instruction (determined by the input `instr_i` given to the sign extend module from the controlunit)
 
 ```verilog
 case(imm_src_i)
@@ -24,6 +28,11 @@ case(imm_src_i)
 	 default: imm_ext_o = 32'b0;
 ```
 
+
+The first test shown below outputted the correct `sign extended` immediate values for all except for imm_src_i = 11 which should set imm_ext_o to be { {12{1'b0}}, instr_i[31:12]};
+![[error_sign_extend.jpg]](../../images/extend/error_sign_extend.jpg)
+
+
 ![[extend2.jpg]](../../images/extend/sign_extend2.jpg)
 
-here we can see that the instructions are sign extended properly
+Here, we can see that the instructions are sign extended properly

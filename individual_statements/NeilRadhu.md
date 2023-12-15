@@ -38,6 +38,8 @@
 - made 16 way fully associative cache
 ## What I Learned  
 
+- I gained experience in working with Github and using new command lines to find the best ways to move files and folders from branch to branch.
+- Using a HDL it is very important to keep a constant format so it is readable and there is consistency in the code, hence making it easier for anyone to debug your code.
 - In projects when one works with teammates, it is important to keep frequent contact, get updates from and give updates on your work so everybody is on the same page.
 - It is a good idea to explain your logic to your teammate and debug as it becomes clearer to you why you have made certain design decisions. (If you cannot explain it you do not fully understand it)
 - Things can go wrong for you or your teammates but it is important not to hold grudges and to keep morale high in the team. People should help each other instead of just pointing the blame.
@@ -50,6 +52,7 @@ Some minor errors were when everybody is working on different modules and there 
 Most common were small syntax errors or changes made to sv files that have an impact on top files or other files.
 Set deadlines for Cache that Utsav and I were not able to meet, hence making the team anxious and doubt if our tasks would be completed on time. 
 Initial testing also could have been more thorough.
+
 ## What I Would do Differently
 
-I am convinced our team worked extremely well together and am pleased everybody achieved their goals as the deadlines approached. Even though the cache took longer than expected, Utsav and I still delivered the cache sufficiently before the deadline. If I were to do this again, I would definitely make sure the repo is tidy and make everybody work in one branch. while also having a backup branch.  
+I am convinced our team worked extremely well together and am pleased everybody achieved their goals as the deadlines approached. Even though the cache took longer than expected, Utsav and I still delivered the cache sufficiently before the deadline. If I were to do this again, I would want to make sure the repo is tidy and make everybody work in one branch; while also having a backup branch.  
