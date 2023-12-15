@@ -120,8 +120,8 @@ Cache
 |               | Testing [pdf](https://github.com/luju1108/Team14/blob/55573bf5cd5188fad616eb12a406bb40f62c1772/RTL/README_PDF.md)                       | X                         | X                     | X                 | X                     |
 | Pipeline      | Pipeline Register             | X                         |                       |                   |                       |
 |               | [Hazard unit](https://github.com/luju1108/Team14/blob/1ac6203f9dc9e9ce10d48f2375bfcd4949d704cc/RTL/hazard_unit/README.md)                   |                           |                       | X                 |                       |
-|               | Refactoring                   | X                         |                       |                   |                       |
-|               | Top File                      | X                         |                       |                   |                       |
+|               | [Refactoring](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/control_unit/README.md)                   | X                         |                       |                   |                       |
+|               | [Top File](https://github.com/luju1108/Team14/blob/75df15b7cf9c71874d93c646478f9ac34ed26d3c/RTL/README.md)                      | X                         |                       |                   |                       |
 |               | Testing [pdf](https://github.com/luju1108/Team14/blob/98bc1b035346cb44bc519077c4daae0fd198ed2f/RTL/README_PDF.md)                       | X                         |                       | X                 |                       |
 | Cache         | Direct Mapped Cache           | C                         | X                     |                   | X                     |
 |               | RAM Refactor                  |                           | X                     |                   | X                     |

@@ -64,6 +64,8 @@
     - learnt about the benefit of byte adress read/write to memory in closer details with examples
         - realising that I am the type of person who needs examples to understand new content (ie visual learner)
         - better understanding of myself and my ways of learning - I learn better from hands-on practise
+        
+<br>
 
 - when I run into errors that I cannot solve, I am becoming less hesitate to ask for help as we progress in this project, realising how efficient it is to ask and get it solved straight away rather than spending a long time trying to sort it out myself
 - learnt to better collaborate with others and when working on the same folder or file, update each other as soon as possible so that everyone is keep track of the progress and this reduces duplicates of work
