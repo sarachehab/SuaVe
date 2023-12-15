@@ -8,6 +8,7 @@ We were able to deliver in the span of three weeks:
 - A Single Cycle CPU
 - A Pipelined 5-stages CPU
 - A 5-stages Pipelined CPU with direct-mapped cache
+- A Single Cycle CPU with fully-associative cache
 
 Logic was also derived to implement a 4-way associative cache. System-Verilog draft of the code was submitted along this repository, but remains uncomplete.
 
@@ -129,6 +130,8 @@ Cache
 |               | Control Unit Refactor         |                           | X                     |                   | X                     |
 |               | Pipelining Refactor           | X                         |                       |                   |                       |
 |               | Testing                       | X                         | X                     | X                 | X                     |
+|               | Fully Associative Cache       |                           | X                     |                   | X                     |
+|               | Testing                       |                           | X                     |                   | X                     |
 
 
 
