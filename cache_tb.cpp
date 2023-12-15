@@ -36,19 +36,18 @@ int main(int argc, char **argv, char **env) {
             top->write_data_i = 59;
 
         }
-        if(simcyc == 4) { //load word instruction
+        else if(simcyc == 4) { //load word instruction
             top-> cache_enable_i =1;
-            top->write_enable_i = 0;
+            top->write_enable_i = 1;
             top->address_i = 96;
             top->write_data_i = 56;
         }
 
-        if(simcyc==5){//load byte
-            top->cache_enable_i = 0b1;
-            top->byte_op_i =1;
+        else if(simcyc==5){//load byte
+            top->cache_enable_i = 1;
+            top->byte_op_i = 1;
             top->write_data_i = 123;
-            top->address_i = 33;
-
+            top->address_i = 1233;
         } 
         else{
             top->cache_enable_i = 0;
