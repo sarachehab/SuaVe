@@ -6,9 +6,7 @@
 
 | Command | Outcome |
 | ----- | ----|
-| `source ./exe.sh` | Run previous program |
 | `source ./exe.sh f1` | Run Formula Lights Program |
-| `source ./exe.sh pdf` | Run PDF program with previous memory content |
 | `source ./exe.sh pdf gaussian` | Run PDF program for gaussian.mem |
 | `source ./exe.sh pdf triangle` | Run PDF program for triangle.mem |
 | `source ./exe.sh pdf sine` | Run PDF program for sine.mem |
