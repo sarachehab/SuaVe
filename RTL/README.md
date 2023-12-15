@@ -144,3 +144,12 @@ Here, the  `cache_data` data structure is updated at the location pointed to by 
 The counter is also kept syncronous. The logic behind incrementing the count is that every time there is a `write_enable_i` going high which means that the cache must write to `cache_data` and to memory or if there is a read miss meaning that a value must be fetched from memory and written to `cache_data`. In other words, whenever a value in `cache_data is updated` , the counter must be incremented such that the next write to `cache_data` is directed to the correct way. This is visible in vcd file produced by the simulation
 ![Alt text](../images/cache_waveform.png)
 Each successive right occurs in the next cache location.
+It can also be observed that when this program is run with the pdf reference program, the expected probability distribution function can be output and plotted
+### Gaussian
+![gaussian plot](../images/gaussian.png)
+### Noisy
+![noisy plot](../images/noisy.png)
+### Sine
+![sine plot](../images/sine.png)
+### Triangle
+![triangle plot](../images/triangle.png)
