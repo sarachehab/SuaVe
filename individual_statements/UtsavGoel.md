@@ -24,12 +24,12 @@
 
 ### Single Cycle CPU
 
-- designed the main decoder, wrote and tested it with the testbench.
+- designed the main decoder, wrote and tested it with the testbench.[`main decoder`](https://github.com/luju1108/Team14/tree/75de5b7817711dc07937392060a4c5ca4a21adaf)
 - made the main decoder output signals in accordance with the ALU decoder logic
 - helped Sara with the debugging of the f1 assembly program
-- testing of Datapath by driving the inputs to test all use cases for the data path and checking if the expected output is produced
+- testing of Datapath by driving the inputs to test all use cases for the data path and checking if the expected output is produced: [`testbench`](https://github.com/luju1108/Team14/tree/14a63815f1ce2c7ba321d0ad8de81e1d4e234cb9)
 ### Cache
-(all of cache done together with Neil)
+(all of cache done together with Neil)[`cache`](https://github.com/luju1108/Team14/tree/97c876265f0566908f4c0876d91c84ee02b5471d)
 - brainstorming ideas with Sara and Neil for a direct mapped cache
 - made direct mapped cache
 - made 4 way set associative cache with only one set for testing purposes
